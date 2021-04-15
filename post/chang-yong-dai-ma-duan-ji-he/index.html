@@ -1,0 +1,689 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="一位前端开发者的学习笔记与踩坑指南" />
+<meta name="keywords" content="web,html,css,js,es6,nodejs,react,antd,webpack,redux,jenkins,踩坑,学习笔记,微信小程序,微信公众号,适配,git,github,gitee" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>常用JS工具代码集合 | 白山</title>
+<link rel="shortcut icon" href="https://awhitemouse.github.io//favicon.ico?v=1618473992960">
+<!-- <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.css" rel="stylesheet"> -->
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+<link rel="stylesheet" href="https://awhitemouse.github.io//styles/main.css">
+<link rel="stylesheet" href="https://awhitemouse.github.io//media/live2d/css/live2d.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/go.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+</script>
+
+<!-- DEMO JS -->
+<!-- <script src="/media/scripts/index.js"></script> -->
+
+<!-- 百度统计 -->
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?d67319f5aed3ec93a230772fe9c25ab5";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            白山
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fa fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="/" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/archives" class="menu gt-a-link">
+                            归档
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/navigation" class="menu gt-a-link">
+                            导航
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/post/about" class="menu gt-a-link">
+                            关于
+                        </a>
+                    
+                </div>
+            
+        </div>
+    </div>
+</nav>
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    常用JS工具代码集合
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2020-02-04 07:00:32 ·
+                    </time>
+                    
+                        <a href="https://awhitemouse.github.io/tag/YePweIBlg/" class="post-tags">
+                            # 程序人生
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <p>我们在开发中，经常会遇到相同的场景，需要用到相同的代码，所以这篇文章就总结一下。</p>
+<!-- more -->
+<h1 id="去掉字符串首尾字符串">去掉字符串首尾字符串</h1>
+<pre><code class="language-js">// 删除左右两端的空格
+function trim(str){
+    return str.replace(/(^\s*)|(\s*$)/g, &quot;&quot;);
+}
+// 删除左边的空格
+function ltrim(str){
+    return str.replace(/(^\s*)/g,&quot;&quot;);
+}
+// 删除右边的空格
+function rtrim(str){
+    return str.replace(/(\s*$)/g,&quot;&quot;);
+}
+</code></pre>
+<h1 id="捕获页面当前滚动位置">捕获页面当前滚动位置</h1>
+<pre><code class="language-js">// 为保证兼容性，两者缺一不可
+const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+</code></pre>
+<h1 id="阻止冒泡">阻止冒泡</h1>
+<pre><code class="language-js">// JavaScript
+document.getElementById('btn').addEventListener('click', function (event) {
+    event = event || window.event；
+ 
+    if (event.stopPropagation){
+        // W3C
+        event.stopPropagation();
+    } else{
+        // IE
+        event.cancelBubble = true;
+    }
+}, false);
+ 
+// jQuery
+$('#btn').on('click', function (event) {
+    event.stopPropagation();
+});
+</code></pre>
+<h1 id="检测浏览器是否支持svg">检测浏览器是否支持svg</h1>
+<pre><code class="language-js">function isSupportSVG() {
+    var SVG_NS = 'http://www.w3.org/2000/svg';
+    return !!document.createElementNS &amp;&amp;!!document.createElementNS(SVG_NS,'svg').createSVGRect;
+}
+ 
+console.log(isSupportSVG());
+</code></pre>
+<h1 id="检测浏览器是否支持canvas">检测浏览器是否支持canvas</h1>
+<pre><code class="language-js">function isSupportCanvas() {
+    if(document.createElement('canvas').getContext){
+        return true;
+    }else{
+        return false;
+    }
+}
+ 
+console.log(isSupportCanvas());
+</code></pre>
+<h1 id="检测是否是微信浏览器">检测是否是微信浏览器</h1>
+<pre><code class="language-js">function isWeiXinClient() {
+    var ua = navigator.userAgent.toLowerCase();
+    if (ua.match(/MicroMessenger/i)==&quot;micromessenger&quot;) {
+        return true;
+    } else {
+        return false;
+    }
+}
+ 
+alert(isWeiXinClient());
+</code></pre>
+<h1 id="检测是否移动端及浏览器内核">检测是否移动端及浏览器内核</h1>
+<pre><code class="language-js">var browser = {
+    versions: function() {
+        var u = navigator.userAgent;
+        return {
+            trident: u.indexOf('Trident') &gt; -1, //IE内核
+            presto: u.indexOf('Presto') &gt; -1, //opera内核
+            webKit: u.indexOf('AppleWebKit') &gt; -1, //苹果、谷歌内核
+            gecko: u.indexOf('Firefox') &gt; -1, //火狐内核Gecko
+            mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否移动终端
+            ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios
+            android: u.indexOf('Android') &gt; -1 || u.indexOf('Linux') &gt; -1, //android
+            iPhone: u.indexOf('iPhone') &gt; -1 , //iPhone
+            iPad: u.indexOf('iPad') &gt; -1, //iPad
+            webApp: u.indexOf('Safari') &gt; -1 //Safari
+        };
+    }
+}
+ 
+if (browser.versions.mobile() || browser.versions.ios() || browser.versions.android() ||browser.versions.iPhone() || browser.versions.iPad()) {
+    alert('移动端');
+}
+</code></pre>
+<h1 id="检测是否电脑端移动端">检测是否电脑端/移动端</h1>
+<pre><code class="language-js">var browser={
+    versions:function(){
+        var u = navigator.userAgent, app = navigator.appVersion;
+        var sUserAgent = navigator.userAgent;
+        return {
+        trident: u.indexOf('Trident') &gt; -1,
+        presto: u.indexOf('Presto') &gt; -1,
+        isChrome: u.indexOf(&quot;chrome&quot;) &gt; -1,
+        isSafari: !u.indexOf(&quot;chrome&quot;) &gt; -1 &amp;&amp; (/webkit|khtml/).test(u),
+        isSafari3: !u.indexOf(&quot;chrome&quot;) &gt; -1 &amp;&amp; (/webkit|khtml/).test(u) &amp;&amp; u.indexOf('webkit/5') != -1,
+        webKit: u.indexOf('AppleWebKit') &gt; -1,
+        gecko: u.indexOf('Gecko') &gt; -1 &amp;&amp; u.indexOf('KHTML') == -1,
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/),
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+        android: u.indexOf('Android') &gt; -1 || u.indexOf('Linux') &gt; -1,
+        iPhone: u.indexOf('iPhone') &gt; -1,
+        iPad: u.indexOf('iPad') &gt; -1,
+        iWinPhone: u.indexOf('Windows Phone') &gt; -1
+        };
+    }()
+}
+if(browser.versions.mobile || browser.versions.iWinPhone){
+    window.location = &quot;http:/www.baidu.com/m/&quot;;
+}
+</code></pre>
+<h1 id="检测浏览器内核">检测浏览器内核</h1>
+<pre><code class="language-js">function getInternet(){    
+    if(navigator.userAgent.indexOf(&quot;MSIE&quot;)&gt;0) {    
+      return &quot;MSIE&quot;;       //IE浏览器  
+    }  
+ 
+    if(isFirefox=navigator.userAgent.indexOf(&quot;Firefox&quot;)&gt;0){    
+      return &quot;Firefox&quot;;     //Firefox浏览器  
+    }  
+ 
+    if(isSafari=navigator.userAgent.indexOf(&quot;Safari&quot;)&gt;0) {    
+      return &quot;Safari&quot;;      //Safan浏览器  
+    }  
+ 
+    if(isCamino=navigator.userAgent.indexOf(&quot;Camino&quot;)&gt;0){    
+      return &quot;Camino&quot;;   //Camino浏览器  
+    }  
+    if(isMozilla=navigator.userAgent.indexOf(&quot;Gecko/&quot;)&gt;0){    
+      return &quot;Gecko&quot;;    //Gecko浏览器  
+    }    
+}
+</code></pre>
+<h1 id="强制移动端页面横屏显示">强制移动端页面横屏显示</h1>
+<pre><code class="language-js">$( window ).on( &quot;orientationchange&quot;, function( event ) {
+    if (event.orientation=='portrait') {
+        $('body').css('transform', 'rotate(90deg)');
+    } else {
+        $('body').css('transform', 'rotate(0deg)');
+    }
+});
+$( window ).orientationchange();
+</code></pre>
+<h1 id="电脑端页面全屏显示">电脑端页面全屏显示</h1>
+<pre><code class="language-js">function fullscreen(element) {
+    if (element.requestFullscreen) {
+        element.requestFullscreen();
+    } else if (element.mozRequestFullScreen) {
+        element.mozRequestFullScreen();
+    } else if (element.webkitRequestFullscreen) {
+        element.webkitRequestFullscreen();
+    } else if (element.msRequestFullscreen) {
+        element.msRequestFullscreen();
+    }
+}
+ 
+fullscreen(document.documentElement);
+</code></pre>
+<h1 id="获得失去焦点">获得/失去焦点</h1>
+<p>1、JavaScript实现</p>
+<pre><code class="language-html">&lt;input id=&quot;i_input&quot; type=&quot;text&quot; value=&quot;会员卡号/手机号&quot;/&gt;
+</code></pre>
+<pre><code class="language-js">// JavaScript
+window.onload = function(){
+    var oIpt = document.getElementById(&quot;i_input&quot;);
+ 
+    if(oIpt.value == &quot;会员卡号/手机号&quot;){
+        oIpt.style.color = &quot;#888&quot;;
+    }else{
+        oIpt.style.color = &quot;#000&quot;;
+    };
+ 
+    oIpt.onfocus = function(){
+        if(this.value == &quot;会员卡号/手机号&quot;){
+            this.value=&quot;&quot;;
+            this.style.color = &quot;#000&quot;;
+            this.type = &quot;password&quot;;
+        }else{
+            this.style.color = &quot;#000&quot;;
+        }
+    };
+    
+    oIpt.onblur = function(){
+        if(this.value == &quot;&quot;){
+            this.value=&quot;会员卡号/手机号&quot;;
+            this.style.color = &quot;#888&quot;;
+            this.type = &quot;text&quot;;
+        }
+    };
+}
+</code></pre>
+<p>2、jQuery实现</p>
+<pre><code class="language-html">&lt;input type=&quot;text&quot; class=&quot;oldpsw&quot; id=&quot;showPwd&quot; value=&quot;请输入您的注册密码&quot;/&gt;
+&lt;input type=&quot;password&quot; name=&quot;psw&quot; class=&quot;oldpsw&quot; id=&quot;password&quot; value=&quot;&quot; style=&quot;display:none;&quot;/&gt;
+</code></pre>
+<pre><code>// jQuery
+$(&quot;#showPwd&quot;).focus(function() {
+    var text_value=$(this).val();
+    if (text_value =='请输入您的注册密码') {
+        $(&quot;#showPwd&quot;).hide();
+        $(&quot;#password&quot;).show().focus();
+    }
+});
+$(&quot;#password&quot;).blur(function() {
+    var text_value = $(this).val();
+    if (text_value == &quot;&quot;) {
+        $(&quot;#showPwd&quot;).show();
+        $(&quot;#password&quot;).hide();
+    }
+});
+</code></pre>
+<h1 id="获取上传文件大小">获取上传文件大小</h1>
+<pre><code class="language-html">&lt;input type=&quot;file&quot; id=&quot;filePath&quot; onchange=&quot;getFileSize(this)&quot;/&gt;
+</code></pre>
+<pre><code class="language-js">// 兼容IE9低版本
+function getFileSize(obj){
+    var filesize;
+    
+    if(obj.files){
+        filesize = obj.files[0].size;
+    }else{
+        try{
+            var path,fso;
+            path = document.getElementById('filePath').value;
+            fso = new ActiveXObject(&quot;Scripting.FileSystemObject&quot;);
+            filesize = fso.GetFile(path).size;
+        }
+        catch(e){
+            // 在IE9及低版本浏览器，如果不容许ActiveX控件与页面交互，点击了否，就无法获取size
+            console.log(e.message); // Automation 服务器不能创建对象
+            filesize = 'error'; // 无法获取
+        }
+    }
+    return filesize;
+}
+</code></pre>
+<h1 id="限制上传文件类型">限制上传文件类型</h1>
+<p>1、高版本浏览器</p>
+<pre><code class="language-html">&lt;input type=&quot;file&quot; name=&quot;filePath&quot; accept=&quot;.jpg,.jpeg,.doc,.docxs,.pdf&quot;/&gt;
+</code></pre>
+<p>2、限制图片</p>
+<pre><code class="language-html">&lt;input type=&quot;file&quot; class=&quot;file&quot; value=&quot;上传&quot; accept=&quot;image/*&quot;&gt;
+</code></pre>
+<p>3、低版本浏览器</p>
+<pre><code class="language-html">&lt;input type=&quot;file&quot; id=&quot;filePath&quot; onchange=&quot;limitTypes()&quot;&gt;
+</code></pre>
+<pre><code class="language-js">/* 通过扩展名，检验文件格式。
+* @parma filePath{string} 文件路径
+* @parma acceptFormat{Array} 允许的文件类型
+* @result 返回值{Boolen}：true or false
+*/
+ 
+function checkFormat(filePath,acceptFormat){
+    var resultBool= false,
+        ex = filePath.substring(filePath.lastIndexOf('.') + 1);
+        ex = ex.toLowerCase();
+        
+    for(var i = 0; i &lt; acceptFormat.length; i++){
+    　　if(acceptFormat[i] == ex){
+            resultBool = true;
+            break;
+    　　}
+    }
+    return resultBool;
+};
+        
+function limitTypes(){
+    var obj = document.getElementById('filePath');
+    var path = obj.value;
+    var result = checkFormat(path,['bmp','jpg','jpeg','png']);
+    
+    if(!result){
+        alert('上传类型错误，请重新上传');
+        obj.value = '';
+    }
+}
+</code></pre>
+<h1 id="阻止默认行为">阻止默认行为</h1>
+<pre><code class="language-js">// JavaScript
+document.getElementById('btn').addEventListener('click', function (event) {
+    event = event || window.event；
+ 
+    if (event.preventDefault){
+        // W3C
+        event.preventDefault();
+    } else{
+        // IE
+        event.returnValue = false;
+    }
+}, false);
+ 
+// jQuery
+$('#btn').on('click', function (event) {
+    event.preventDefault();
+});
+</code></pre>
+<h1 id="禁止移动端浏览器页面滚动">禁止移动端浏览器页面滚动</h1>
+<p>HTML实现：</p>
+<pre><code class="language-html">&lt;body ontouchmove=&quot;event.preventDefault()&quot;&gt;
+</code></pre>
+<p>JavaScript实现：</p>
+<pre><code class="language-js">document.addEventListener('touchmove', function (e) {
+    event.preventDefault();
+});
+</code></pre>
+<h1 id="图片懒加载">图片懒加载</h1>
+<pre><code class="language-js">// 获取所有的内容图片
+const imgList = $('img.child-page-img');
+
+// 检查图片是否已经被显示
+check();
+
+// 滚动监听，如滚动则触发check函数
+$('.main-content-right-wrap').on('scroll', check);
+
+/**
+ * 检查检查图片是否已经被显示
+ */
+function check() {
+    // 选中imgList中没有展示的图片，然后判断未被展示的图片是否已经进入可视区域
+    imgList.not('.show').each(function () {
+        if (isShow($(this))) {
+            showImg($(this));
+        }
+    });
+}
+
+/**
+ * 判断元素是否进入可视区域
+ * @Param node 元素节点
+ */
+function isShow(node) {
+    const windowHeight = $(window).height();
+    const scrollTop = $(window).scrollTop();
+    const offsetTop = node.offset().top;
+    const nodeHeight = node.height();
+    return windowHeight + scrollTop &gt; offsetTop &amp;&amp; scrollTop &lt; offsetTop + nodeHeight;
+}
+
+/**
+ * 展示图片
+ * @Param imgs 图片节点数组
+ */
+function showImg(imgs) {
+    imgs.each(function () {
+        var imgUrl = $(this).attr('data-src');
+        $(this).attr('src', imgUrl);
+        $(this).addClass('show');
+    })
+}
+</code></pre>
+<h1 id="回到页面顶部">回到页面顶部</h1>
+<pre><code class="language-js">// jQuery
+$('.container')[0].scrollTop = 0;
+
+// js
+document.getElementsByClassName('container')[0].scrollTop = 0;
+</code></pre>
+<h1 id="隐式转换">隐式转换</h1>
+<p>这是一个很有意思的转换，但是一般没什么卵用。</p>
+<pre><code class="language-js">const obj = {
+    valueOf: function() {
+        return 42;
+    },
+    toString: function() {
+        return 4;
+    },
+};
+
+obj + '';   // 42，直接作为变量会执行valueOf方法。
+String(obj);   // 4，用String类包裹会调用toString方法。
+</code></pre>
+<h1 id="数据检查类型">数据检查类型</h1>
+<p>普通类型检查可以使用typeof来检查，但是遇到对象、数组就无法明显的区分开，所以可以这样区分：</p>
+<pre><code class="language-js">function isObject(value) {
+    return Object.prototype.toString.call(value).slice(8, -1) === 'Object';
+}
+
+function isArray(value) {
+    return Object.prototype.toString.call(value).slice(8, -1) === 'Array';
+}
+
+// 这种方法同样也适用于Function等
+function isFunction(value) {
+    return Object.prototype.toString.call(value).slice(8, -1) === 'Function';
+}
+</code></pre>
+<h1 id="多维数组变一维">多维数组变一维</h1>
+<p>这种情况经常出现在笔试题和面试题中。</p>
+<pre><code class="language-js">const arr = [1, 2, ['3', 4], [5]];
+
+arr.toString().split(',');   // 结果全部变为字符类型
+JSON.parse(`[${JSON.stringify(foo).replace(/\[|]/g, '')}]`);   // 元素类型不变
+</code></pre>
+<h1 id="动态插入js">动态插入js</h1>
+<pre><code class="language-js">function injectScript(src) {    
+    var s, t;
+    s = document.createElement('script');
+    s.type = 'text/javascript';
+    s.async = true;
+    s.src = src;
+    t = document.getElementsByTagName('script')[0];
+    t.parentNode.insertBefore(s, t);
+}
+</code></pre>
+<h1 id="大数字格式化">大数字格式化</h1>
+<p>一般在表示大金额、大数据的时候，为了便于阅读，会进行格式化处理。</p>
+<pre><code class="language-js">'2313123'.replace(/\B(?=(\d{3})+(?!\d))/g, ',');   // &quot;2,313,123&quot;
+</code></pre>
+<h1 id="浮点数取整">浮点数取整</h1>
+<p>浮点数取整，除了parseInt，还有别的方法：</p>
+<pre><code class="language-js">const a = 12.34;
+a | 0;   // 12
+a &gt;&gt; 0;   // 12
+~~a;   // 12
+Math.floor(a);   // 13
+
+const b = -12.34;
+b | 0;   // -12
+b &gt;&gt; 0;   // -12
+~~b;   // -12
+Math.floor(b);   // -13
+</code></pre>
+<h1 id="生成验证码">生成验证码</h1>
+<p>js生成验证码可以使用Math.random函数：</p>
+<pre><code class="language-js">Math.random().toString().slice(-6);
+
+Math.random().toFixed(6).slice(-6);
+
+'' + Math.floor(Math.random() * 999999);
+</code></pre>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://awhitemouse.github.io/post/webpack-yi-dong-duan-gua-pei/" class="post-title gt-a-link">
+                    移动端通用适配
+                </a>
+            </div>
+        
+
+        
+            
+                <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '1c7817279f236848ef3b',
+    clientSecret: 'cc9a052a730aca58df4ac91361957979a7fb5396',
+    repo: 'AWhiteMouse.github.io',
+    owner: 'AWhiteMouse',
+    admin: ['AWhiteMouse'],
+    id: location.pathname,      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+            
+
+            
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">温故而知新。</div>
+    <div class="social-container">
+        
+        
+        <a href="https://github.com/AWhiteMouse" target="_blank">
+            <i class="fa fa-github gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        <a href="https://wpa.qq.com/msgrd?v=3&amp;uin=1586671591&amp;site=qq&amp;menu=yes" target="_blank">
+            <i class="fa fa-qq gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        <a href="https://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=r9vOwc7NzsPa797egczAwg" target="_blank">
+            <i class="fa fa-envelope gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        <a href="https://blog.csdn.net/i_dont_know_a" target="_blank">
+            <i class="fa fa-rss gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    </div>
+    Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a href="https://awhitemouse.github.io//atom.xml" target="_blank">RSS</a>
+</div>
+
+<div id="landlord" style="left:5px;bottom:0px;">
+    <div class="message" style="opacity:0"></div>
+    <canvas id="live2d" width="500" height="560" class="live2d"></canvas>
+    <div class="live_talk_input_body">
+        <div class="live_talk_input_name_body">
+            <input name="name" type="text" class="live_talk_name white_input" id="AIuserName" autocomplete="off"
+                placeholder="你的名字" />
+        </div>
+        <div class="live_talk_input_text_body">
+            <input name="talk" type="text" class="live_talk_talk white_input" id="AIuserText" autocomplete="off"
+                placeholder="要和我聊什么呀？" />
+            <button type="button" class="live_talk_send_btn" id="talk_send">发送</button>
+        </div>
+    </div>
+    <input name="live_talk" id="live_talk" value="1" type="hidden" />
+    <div class="live_ico_box">
+        <div class="live_ico_item type_info" id="showInfoBtn"></div>
+        <div class="live_ico_item type_talk" id="showTalkBtn"></div>
+        <div class="live_ico_item type_music" id="musicButton"></div>
+        <div class="live_ico_item type_youdu" id="youduButton"></div>
+        <div class="live_ico_item type_quit" id="hideButton"></div>
+        <input name="live_statu_val" id="live_statu_val" value="0" type="hidden" />
+        <audio src="" style="display:none;" id="live2d_bgm" data-bgm="0" preload="none"></audio>
+        <input name="live2dBGM" value="http://music.163.com/song/media/outer/url?id=1313102578.mp3" type="hidden">
+        <input id="duType" value="douqilai,l2d_caihong" type="hidden">
+    </div>
+</div>
+<div id="open_live2d">召唤伊斯特瓦尔</div>
+
+<script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/1.7.1/jquery.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+    var message_Path = '/media/live2d/'; //资源目录，如果目录不对请更改
+    var talkAPI = ""; //如果有类似图灵机器人的聊天接口请填写接口路径
+</script>
+<script type="text/javascript" src="/media/live2d/js/live2d.js"></script>
+<script type="text/javascript" src="/media/live2d/js/message.js"></script>
+<!-- <script src="//code.tidio.co/fkwn1bueaqmcolzjchxzh7xoz5ahzrtw.js" async></script> -->
+
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,448 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="一位前端开发者的学习笔记与踩坑指南" />
+<meta name="keywords" content="web,html,css,js,es6,nodejs,react,antd,webpack,redux,jenkins,踩坑,学习笔记,微信小程序,微信公众号,适配,git,github,gitee" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>React Hooks学习笔记 | 白山</title>
+<link rel="shortcut icon" href="https://awhitemouse.github.io//favicon.ico?v=1618473992960">
+<!-- <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.css" rel="stylesheet"> -->
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+<link rel="stylesheet" href="https://awhitemouse.github.io//styles/main.css">
+<link rel="stylesheet" href="https://awhitemouse.github.io//media/live2d/css/live2d.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/go.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+</script>
+
+<!-- DEMO JS -->
+<!-- <script src="/media/scripts/index.js"></script> -->
+
+<!-- 百度统计 -->
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?d67319f5aed3ec93a230772fe9c25ab5";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            白山
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fa fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="/" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/archives" class="menu gt-a-link">
+                            归档
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/navigation" class="menu gt-a-link">
+                            导航
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/post/about" class="menu gt-a-link">
+                            关于
+                        </a>
+                    
+                </div>
+            
+        </div>
+    </div>
+</nav>
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    React Hooks学习笔记
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2020-02-01 10:11:53 ·
+                    </time>
+                    
+                        <a href="https://awhitemouse.github.io/tag/6WltqJasa/" class="post-tags">
+                            # 学习笔记
+                        </a>
+                    
+                        <a href="https://awhitemouse.github.io/tag/M9JFSzGuU/" class="post-tags">
+                            # React
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <p>react hooks将会是react未来的趋势。</p>
+<!-- more -->
+<h1 id="开发环境搭建与示例编写">开发环境搭建与示例编写</h1>
+<p>准备好，要开始咯！</p>
+<h2 id="开发环境搭建">开发环境搭建</h2>
+<p>React Hooks是React的新特性，不需要安装，只需要React版本在16.8以上，即可使用。</p>
+<h2 id="示例">示例</h2>
+<p>首先编写一个小demo：</p>
+<pre><code class="language-js">import React, { useState } from 'react';
+
+export default function Example() {
+    const [ count, setCount ] = useState(0);  // 数组解构
+
+    return (
+        &lt;div&gt;
+            &lt;div&gt;你已经点击了{count}次&lt;/div&gt;
+            &lt;button onClick={() =&gt; setCount(count + 1)}&gt;点击&lt;/button&gt;
+        &lt;/div&gt;
+    )
+}
+</code></pre>
+<p>注意：</p>
+<blockquote>
+<p><code>useState</code>是一个方法，接收一个初始值。返回结果是一个数组：数组第一项是<code>this.state</code>，第二项是<code>this.setState</code>，在上面的例子里，只是给它们去了一个别名。</p>
+</blockquote>
+<h1 id="多状态声明">多状态声明</h1>
+<p>编写多个useState语句即可。</p>
+<pre><code class="language-js">import React, { useState } from 'react';
+
+export default function Example() {
+    const [name, setName] = useState('白山');
+    const [age, setAge] = useState(18);
+
+    return (
+        &lt;div&gt;
+            &lt;div&gt;{name}&lt;/div&gt;
+            &lt;div&gt;{age}&lt;/div&gt;
+        &lt;/div&gt;
+    )
+}
+</code></pre>
+<p>注意：<code>useState</code>语句不能放在条件语句中。例如：</p>
+<pre><code class="language-js">const isEmpty = true;
+if (isEmpty) {
+    const [name, setName] = useState('白山');
+}
+</code></pre>
+<h1 id="使用useeffect代替生命周期">使用useEffect代替生命周期</h1>
+<p>在react中，有各式各样的生命周期函数来辅助整个程序的运行。这些生命周期函数在Hooks可以使用useEffect进行替代。</p>
+<h2 id="代替componentdidmount和componentdidupdate">代替<code>componentDidMount</code>和<code>componentDidUpdate</code></h2>
+<pre><code class="language-js">import React, { useState, useEffect } from 'react';
+
+export default function Example() {
+    const [ count, setCount ] = useState(0);  // 数组解构
+
+    useEffect(() =&gt; {
+        console.log(`done: ${count}`);
+    });
+
+    return (
+        &lt;div&gt;
+            &lt;div&gt;你已经点击了{count}次&lt;/div&gt;
+            &lt;button onClick={() =&gt; setCount(count + 1)}&gt;点击&lt;/button&gt;
+        &lt;/div&gt;
+    )
+}
+</code></pre>
+<p>注解：</p>
+<blockquote>
+<p><code>useEffect</code>是一个函数，它的<code>第一个参数是一个匿名函数</code>，useEffect触发时将会执行这个函数。<br>
+<code>useEffect</code>的存在相当于<code>componentDidMount</code> + <code>componentDidUpdate</code>，React首次渲染和之后的每次渲染都会调用一遍<code>useEffect</code>函数。<br>
+<code>useEffect</code>不会阻碍视图的更新，因为它是异步的。</p>
+</blockquote>
+<p>因为<code>useEffect</code>是异步`的，所以它无法完成一些实时的操作。</p>
+<p>比如，实时计算屏幕大小，调整页面布局，这个它是无法准确完成的，因为它异步的特性，会存在延时的情况。</p>
+<p>🤗别着急，接着往下看👇👇👇</p>
+<h2 id="实现仅componentdidmount">实现仅<code>componentDidMount</code></h2>
+<p>上面的写法让它同时替代了两个生命周期函数，那如果我需要在首次渲染和重新渲染后执行不同的函数该怎么做呢？</p>
+<p>首先，我们实现仅首次渲染后执行。这里需要介绍一下<code>useEffect</code>的第二个参数，它的<code>第二个参数是一个数组</code>。只有数组中的值发生变化了，才会调用 <code>useEffect()</code> ，而不是每次在渲染的时候调用。</p>
+<blockquote>
+<p>当第二个参数为空数组([])的时候，代表不监听任何参数变化，即只有在组件初始化或销毁的时候才会触发，用来代替 <code>componentDidMount</code> 和 <code>componentWillUnmount</code>。</p>
+</blockquote>
+<p>先来看一下如何实现<code>componentDidMount</code>：</p>
+<pre><code class="language-js">import React, { useState, useEffect } from 'react';
+
+export default function Example() {
+    const [count, setCount] = useState(0);  // 数组解构
+
+    useEffect(() =&gt; {
+        console.log('componentDidMount');
+    }, []);
+
+    return (
+        &lt;div&gt;
+            &lt;div&gt;你已经点击了{count}次&lt;/div&gt;
+            &lt;button onClick={() =&gt; setCount(count + 1)}&gt;点击&lt;/button&gt;
+        &lt;/div&gt;
+    )
+}
+</code></pre>
+<p>对比一下，就会发现仅仅只有一处地方修改了，那就是在<code>useEffect</code>的第二个参数上加了一个空数组。</p>
+<h2 id="实现componentdidupdate">实现<code>componentDidUpdate</code></h2>
+<p>例如我们监听一下变量<code>count</code>的更新：</p>
+<pre><code class="language-js">import React, { useState, useEffect } from 'react';
+
+export default function Example() {
+    const [count, setCount] = useState(0);  // 数组解构
+
+    useEffect(() =&gt; {
+        console.log('componentDidMount');
+    }, []);
+
+    useEffect(() =&gt; {
+        console.log(`componentDidUpdate: you click ${count} times`);
+    }, [count]);
+
+    return (
+        &lt;div&gt;
+            &lt;div&gt;你已经点击了{count}次&lt;/div&gt;
+            &lt;button onClick={() =&gt; setCount(count + 1)}&gt;点击&lt;/button&gt;
+        &lt;/div&gt;
+    )
+}
+</code></pre>
+<p>以上代码在执行的时候，第二个<code>useEffect()</code>函数就相当于<code>conponentDidUpdate</code>，首次渲染和变量<code>count</code>更新时都会执行，因为首次渲染时，变量<code>count</code>也被定义并被赋予初始值。</p>
+<h2 id="实现componentwillunmount">实现<code>componentWillUnmount</code></h2>
+<p>以上介绍了如何使用useEffect实现首次加载的副作用和数据更新的副作用，而在实际的开发中，我们可能还需要在组件卸载时做一些操作。</p>
+<p>这一点React Hooks也帮我们想到了。🤓</p>
+<blockquote>
+<p>我们只需要在 useEffect() 中返回一个函数，就可以模拟 <code>componentWillUnmount</code> 的功能。</p>
+</blockquote>
+<p>为了模拟卸载的状态，这里需要引入React Router用于路由的切换。</p>
+<pre><code class="language-shell">npm install --save react-router-dom
+</code></pre>
+<p>示例如下：</p>
+<pre><code class="language-js">import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Link } from &quot;react-router-dom&quot;
+
+export default function Example() {
+    const [count, setCount] = useState(0);  // 数组解构
+
+    // useEffect(() =&gt; {
+    //     console.log('componentDidMount');
+    // }, []);
+
+    // useEffect(() =&gt; {
+    //     console.log(`componentDidUpdate: you click ${count} times`);
+    // }, [count]);
+
+    function Index() {
+        useEffect(() =&gt; {
+            console.log('老弟你来了 =》 index');
+            return () =&gt; {
+                // componentWillUnmount
+                console.log('老弟你走了 =&gt; index');
+            };
+        }, []);
+        return &lt;h1&gt;index&lt;/h1&gt;;
+    }
+
+    function List() {
+        useEffect(() =&gt; {
+            console.log('老弟你来了 =》 list');
+            return () =&gt; {
+                // componentWillUnmount
+                console.log('老弟你走了 =&gt; list');
+            };
+        }, []);
+        return &lt;h1&gt;list&lt;/h1&gt;;
+    }
+
+    return (
+        &lt;div&gt;
+            &lt;div&gt;你已经点击了{count}次&lt;/div&gt;
+            &lt;button onClick={() =&gt; setCount(count + 1)}&gt;点击&lt;/button&gt;
+
+            &lt;Router&gt;
+                &lt;ul&gt;
+                    &lt;li&gt; &lt;Link to=&quot;/&quot;&gt;首页&lt;/Link&gt; &lt;/li&gt;
+                    &lt;li&gt;&lt;Link to=&quot;/list/&quot;&gt;列表&lt;/Link&gt; &lt;/li&gt;
+                &lt;/ul&gt;
+                &lt;Route path=&quot;/&quot; exact component={Index} /&gt;
+                &lt;Route path=&quot;/list/&quot; component={List} /&gt;
+            &lt;/Router&gt;
+        &lt;/div&gt;
+    )
+}
+</code></pre>
+<p>至此，<code>componentWillUnmount</code>也就实现咯。</p>
+<p>总结：</p>
+<blockquote>
+<p><code>useEffect</code>其实等同于类组件的 <code>componentDidMount</code> 、 <code>componentDidUpdate</code> 和 <code>componentWillUnmount</code> 的结合体 。</p>
+</blockquote>
+<h1 id="使用usecontext父子传值">使用<code>useContext</code>父子传值</h1>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://awhitemouse.github.io/post/gei-bo-ke-jia-shang-live2d-wang-ye-chong-wu/" class="post-title gt-a-link">
+                    给博客加上live2d网页宠物🙆
+                </a>
+            </div>
+        
+
+        
+            
+                <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '1c7817279f236848ef3b',
+    clientSecret: 'cc9a052a730aca58df4ac91361957979a7fb5396',
+    repo: 'AWhiteMouse.github.io',
+    owner: 'AWhiteMouse',
+    admin: ['AWhiteMouse'],
+    id: location.pathname,      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+            
+
+            
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">温故而知新。</div>
+    <div class="social-container">
+        
+        
+        <a href="https://github.com/AWhiteMouse" target="_blank">
+            <i class="fa fa-github gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        <a href="https://wpa.qq.com/msgrd?v=3&amp;uin=1586671591&amp;site=qq&amp;menu=yes" target="_blank">
+            <i class="fa fa-qq gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        <a href="https://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=r9vOwc7NzsPa797egczAwg" target="_blank">
+            <i class="fa fa-envelope gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        <a href="https://blog.csdn.net/i_dont_know_a" target="_blank">
+            <i class="fa fa-rss gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    </div>
+    Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a href="https://awhitemouse.github.io//atom.xml" target="_blank">RSS</a>
+</div>
+
+<div id="landlord" style="left:5px;bottom:0px;">
+    <div class="message" style="opacity:0"></div>
+    <canvas id="live2d" width="500" height="560" class="live2d"></canvas>
+    <div class="live_talk_input_body">
+        <div class="live_talk_input_name_body">
+            <input name="name" type="text" class="live_talk_name white_input" id="AIuserName" autocomplete="off"
+                placeholder="你的名字" />
+        </div>
+        <div class="live_talk_input_text_body">
+            <input name="talk" type="text" class="live_talk_talk white_input" id="AIuserText" autocomplete="off"
+                placeholder="要和我聊什么呀？" />
+            <button type="button" class="live_talk_send_btn" id="talk_send">发送</button>
+        </div>
+    </div>
+    <input name="live_talk" id="live_talk" value="1" type="hidden" />
+    <div class="live_ico_box">
+        <div class="live_ico_item type_info" id="showInfoBtn"></div>
+        <div class="live_ico_item type_talk" id="showTalkBtn"></div>
+        <div class="live_ico_item type_music" id="musicButton"></div>
+        <div class="live_ico_item type_youdu" id="youduButton"></div>
+        <div class="live_ico_item type_quit" id="hideButton"></div>
+        <input name="live_statu_val" id="live_statu_val" value="0" type="hidden" />
+        <audio src="" style="display:none;" id="live2d_bgm" data-bgm="0" preload="none"></audio>
+        <input name="live2dBGM" value="http://music.163.com/song/media/outer/url?id=1313102578.mp3" type="hidden">
+        <input id="duType" value="douqilai,l2d_caihong" type="hidden">
+    </div>
+</div>
+<div id="open_live2d">召唤伊斯特瓦尔</div>
+
+<script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/1.7.1/jquery.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+    var message_Path = '/media/live2d/'; //资源目录，如果目录不对请更改
+    var talkAPI = ""; //如果有类似图灵机器人的聊天接口请填写接口路径
+</script>
+<script type="text/javascript" src="/media/live2d/js/live2d.js"></script>
+<script type="text/javascript" src="/media/live2d/js/message.js"></script>
+<!-- <script src="//code.tidio.co/fkwn1bueaqmcolzjchxzh7xoz5ahzrtw.js" async></script> -->
+
+    </div>
+</div>
+</body>
+</html>

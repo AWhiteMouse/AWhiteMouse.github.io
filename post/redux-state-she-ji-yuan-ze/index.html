@@ -1,0 +1,343 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="一位前端开发者的学习笔记与踩坑指南" />
+<meta name="keywords" content="web,html,css,js,es6,nodejs,react,antd,webpack,redux,jenkins,踩坑,学习笔记,微信小程序,微信公众号,适配,git,github,gitee" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Redux state设计原则 | 白山</title>
+<link rel="shortcut icon" href="https://awhitemouse.github.io//favicon.ico?v=1618473992960">
+<!-- <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.css" rel="stylesheet"> -->
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+<link rel="stylesheet" href="https://awhitemouse.github.io//styles/main.css">
+<link rel="stylesheet" href="https://awhitemouse.github.io//media/live2d/css/live2d.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/go.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+</script>
+
+<!-- DEMO JS -->
+<!-- <script src="/media/scripts/index.js"></script> -->
+
+<!-- 百度统计 -->
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?d67319f5aed3ec93a230772fe9c25ab5";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            白山
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fa fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="/" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/archives" class="menu gt-a-link">
+                            归档
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/navigation" class="menu gt-a-link">
+                            导航
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/post/about" class="menu gt-a-link">
+                            关于
+                        </a>
+                    
+                </div>
+            
+        </div>
+    </div>
+</nav>
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    Redux state设计原则
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2020-02-28 01:40:54 ·
+                    </time>
+                    
+                        <a href="https://awhitemouse.github.io/tag/Wv66WQAJ8/" class="post-tags">
+                            # Redux
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <p>Redux state设计原则：<code>像设计数据库一样设计state</code>。</p>
+<!-- more -->
+<h1 id="前言">前言</h1>
+<p>在数据库的设计中，数据库是由1到多个数据表构成的，数据表就是用来存储数据的。在功能与Redux有些微的类似，都是用来保存数据的，而且这些数据在不设权限的情况下是共享的。</p>
+<p>在前辈开发人员的探索下，发现Redux state最好的设计方式就是像数据库一样设计。</p>
+<h1 id="数据库是怎样设计的">数据库是怎样设计的</h1>
+<p>来看一个简单的例子：</p>
+<figure data-type="image" tabindex="1"><img src="https://awhitemouse.github.io//post-images/1584871237131.png" alt="" loading="lazy"></figure>
+<p>上图是一张表格，在这张表格中有一个数据列的名称是“标识”。可以看到这一列的标识中，每一项都是不同的数字。</p>
+<p>而这样每一个不同的数字，对应着横向一行数据，它们的关系是<code>一对一的关系</code>。每一个唯一标识都对应着唯一的数据项。</p>
+<p>那么在查找数据的时候就可以通过这个唯一的“标识”来查找与之唯一对应的数据项（可能包含一个数据，也可能包含多个数据），在后端领域，将这个“标识”称之为主键。以下是对“主键”的科学定义：</p>
+<blockquote>
+<p>主键，又称主码（英語：primary key或unique key）。 数据库表中对储存数据对象予以唯一和完整标识的数据列或属性的组合。 一个数据表只能有一个主键，且主键的取值不能缺失，即不能为空值（Null）。</p>
+</blockquote>
+<p>以上都是比较直白话的说法，下面这三点是比较官方化的数据库设计基本原则的介绍：</p>
+<ol>
+<li>数据按照领域分类，存储在不同的表中，不同的表中存储的列数据不能重复。</li>
+<li>表中的每一列的数据都依赖于这个这张表的主键。</li>
+<li>表中除了主键以外的其他列，互相之间不能有直接依赖关系。</li>
+</ol>
+<h1 id="redux-state该如何设计">Redux state该如何设计</h1>
+<p>上面已经说过了，Redux state的设计原则应该是仿照数据库设计原则的。所以，针对以上数据库基本设计原则，套用在Redux state的设计中，可以得到如下结论：</p>
+<ol>
+<li>数据按照领域把整个应用的状态按照领域分成若干个子state，子state之间保存的数据是不重复的。</li>
+<li>表中的state以键值对的结构存储数据，以记录的key/ID作为记录的索引，记录中的其他字段都依赖于索引。</li>
+<li>state中不能保存可以通过已有数据计算而来的数据，即state中的字段不互相依赖。</li>
+</ol>
+<h1 id="示例">示例</h1>
+<p>如果现在有一个文章列表，后端以数组的形式将数据传给前端，传递的数据是这样的（暂时称之为<strong>结构体</strong>）：</p>
+<pre><code class="language-json">{
+    posts: [
+        {
+            id: 1,
+            title: 'First Blog',
+            content: 'some thing',
+            comments: [
+                {
+                    id: 454,
+                    userId: 23,
+                    content: 'haha',
+                },
+                {
+                    id: 759,
+                    userId: 23,
+                    content: 'baibai',
+                }
+            ]
+        }
+    ]
+}
+</code></pre>
+<p>使用上面所讲的设计原则，可以将这样的数据做扁平化操作，结果如下（暂时称之为<strong>扁平体</strong>）：</p>
+<pre><code class="language-json">{
+    posts: {
+        1: {
+            id: 1,
+            title: 'First Blog',
+            content: 'some thing',
+            commentIds: [454, 759],
+        }
+    },
+    postIds: [1],
+    comments: {
+        454: {
+            id: 454,
+            userId: 23,
+            content: 'haha',
+        },
+        759: {
+            id: 759,
+            userId: 23,
+            content: 'baibai',
+        }
+    }
+}
+</code></pre>
+<p>上面的结构发生的什么样的改变呢？简单来说就是将数组转化成了以键值对形式存在的对象。</p>
+<p>为什么要这样设计呢？这样设计的好处是什么？原因是<code>扁平化的state，具有更好的灵活性和扩展性</code>。</p>
+<p>这样的一句说明可能还不太好理解这样改写的好处，现在在此基础上提出一个需求，来帮助理解这么设计的好处究竟在哪里。</p>
+<p><em>产品经理：“需要允许用户在原来的评论上进行修改。”</em><br>
+<em>程序员：“了解。”</em></p>
+<p>需求到位，首先需要获取到用户原来的评论，当然可以使用评论id直接请求后端数据来获取原始评论内容，但是在当前场景下从后端获取数据是不健康的方式，因为前端既然可以拿到准确的数据，就不应该调用后端的接口，给服务器增加压力。所以前端开发者需要直接从已经拿到的数据中获取原始评论内容。现在分别对这两种设计，在实现该需求上所做的工作做一下比较。</p>
+<p>原来的数组结构拿到原始评论数据，首先需要遍历posts查找到该评论所在的文章，然后需要遍历posts下的comments，找到相应的评论对象，获取到原始评论内容。</p>
+<p>而经过改写后的数据结构，只需要在comments对象中直接使用对象取值的方式来获取原始评论内容。</p>
+<p>两者工作量差别之大显而易见，虽然这个需求是临时编的，但是通过两者的对比，很容易就可以发现：改写后端数据结构避免了嵌套层级过深的问题，数据查找非常方便。</p>
+<p>当然，这种设计也并不全是好处，在某些方面也是存在相对劣势的。比如现在需要在文章列表中需要新加一篇文章，改写后的数据结构可能就需要同时操作posts和postIds这两个字段值，而改写前的数据结构只需要操作posts这一个字段就够了。</p>
+<p>经过优劣两相对比，本文中命名的的<strong>扁平体</strong>应该是更胜一筹的。因为在实际的开发场景中，同时操作两个字段的影响并不是特别大，而嵌套层级过深的数据结构在数据修改时产生的影响是致命的。</p>
+<h1 id="总结">总结</h1>
+<p>Redux state的设计原则是：像设计数据库一样设计state。</p>
+<h1 id="观点来源">观点来源</h1>
+<ol>
+<li><a href="https://coding.imooc.com/class/313.html">React16+Redux 实战企业级大众点评Web App - 慕课网</a>.</li>
+</ol>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://awhitemouse.github.io/post/redux-xiang-mu-jie-gou-zu-zhi-fang-shi/" class="post-title gt-a-link">
+                    Redux项目结构组织方式设计原则
+                </a>
+            </div>
+        
+
+        
+            
+                <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '1c7817279f236848ef3b',
+    clientSecret: 'cc9a052a730aca58df4ac91361957979a7fb5396',
+    repo: 'AWhiteMouse.github.io',
+    owner: 'AWhiteMouse',
+    admin: ['AWhiteMouse'],
+    id: location.pathname,      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+            
+
+            
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">温故而知新。</div>
+    <div class="social-container">
+        
+        
+        <a href="https://github.com/AWhiteMouse" target="_blank">
+            <i class="fa fa-github gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        <a href="https://wpa.qq.com/msgrd?v=3&amp;uin=1586671591&amp;site=qq&amp;menu=yes" target="_blank">
+            <i class="fa fa-qq gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        <a href="https://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=r9vOwc7NzsPa797egczAwg" target="_blank">
+            <i class="fa fa-envelope gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        <a href="https://blog.csdn.net/i_dont_know_a" target="_blank">
+            <i class="fa fa-rss gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    </div>
+    Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a href="https://awhitemouse.github.io//atom.xml" target="_blank">RSS</a>
+</div>
+
+<div id="landlord" style="left:5px;bottom:0px;">
+    <div class="message" style="opacity:0"></div>
+    <canvas id="live2d" width="500" height="560" class="live2d"></canvas>
+    <div class="live_talk_input_body">
+        <div class="live_talk_input_name_body">
+            <input name="name" type="text" class="live_talk_name white_input" id="AIuserName" autocomplete="off"
+                placeholder="你的名字" />
+        </div>
+        <div class="live_talk_input_text_body">
+            <input name="talk" type="text" class="live_talk_talk white_input" id="AIuserText" autocomplete="off"
+                placeholder="要和我聊什么呀？" />
+            <button type="button" class="live_talk_send_btn" id="talk_send">发送</button>
+        </div>
+    </div>
+    <input name="live_talk" id="live_talk" value="1" type="hidden" />
+    <div class="live_ico_box">
+        <div class="live_ico_item type_info" id="showInfoBtn"></div>
+        <div class="live_ico_item type_talk" id="showTalkBtn"></div>
+        <div class="live_ico_item type_music" id="musicButton"></div>
+        <div class="live_ico_item type_youdu" id="youduButton"></div>
+        <div class="live_ico_item type_quit" id="hideButton"></div>
+        <input name="live_statu_val" id="live_statu_val" value="0" type="hidden" />
+        <audio src="" style="display:none;" id="live2d_bgm" data-bgm="0" preload="none"></audio>
+        <input name="live2dBGM" value="http://music.163.com/song/media/outer/url?id=1313102578.mp3" type="hidden">
+        <input id="duType" value="douqilai,l2d_caihong" type="hidden">
+    </div>
+</div>
+<div id="open_live2d">召唤伊斯特瓦尔</div>
+
+<script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/1.7.1/jquery.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+    var message_Path = '/media/live2d/'; //资源目录，如果目录不对请更改
+    var talkAPI = ""; //如果有类似图灵机器人的聊天接口请填写接口路径
+</script>
+<script type="text/javascript" src="/media/live2d/js/live2d.js"></script>
+<script type="text/javascript" src="/media/live2d/js/message.js"></script>
+<!-- <script src="//code.tidio.co/fkwn1bueaqmcolzjchxzh7xoz5ahzrtw.js" async></script> -->
+
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,499 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="一位前端开发者的学习笔记与踩坑指南" />
+<meta name="keywords" content="web,html,css,js,es6,nodejs,react,antd,webpack,redux,jenkins,踩坑,学习笔记,微信小程序,微信公众号,适配,git,github,gitee" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>看到这套前端业务代码规范，有内味了！ | 白山</title>
+<link rel="shortcut icon" href="https://awhitemouse.github.io//favicon.ico?v=1618473992960">
+<!-- <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.css" rel="stylesheet"> -->
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+<link rel="stylesheet" href="https://awhitemouse.github.io//styles/main.css">
+<link rel="stylesheet" href="https://awhitemouse.github.io//media/live2d/css/live2d.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/go.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+</script>
+
+<!-- DEMO JS -->
+<!-- <script src="/media/scripts/index.js"></script> -->
+
+<!-- 百度统计 -->
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?d67319f5aed3ec93a230772fe9c25ab5";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            白山
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fa fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="/" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/archives" class="menu gt-a-link">
+                            归档
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/navigation" class="menu gt-a-link">
+                            导航
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/post/about" class="menu gt-a-link">
+                            关于
+                        </a>
+                    
+                </div>
+            
+        </div>
+    </div>
+</nav>
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    看到这套前端业务代码规范，有内味了！
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2020-04-01 03:22:17 ·
+                    </time>
+                    
+                </div>
+                <div class="post-content">
+                    <p>代码规范不可谓不重要。</p>
+<!-- more -->
+<h1 id="前言">前言</h1>
+<p>一手漂亮的代码往往给人眼前一亮的感觉，既利于阅读，也利于维护。而糟糕的代码是会被开发者们所诟病的，所以大多数大中型互联网公司都会制订一套属于自己的代码规范。</p>
+<p>对于这些大厂列出的标准性规范，相信大多数开发者已经有了大致的了解，并且能够遵守的。但如果你对这些规范还不甚了解，可以先学习一下阿里巴巴的代码规范<a href="https://github.com/airbnb/javascript">airbnb/javascript</a>。</p>
+<h1 id="code-rules">CODE RULES</h1>
+<p>本篇代码规范抽选自京东前端代码规范。</p>
+<h2 id="css-rules">CSS RULES</h2>
+<h3 id="代码风格">代码风格</h3>
+<h4 id="命名">命名</h4>
+<p><strong>[强制] ClassName命名一律小写字母，以<code>-</code>连接且不带其他符号。</strong></p>
+<p>示例：</p>
+<pre><code class="language-css">/* good */
+.footer-author {
+    width: 100px;
+}
+
+/* bad */
+.footerAuthor {
+  width: 100px;
+}
+
+/* bad */
+.footer_author {
+    width: 100px;
+}
+</code></pre>
+<h3 id="通用">通用</h3>
+<h4 id="选择器">选择器</h4>
+<p><strong>[建议] 如无必要，不要使用id选择器，尽量使用class选择器。</strong></p>
+<p>示例：</p>
+<pre><code class="language-css">/* good */
+.footer {
+    width: 100px;
+}
+
+/* bad */
+#footer {
+    width: 100px;
+}
+</code></pre>
+<h4 id="属性书写顺序">属性书写顺序</h4>
+<p><strong>[强制] 以 Formatting Model（布局方式、位置） &gt; Box Model（尺寸） &gt; Typographic（文本相关） &gt; Visual（视觉效果） 的顺序书写，以提高代码的可读性。</strong></p>
+<p>解释：</p>
+<ul>
+<li>Formatting Model 相关属性包括：<code>position</code> / <code>top</code> / <code>right</code> / <code>bottom</code> / <code>left</code> / <code>float</code> / <code>display</code> / <code>overflow</code> / <code>z-index</code> 等</li>
+<li>Box Model 相关属性包括：<code>border</code> / <code>margin</code> / <code>padding</code> / <code>width</code> / <code>height</code> 等</li>
+<li>Typographic 相关属性包括：<code>font</code> / <code>line-height</code> / <code>text-align</code> / <code>word-wrap</code> 等</li>
+<li>Visual 相关属性包括：<code>background</code> / <code>color</code> / <code>transition</code> / <code>list-style</code> 等</li>
+</ul>
+<h4 id="文本占位">文本占位</h4>
+<p><strong>[强制] 列表中所有的文本节点都必须指定 <code>height</code> 值，确保空内容节点仍然占位。</strong></p>
+<h4 id="important">!important</h4>
+<p><strong>[建议] 尽量不要使用<code>!important</code>声明。</strong></p>
+<p>解释：</p>
+<p>大量使用<code>!important</code>会使样式错乱。</p>
+<h4 id="z-index">z-index</h4>
+<p><strong>[强制] 将z-index进行分层，必须按照固定层级规则添加z-index。如无必要，不要让z-index超过700</strong></p>
+<p>解释：</p>
+<ul>
+<li>普通元素：0~100</li>
+<li>floating/吸顶/吸底：101～200</li>
+<li>弹窗：201～300</li>
+<li>loading/分享蒙层：301～400</li>
+<li>其它：401 ~ 700</li>
+</ul>
+<h3 id="值与单位">值与单位</h3>
+<h4 id="尺寸-单位">尺寸 · 单位</h4>
+<p><strong>[强制] 如无特殊要求，构建稿单位： <code>rem</code> + <code>%</code>。</strong></p>
+<p><strong>[强制] 图片尺寸严禁使用奇数值（类似 <code>749x123</code>, <code>321x120</code> 是不允许出现的）。</strong></p>
+<p><strong>[强制] border统一用0.5px，使用scale实现。</strong></p>
+<p><strong>[建议] 视觉稿宽度： <code>375px</code>。</strong></p>
+<h4 id="数值">数值</h4>
+<p><strong>[建议] 当数值为 0 - 1 之间的小数时，省略整数部分的 <code>0</code>。</strong></p>
+<p>示例：</p>
+<pre><code class="language-css">/* good */
+panel {
+    opacity: .8;
+}
+
+/* bad */
+panel {
+    opacity: 0.8;
+}
+</code></pre>
+<h4 id="长度">长度</h4>
+<p><strong>[强制] 长度为 <code>0</code> 时须省略单位。 (也只有长度单位可省)</strong></p>
+<p>示例：</p>
+<pre><code class="language-css">/* good */
+body {
+    padding: 0 5px;
+}
+
+/* bad */
+body {
+    padding: 0px 5px;
+}
+</code></pre>
+<h4 id="颜色">颜色</h4>
+<p><strong>[强制] RGB颜色值必须使用十六进制记号形式 <code>#rrggbb</code>。不允许使用 <code>rgb()</code>。</strong></p>
+<p>解释：</p>
+<p>带有alpha的颜色信息可以使用 <code>rgba()</code>。使用 <code>rgba()</code> 时每个逗号后必须保留一个空格。</p>
+<p>示例：</p>
+<pre><code class="language-css">/* good */
+.success {
+    box-shadow: 0 0 2px rgba(0, 128, 0, .3);
+    border-color: #008000;
+}
+
+/* bad */
+.success {
+    box-shadow: 0 0 2px rgba(0, 128, 0, .3);
+    border-color: rgb(0, 128, 0);
+}
+</code></pre>
+<p><strong>[强制] 颜色值可以缩写时，必须使用缩写形式。</strong></p>
+<p>示例：</p>
+<pre><code class="language-css">/* good */
+.success {
+    background-color: #aca;
+}
+
+/* bad */
+.success {
+    background-color: #aaccaa;
+}
+</code></pre>
+<p><strong>[强制] 颜色值不允许使用命名色值。</strong></p>
+<p>解释：</p>
+<p>同一种命名色值在不同机型上会有不同展示。</p>
+<p>示例：</p>
+<pre><code class="language-css">/* good */
+.success {
+    color: #90ee90;
+}
+
+/* bad */
+.success {
+    color: lightgreen;
+}
+</code></pre>
+<p><strong>[强制] 颜色值中的英文字符采用小写。</strong></p>
+<p>示例：</p>
+<pre><code class="language-css">/* good */
+.success {
+    background-color: #aca;
+    color: #90ee90;
+}
+
+/* bad */
+.success {
+    background-color: #ACA;
+    color: #90ee90;
+}
+</code></pre>
+<h3 id="文本编排">文本编排</h3>
+<h4 id="字体">字体</h4>
+<p><strong>[建议] 如无特殊要求，不要在css中写<code>font-family</code>属性。</strong></p>
+<p>解释：</p>
+<p>字体样式在许多机型上会失效。</p>
+<h4 id="字重">字重</h4>
+<p><strong>[强制] <code>font-weight</code> 属性必须使用数值方式描述。</strong></p>
+<p>解释：</p>
+<p>可用数值：<code>400</code>、<code>600</code>、<code>700</code>。</p>
+<h4 id="行高">行高</h4>
+<p><strong>[建议] <code>line-height</code> 在定义文本段落时，应使用数值。并且行高至少要比字号大两个单位。</strong></p>
+<p>解释：</p>
+<p>行高小于或等于字体号，在部分机型上会出现文字被切割、展示不全的情况。</p>
+<h4 id="溢出处理">溢出处理</h4>
+<p><strong>[强制] 对有行数限制的文本要做文本溢出处理。</strong></p>
+<h3 id="变换和动画">变换和动画</h3>
+<p><strong>[建议] 尽可能在浏览器能高效实现的属性上添加过渡和动画。</strong></p>
+<p>解释：</p>
+<p>见<a href="http://www.html5rocks.com/en/tutorials/speed/high-performance-animations/">本文</a>，在可能的情况下应选择这样四种变换：</p>
+<ul>
+<li><code>transform: translate(npx, npx);</code></li>
+<li><code>transform: scale(n);</code></li>
+<li><code>transform: rotate(ndeg);</code></li>
+<li><code>opacity: 0..1;</code></li>
+</ul>
+<p>典型的，可以使用 <code>translate</code> 来代替 <code>left</code> 作为动画属性。</p>
+<p>示例：</p>
+<pre><code class="language-css">/* good */
+.box {
+    transition: transform 1s;
+}
+.box:hover {
+    transform: translate(20px); /* move right for 20px */
+}
+
+/* bad */
+.box {
+    left: 0;
+    transition: left 1s;
+}
+.box:hover {
+    left: 20px; /* move right for 20px */
+}
+</code></pre>
+<h3 id="兼容性">兼容性</h3>
+<h4 id="属性前缀">属性前缀</h4>
+<p><strong>[建议] 如无必要，使用插件自动编译生成私有前缀，不需要手动加兼容前缀。</strong></p>
+<h2 id="other-rules">OTHER RULES</h2>
+<h3 id="图片格式">图片格式</h3>
+<p><strong>[建议] 色彩丰富的banner等大图使用jpg格式，色彩简单的logo、透明图使用png格式。</strong></p>
+<h3 id="图片大小">图片大小</h3>
+<p><strong>[强制] 一定要使用二倍图或者三倍图，不要使用一倍图。</strong></p>
+<h3 id="音乐">音乐</h3>
+<p><strong>[建议] 开头和结尾做淡入淡出处理。</strong></p>
+<h3 id="懒加载">懒加载</h3>
+<p><strong>[强制] 对于图片较多较大的页面，必须使用图片懒加载。</strong></p>
+<h3 id="注释">注释</h3>
+<p><strong>[强制] 编写组件时必须使用函数注释标识该组件的输入值与输出值。</strong></p>
+<p>示例：</p>
+<pre><code class="language-css">/**
+ * 图片上传组件普适版
+ * 
+ * required
+ * @param {Function} update 图片上传成功回调
+ * 
+ * not required
+ * @param {String} imageUrl 上传组件中展示的图片url
+ * @param {String} listType 图片上传组件类型，默认为&quot;picture-card&quot;
+ * @param {Number} size 图片限制大小
+ * @param {String} unit 传入的size的单位，推荐取值：KB、MB、GB。默认为MB。
+ * @param {Number} width 图片的固定宽度
+ * @param {Number} heigth 图片的固定高度
+ * @param {Number} ratio 图片的固定宽高比
+ * @param {Number} maxHeight 图片的最大高度
+ * @param {Boolean} allowTwiceWH 是否允许图片实际宽高为限定宽高（width、height）的两倍，默认为否
+ * @param {Boolean} disabled 是否禁用图片上传，默认为否
+ * @param {Function} updateProgress 进度条更新回调
+ * @param {Function} updateFileName 一元解锁上传海报前校验成功更新文件名回调
+ * @param {String} accept 上传图片类型, 默认值为 'image/png, image/jpeg, image/jpg'
+ * 
+ * @param {Node} children 自定义的组件内部内容
+ */
+</code></pre>
+<h3 id="安全">安全</h3>
+<p><strong>[强制] URL中可能带有中文或者其他特殊符号的情况下，必须做转义处理。</strong></p>
+<p>示例：</p>
+<pre><code class="language-react">dealURL(value) {
+    // 中文转义
+    const name = encodeURIComponent(value);
+
+    const url = DEFAULT_URL + '&amp;name=' + name;
+    location.href = url;
+}
+
+dealURL('张三');
+</code></pre>
+<h1 id="结语">结语</h1>
+<p>一名优秀的工程师，不仅仅需要会写一手漂亮的代码，掌握重构手法也是一项重要的品质。所以推荐前端开发者阅读《重构：改善既有代码的设计》（第二版）。</p>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://awhitemouse.github.io/post/mei-ri-yi-ti-or-20200330/" class="post-title gt-a-link">
+                    每日一题 | 2020.03.30
+                </a>
+            </div>
+        
+
+        
+            
+                <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '1c7817279f236848ef3b',
+    clientSecret: 'cc9a052a730aca58df4ac91361957979a7fb5396',
+    repo: 'AWhiteMouse.github.io',
+    owner: 'AWhiteMouse',
+    admin: ['AWhiteMouse'],
+    id: location.pathname,      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+            
+
+            
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">温故而知新。</div>
+    <div class="social-container">
+        
+        
+        <a href="https://github.com/AWhiteMouse" target="_blank">
+            <i class="fa fa-github gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        <a href="https://wpa.qq.com/msgrd?v=3&amp;uin=1586671591&amp;site=qq&amp;menu=yes" target="_blank">
+            <i class="fa fa-qq gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        <a href="https://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=r9vOwc7NzsPa797egczAwg" target="_blank">
+            <i class="fa fa-envelope gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        <a href="https://blog.csdn.net/i_dont_know_a" target="_blank">
+            <i class="fa fa-rss gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    </div>
+    Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a href="https://awhitemouse.github.io//atom.xml" target="_blank">RSS</a>
+</div>
+
+<div id="landlord" style="left:5px;bottom:0px;">
+    <div class="message" style="opacity:0"></div>
+    <canvas id="live2d" width="500" height="560" class="live2d"></canvas>
+    <div class="live_talk_input_body">
+        <div class="live_talk_input_name_body">
+            <input name="name" type="text" class="live_talk_name white_input" id="AIuserName" autocomplete="off"
+                placeholder="你的名字" />
+        </div>
+        <div class="live_talk_input_text_body">
+            <input name="talk" type="text" class="live_talk_talk white_input" id="AIuserText" autocomplete="off"
+                placeholder="要和我聊什么呀？" />
+            <button type="button" class="live_talk_send_btn" id="talk_send">发送</button>
+        </div>
+    </div>
+    <input name="live_talk" id="live_talk" value="1" type="hidden" />
+    <div class="live_ico_box">
+        <div class="live_ico_item type_info" id="showInfoBtn"></div>
+        <div class="live_ico_item type_talk" id="showTalkBtn"></div>
+        <div class="live_ico_item type_music" id="musicButton"></div>
+        <div class="live_ico_item type_youdu" id="youduButton"></div>
+        <div class="live_ico_item type_quit" id="hideButton"></div>
+        <input name="live_statu_val" id="live_statu_val" value="0" type="hidden" />
+        <audio src="" style="display:none;" id="live2d_bgm" data-bgm="0" preload="none"></audio>
+        <input name="live2dBGM" value="http://music.163.com/song/media/outer/url?id=1313102578.mp3" type="hidden">
+        <input id="duType" value="douqilai,l2d_caihong" type="hidden">
+    </div>
+</div>
+<div id="open_live2d">召唤伊斯特瓦尔</div>
+
+<script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/1.7.1/jquery.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+    var message_Path = '/media/live2d/'; //资源目录，如果目录不对请更改
+    var talkAPI = ""; //如果有类似图灵机器人的聊天接口请填写接口路径
+</script>
+<script type="text/javascript" src="/media/live2d/js/live2d.js"></script>
+<script type="text/javascript" src="/media/live2d/js/message.js"></script>
+<!-- <script src="//code.tidio.co/fkwn1bueaqmcolzjchxzh7xoz5ahzrtw.js" async></script> -->
+
+    </div>
+</div>
+</body>
+</html>

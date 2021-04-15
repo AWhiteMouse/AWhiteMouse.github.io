@@ -1,0 +1,456 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="一位前端开发者的学习笔记与踩坑指南" />
+<meta name="keywords" content="web,html,css,js,es6,nodejs,react,antd,webpack,redux,jenkins,踩坑,学习笔记,微信小程序,微信公众号,适配,git,github,gitee" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>如何拦截Elementui RadioGroup的数据变更 | 白山</title>
+<link rel="shortcut icon" href="https://awhitemouse.github.io//favicon.ico?v=1618473992960">
+<!-- <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.css" rel="stylesheet"> -->
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+<link rel="stylesheet" href="https://awhitemouse.github.io//styles/main.css">
+<link rel="stylesheet" href="https://awhitemouse.github.io//media/live2d/css/live2d.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/go.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+</script>
+
+<!-- DEMO JS -->
+<!-- <script src="/media/scripts/index.js"></script> -->
+
+<!-- 百度统计 -->
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?d67319f5aed3ec93a230772fe9c25ab5";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            白山
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fa fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="/" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/archives" class="menu gt-a-link">
+                            归档
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/navigation" class="menu gt-a-link">
+                            导航
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/post/about" class="menu gt-a-link">
+                            关于
+                        </a>
+                    
+                </div>
+            
+        </div>
+    </div>
+</nav>
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    如何拦截Elementui RadioGroup的数据变更
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2021-03-30 10:00:12 ·
+                    </time>
+                    
+                        <a href="https://awhitemouse.github.io/tag/YePweIBlg/" class="post-tags">
+                            # 程序人生
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <p>最近在做的一个业务场景需要劫持掉 <code>RadioGroup</code> 的内部的数据自动更新行为，然后根据外部的条件动态判断能否更新数据。</p>
+<!-- more -->
+<h2 id="问题简述">问题简述</h2>
+<p>界面如下图。最上方的Tabs标签页是一级分类（Tabs）；中间的按钮组（即RadioGroup）是二级分类；下方是数据展示面板，用于展示当前分类下的数据。</p>
+<figure data-type="image" tabindex="1"><img src="https://awhitemouse.github.io//post-images/1617161503433.png" alt="" loading="lazy"></figure>
+<p>如果数据展示面板被手动操作导致数据发生更改后，此时去切换上方的一级分类或者二级分类都需要弹出二次确认弹窗如下：</p>
+<figure data-type="image" tabindex="2"><img src="https://awhitemouse.github.io//post-images/1617161868698.png" alt="" loading="lazy"></figure>
+<h2 id="解决方案">解决方案</h2>
+<p>我们的使用的组件库是<a href="https://element.eleme.cn/#/zh-CN/component/installation">element-ui 2</a>。</p>
+<p>下面将针对不同的组件提出不同的数据劫持的方案。</p>
+<h3 id="一级分类tabs">一级分类：Tabs</h3>
+<p>Tabs组件提供了 <code>before-leave</code> 钩子，可以使用这个钩子完成对数据变更的劫持。</p>
+<figure data-type="image" tabindex="3"><img src="https://awhitemouse.github.io//post-images/1617162183098.png" alt="" loading="lazy"></figure>
+<p>使用示例如下：<br>
+<img src="https://awhitemouse.github.io//post-images/1617162565503.png" alt="" loading="lazy"><br>
+<img src="https://awhitemouse.github.io//post-images/1617162382412.png" alt="" loading="lazy"></p>
+<h3 id="二级分类radiogroup">二级分类：RadioGroup</h3>
+<p>相较于Tabs，RadioGroup的处理方案要复杂一些，因为这个组件并没有提供类似于 <code>before-leave</code> 的钩子，所以需要自行实现这一过程。</p>
+<p>最初的想法是利用官方提供的 <code>value</code> 属性以及<code>chang</code>回调来完成这一过程。因为如果用 <code>v-model</code> 的话，Vue内部就会代理所有的数据处理，就不能完成自定义的数据劫持了。</p>
+<figure data-type="image" tabindex="4"><img src="https://awhitemouse.github.io//post-images/1617163290456.png" alt="" loading="lazy"></figure>
+<p>关键代码如下：</p>
+<pre><code class="language-html">&lt;template&gt;
+    &lt;el-tabs v-model=&quot;activeLevelGroup&quot; :before-leave=&quot;beforeLeave&quot; :class=&quot;$style['tabs']&quot;&gt;
+        &lt;el-tab-pane
+            v-for=&quot;key in bigCatLevelManage&quot;
+            :key=&quot;key&quot;
+            :label=&quot;BigCatLevelGroupName[key]&quot;
+            :name=&quot;`${key}`&quot;
+        &gt;
+            &lt;!-- FIXME: value + change --&gt;
+            &lt;el-radio-group :value=&quot;activeLevel&quot; size=&quot;small&quot; @change=&quot;onRadioChange&quot;&gt;
+                &lt;el-radio-button
+                    v-for=&quot;level in BigCatLevelManage[key]&quot;
+                    :key=&quot;level&quot;
+                    :label=&quot;level&quot;
+                    :data-level=&quot;level&quot;
+                &gt;
+                    {{BigCatBookLevelName[level]}}
+                &lt;/el-radio-button&gt;
+            &lt;/el-radio-group&gt;
+        &lt;/el-tab-pane&gt;
+    &lt;/el-tabs&gt;
+&lt;/template&gt;
+
+&lt;script lang=&quot;ts&quot;&gt;
+import {Vue, Prop, Component, Watch} from 'vue-property-decorator';
+
+@Component
+export default class LevelTab extends Vue {
+    activeLevel = 0;
+
+    onRadioChange(value) {
+        // 这里拦截数据变更
+        if (this.allowChange) {
+            this.activeLevel = value;
+        }
+        else {
+            // ……
+        }
+    }
+}
+&lt;/script&gt;
+</code></pre>
+<p>当我兴高采烈地去运行代码的时候发现实际效果与预想的效果差的十万八千里。</p>
+<p>无论我点选哪个选项，该选项都会被点亮，并且再次点击也无法取消选中……😰</p>
+<figure data-type="image" tabindex="5"><img src="https://awhitemouse.github.io//post-images/1617172179228.png" alt="" loading="lazy"></figure>
+<p>到这里，继续靠推测去研究方案效率就很低了。不如干脆去看看element-ui 源码，看看<a href="https://github.com/ElemeFE/element/blob/dev/packages/radio/src/radio-group.vue">RadioGroup</a>和<a href="https://github.com/ElemeFE/element/blob/dev/packages/radio/src/radio-button.vue">RadioButton</a>的数据是怎么传递和更新的.</p>
+<h2 id="radiogroup-与-radiobutton">RadioGroup 与 RadioButton</h2>
+<p>先看了 RadioGroup 的源码，只在 <code>created</code> 钩子里看见了数据处理相关的代码。它监听了 <code>handleChange</code> 事件，并在监听到该事件后向上层发送 <code>change</code> 回调。</p>
+<pre><code class="language-js">created() {
+    this.$on('handleChange', value =&gt; {
+        this.$emit('change', value);
+    });
+},
+</code></pre>
+<p>RadioGroup 没有更多关于数据处理的代码了，那么玄机就应该在 RadioButton 的源码里了，这里先贴一下 RadioButton 代码里有关数据处理的部分。</p>
+<pre><code class="language-html">&lt;template&gt;
+  &lt;label
+    class=&quot;el-radio-button&quot;
+    :class=&quot;[
+      size ? 'el-radio-button--' + size : '',
+      { 'is-active': value === label },
+      { 'is-disabled': isDisabled },
+      { 'is-focus': focus }
+    ]&quot;
+    role=&quot;radio&quot;
+    :aria-checked=&quot;value === label&quot;
+    :aria-disabled=&quot;isDisabled&quot;
+    :tabindex=&quot;tabIndex&quot;
+    @keydown.space.stop.prevent=&quot;value = isDisabled ? value : label&quot;
+  &gt;
+    &lt;input
+      class=&quot;el-radio-button__orig-radio&quot;
+      :value=&quot;label&quot;
+      type=&quot;radio&quot;
+      v-model=&quot;value&quot;
+      :name=&quot;name&quot;
+      @change=&quot;handleChange&quot;
+      :disabled=&quot;isDisabled&quot;
+      tabindex=&quot;-1&quot;
+      @focus=&quot;focus = true&quot;
+      @blur=&quot;focus = false&quot;
+    &gt;
+    &lt;span
+      class=&quot;el-radio-button__inner&quot;
+      :style=&quot;value === label ? activeStyle : null&quot;
+      @keydown.stop&gt;
+      &lt;slot&gt;&lt;/slot&gt;
+      &lt;template v-if=&quot;!$slots.default&quot;&gt;{{label}}&lt;/template&gt;
+    &lt;/span&gt;
+  &lt;/label&gt;
+&lt;/template&gt;
+&lt;script&gt;
+  import Emitter from 'element-ui/src/mixins/emitter';
+
+  export default {
+    name: 'ElRadioButton',
+
+    mixins: [Emitter],
+    
+    computed: {
+      // **注意这里**
+      value: {
+        get() {
+          return this._radioGroup.value;
+        },
+        set(value) {
+          this._radioGroup.$emit('input', value);
+        }
+      },
+      _radioGroup() {
+        let parent = this.$parent;
+        while (parent) {
+          if (parent.$options.componentName !== 'ElRadioGroup') {
+            parent = parent.$parent;
+          } else {
+            return parent;
+          }
+        }
+        return false;
+      },
+    },
+
+    methods: {
+      handleChange() {
+        this.$nextTick(() =&gt; {
+          this.dispatch('ElRadioGroup', 'handleChange', this.value);
+        });
+      }
+    }
+  };
+&lt;/script&gt;
+</code></pre>
+<p>从源码里可以看到，内部是使用 <code>&lt;input type=&quot;radio&quot; /&gt;</code> 实现的单选按钮。</p>
+<p>当我们的使用了 <code>value</code> 来传递数据时，可以监听 <code>input</code> 回调来劫持数据的更改。</p>
+<p>然后当我使用 <code>value</code> + <code>input</code> 的组合时，展示效果依然跟上面一样，所有的选项都会被点亮。我用Vue devtools查看数据的时候发现，数据传递确实中断了。而我所看到的<strong>点亮</strong>的效果，居然是 <code>input:checked</code> 样式造成的，而不是数据。</p>
+<p>那么想要用 <code>value</code> 就必须要消除 <code>input</code> 的 <code>checked</code> 状态对样式的影响。所以当前最佳的办法就是自定义 <code>click</code> 方法，然后使用 <code>.prevent</code> 修饰符来屏蔽掉内部的点击事件。</p>
+<h2 id="劫持radiogroup终极方案">“劫持”RadioGroup终极方案</h2>
+<pre><code class="language-html">&lt;template&gt;
+    &lt;el-tabs v-model=&quot;activeLevelGroup&quot; :before-leave=&quot;beforeLeave&quot; :class=&quot;$style['tabs']&quot;&gt;
+        &lt;el-tab-pane
+            v-for=&quot;key in bigCatLevelManage&quot;
+            :key=&quot;key&quot;
+            :label=&quot;BigCatLevelGroupName[key]&quot;
+            :name=&quot;`${key}`&quot;
+        &gt;
+            &lt;el-radio-group :value=&quot;activeLevel&quot; size=&quot;small&quot;&gt;
+                &lt;!-- NOTE：这里拦截了radio-button的向上冒泡。主要为了实现数据切换前进行一系列的判断 --&gt;
+                &lt;el-radio-button
+                    v-for=&quot;level in BigCatLevelManage[key]&quot;
+                    :key=&quot;level&quot;
+                    :label=&quot;level&quot;
+                    :data-level=&quot;level&quot;
+                    @click.native.prevent=&quot;handeClickRadio(level)&quot;
+                &gt;
+                    {{BigCatBookLevelName[level]}}
+                &lt;/el-radio-button&gt;
+            &lt;/el-radio-group&gt;
+        &lt;/el-tab-pane&gt;
+    &lt;/el-tabs&gt;
+&lt;/template&gt;
+
+&lt;script lang=&quot;ts&quot;&gt;
+import {Vue, Prop, Component, Watch} from 'vue-property-decorator';
+
+@Component
+export default class LevelTab extends Vue {
+
+    activeLevel =0;
+
+    // 拦截radio-button向上冒泡，用于判断当前是否允许切换选项
+    handeClickRadio(level: BigCatBookLevel) {
+        // 如果当前点击的radio已经是选中状态，则不作处理
+        if (level === this.activeLevel) {
+            return;
+        }
+        this.beforeLeave().then(() =&gt; {
+            this.activeLevel = level;
+        });
+    }
+}
+&lt;/script&gt;
+</code></pre>
+<h2 id="我是尾巴">我是尾巴</h2>
+<p>至此，问题总算解决了，这也感谢其他小伙伴的帮助。</p>
+<p>遇到这种问题的时候，还是要多看源码是怎么设计的，从里面寻找突破口。</p>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://awhitemouse.github.io/post/github-action-gou-jian-shi-bai-chu-li/" class="post-title gt-a-link">
+                    GitHub Action: The process &#39;/usr/bin/git&#39; failed with exit code 128
+                </a>
+            </div>
+        
+
+        
+            
+                <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '1c7817279f236848ef3b',
+    clientSecret: 'cc9a052a730aca58df4ac91361957979a7fb5396',
+    repo: 'AWhiteMouse.github.io',
+    owner: 'AWhiteMouse',
+    admin: ['AWhiteMouse'],
+    id: location.pathname,      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+            
+
+            
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">温故而知新。</div>
+    <div class="social-container">
+        
+        
+        <a href="https://github.com/AWhiteMouse" target="_blank">
+            <i class="fa fa-github gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        <a href="https://wpa.qq.com/msgrd?v=3&amp;uin=1586671591&amp;site=qq&amp;menu=yes" target="_blank">
+            <i class="fa fa-qq gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        <a href="https://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=r9vOwc7NzsPa797egczAwg" target="_blank">
+            <i class="fa fa-envelope gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        <a href="https://blog.csdn.net/i_dont_know_a" target="_blank">
+            <i class="fa fa-rss gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    </div>
+    Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a href="https://awhitemouse.github.io//atom.xml" target="_blank">RSS</a>
+</div>
+
+<div id="landlord" style="left:5px;bottom:0px;">
+    <div class="message" style="opacity:0"></div>
+    <canvas id="live2d" width="500" height="560" class="live2d"></canvas>
+    <div class="live_talk_input_body">
+        <div class="live_talk_input_name_body">
+            <input name="name" type="text" class="live_talk_name white_input" id="AIuserName" autocomplete="off"
+                placeholder="你的名字" />
+        </div>
+        <div class="live_talk_input_text_body">
+            <input name="talk" type="text" class="live_talk_talk white_input" id="AIuserText" autocomplete="off"
+                placeholder="要和我聊什么呀？" />
+            <button type="button" class="live_talk_send_btn" id="talk_send">发送</button>
+        </div>
+    </div>
+    <input name="live_talk" id="live_talk" value="1" type="hidden" />
+    <div class="live_ico_box">
+        <div class="live_ico_item type_info" id="showInfoBtn"></div>
+        <div class="live_ico_item type_talk" id="showTalkBtn"></div>
+        <div class="live_ico_item type_music" id="musicButton"></div>
+        <div class="live_ico_item type_youdu" id="youduButton"></div>
+        <div class="live_ico_item type_quit" id="hideButton"></div>
+        <input name="live_statu_val" id="live_statu_val" value="0" type="hidden" />
+        <audio src="" style="display:none;" id="live2d_bgm" data-bgm="0" preload="none"></audio>
+        <input name="live2dBGM" value="http://music.163.com/song/media/outer/url?id=1313102578.mp3" type="hidden">
+        <input id="duType" value="douqilai,l2d_caihong" type="hidden">
+    </div>
+</div>
+<div id="open_live2d">召唤伊斯特瓦尔</div>
+
+<script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/1.7.1/jquery.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+    var message_Path = '/media/live2d/'; //资源目录，如果目录不对请更改
+    var talkAPI = ""; //如果有类似图灵机器人的聊天接口请填写接口路径
+</script>
+<script type="text/javascript" src="/media/live2d/js/live2d.js"></script>
+<script type="text/javascript" src="/media/live2d/js/message.js"></script>
+<!-- <script src="//code.tidio.co/fkwn1bueaqmcolzjchxzh7xoz5ahzrtw.js" async></script> -->
+
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,366 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="一位前端开发者的学习笔记与踩坑指南" />
+<meta name="keywords" content="web,html,css,js,es6,nodejs,react,antd,webpack,redux,jenkins,踩坑,学习笔记,微信小程序,微信公众号,适配,git,github,gitee" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ant Design Mobile按需加载 | 白山</title>
+<link rel="shortcut icon" href="https://awhitemouse.github.io//favicon.ico?v=1618473992960">
+<!-- <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.css" rel="stylesheet"> -->
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+<link rel="stylesheet" href="https://awhitemouse.github.io//styles/main.css">
+<link rel="stylesheet" href="https://awhitemouse.github.io//media/live2d/css/live2d.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/go.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+</script>
+
+<!-- DEMO JS -->
+<!-- <script src="/media/scripts/index.js"></script> -->
+
+<!-- 百度统计 -->
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?d67319f5aed3ec93a230772fe9c25ab5";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            白山
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fa fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="/" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/archives" class="menu gt-a-link">
+                            归档
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/navigation" class="menu gt-a-link">
+                            导航
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/post/about" class="menu gt-a-link">
+                            关于
+                        </a>
+                    
+                </div>
+            
+        </div>
+    </div>
+</nav>
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    Ant Design Mobile按需加载
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2020-02-02 10:03:32 ·
+                    </time>
+                    
+                        <a href="https://awhitemouse.github.io/tag/gf_3G38fZ/" class="post-tags">
+                            # Antd
+                        </a>
+                    
+                        <a href="https://awhitemouse.github.io/tag/M9JFSzGuU/" class="post-tags">
+                            # React
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <p>我们在使用React开发的时候，常常与Ant Design搭配使用。</p>
+<!-- more -->
+<p>我在安装和使用Ant Design之后，控制台报了一个警告信息⚠️：</p>
+<figure data-type="image" tabindex="1"><img src="https://awhitemouse.github.io//post-images/1580609198075.png" alt="" loading="lazy"></figure>
+<p>很明显，警告的意思是我直接引入antd-mobile的整个包文件，建议我使用<code>babel-plugin-import</code>进行按需加载来削减包的体积。</p>
+<p>挂网本身是有按需加载教程的，但是需要来来回回的修改，并且也加入了不需要的内容，所以这里将官网教程精简之后重新编写一份教程。</p>
+<h1 id="前提">前提</h1>
+<p>已经使用<code>create-react-app</code>创建好项目并启动成功。</p>
+<h1 id="安装依赖">安装依赖</h1>
+<pre><code class="language-shell">yarn add antd-mobile react-app-rewired customize-cra babel-plugin-import
+</code></pre>
+<blockquote>
+<p><code>react-app-rewired</code>：一个对 <code>create-react-app</code> 进行自定义配置的社区解决方案</p>
+</blockquote>
+<p>依赖安装完毕后，需要在项目的根目录新建一个<code>config-overrides.js</code>文件用于修改默认配置。然后删掉项目中的一些无用文件。</p>
+<p>删除无用文件后，项目结构如下：</p>
+<figure data-type="image" tabindex="2"><img src="https://awhitemouse.github.io//post-images/1580611472361.png" alt="" loading="lazy"></figure>
+<p>注意：同时需要删掉<code>App.js</code>、<code>index.js</code>这两个文件中引用和使用了已删除文件的代码块，清空<code>App.css</code>.</p>
+<p>删掉无用代码后结果如下👇</p>
+<p><code>App.js</code></p>
+<pre><code class="language-js">import React from 'react';
+import './App.css';
+
+function App() {
+    return (
+        &lt;div className=&quot;App&quot;&gt;
+        &lt;/div&gt;
+    );
+}
+
+export default App;
+</code></pre>
+<p><code>index.js</code></p>
+<pre><code class="language-js">import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+
+ReactDOM.render(&lt;App /&gt;, document.getElementById('root'));
+</code></pre>
+<h1 id="配置">配置</h1>
+<ol>
+<li>修改<code>package.json</code>：</li>
+</ol>
+<pre><code class="language-json">&quot;scripts&quot;: {
+    &quot;start&quot;: &quot;react-app-rewired start&quot;,
+    &quot;build&quot;: &quot;react-app-rewired build&quot;,
+    &quot;test&quot;: &quot;react-app-rewired test&quot;,
+    &quot;eject&quot;: &quot;react-scripts eject&quot;
+},
+</code></pre>
+<ol start="2">
+<li>编写<code>config-overrides.js</code>：</li>
+</ol>
+<pre><code class="language-js">const { override, fixBabelImports } = require('customize-cra');
+
+module.exports = override(
+    fixBabelImports('import', {
+        libraryName: 'antd-mobile',
+        style: 'css',
+    }),
+);
+</code></pre>
+<ol start="3">
+<li>在<code>App.js</code>中引用一个<code>antd-mobile</code>组件并使用：</li>
+</ol>
+<pre><code class="language-js">import React from 'react';
+import './App.css';
+import { Button } from 'antd-mobile';
+
+function App() {
+    return (
+        &lt;div className=&quot;App&quot;&gt;
+            &lt;Button type=&quot;primary&quot;&gt;测试&lt;/Button&gt;
+        &lt;/div&gt;
+    );
+}
+
+export default App;
+</code></pre>
+<ol start="4">
+<li>修改入口文件<code>index.html</code>的<code>viewport</code>配置：</li>
+</ol>
+<pre><code class="language-html">&lt;!-- 设置html meta --&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no&quot; /&gt;
+</code></pre>
+<ol start="5">
+<li>引入<code>FastClick</code>：</li>
+</ol>
+<pre><code class="language-html">&lt;!-- 引入 FastClick ，解决移动端网页存在300毫秒延时的问题 --&gt;
+&lt;script src=&quot;https://as.alipayobjects.com/g/component/fastclick/1.0.6/fastclick.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+    if ('addEventListener' in document) {
+        document.addEventListener('DOMContentLoaded', function() {
+            FastClick.attach(document.body);
+        }, false);
+    }
+    // 引入 Promise 的 fallback 支持 (部分安卓手机不支持 Promise)
+    if(!window.Promise) {
+        document.writeln('&lt;script src=&quot;https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js&quot;'+'&gt;'+'&lt;'+'/'+'script&gt;');
+    }
+&lt;/script&gt;
+</code></pre>
+<ol start="6">
+<li>重启项目。</li>
+</ol>
+<p>如果重启后，控制台没有提示刚刚的警告，那么我们的按需加载配置就完成了。</p>
+<h1 id="参考网址">参考网址</h1>
+<ol>
+<li><a href="https://mobile.ant.design/docs/react/use-with-create-react-app-cn#%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD">Ant Design Mobile官网</a>.</li>
+</ol>
+<p>拓展：<code>Antd Design</code>的按需加载和<code>Antd Design Mobile</code>类似，详情可以查看<a href="https://ant.design/docs/react/use-with-create-react-app-cn#%E9%AB%98%E7%BA%A7%E9%85%8D%E7%BD%AE">Ant Design官网</a>.</p>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://awhitemouse.github.io/post/react-hooks-xue-xi-bi-ji/" class="post-title gt-a-link">
+                    React Hooks学习笔记
+                </a>
+            </div>
+        
+
+        
+            
+                <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '1c7817279f236848ef3b',
+    clientSecret: 'cc9a052a730aca58df4ac91361957979a7fb5396',
+    repo: 'AWhiteMouse.github.io',
+    owner: 'AWhiteMouse',
+    admin: ['AWhiteMouse'],
+    id: location.pathname,      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+            
+
+            
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">温故而知新。</div>
+    <div class="social-container">
+        
+        
+        <a href="https://github.com/AWhiteMouse" target="_blank">
+            <i class="fa fa-github gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        <a href="https://wpa.qq.com/msgrd?v=3&amp;uin=1586671591&amp;site=qq&amp;menu=yes" target="_blank">
+            <i class="fa fa-qq gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        <a href="https://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=r9vOwc7NzsPa797egczAwg" target="_blank">
+            <i class="fa fa-envelope gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        <a href="https://blog.csdn.net/i_dont_know_a" target="_blank">
+            <i class="fa fa-rss gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    </div>
+    Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a href="https://awhitemouse.github.io//atom.xml" target="_blank">RSS</a>
+</div>
+
+<div id="landlord" style="left:5px;bottom:0px;">
+    <div class="message" style="opacity:0"></div>
+    <canvas id="live2d" width="500" height="560" class="live2d"></canvas>
+    <div class="live_talk_input_body">
+        <div class="live_talk_input_name_body">
+            <input name="name" type="text" class="live_talk_name white_input" id="AIuserName" autocomplete="off"
+                placeholder="你的名字" />
+        </div>
+        <div class="live_talk_input_text_body">
+            <input name="talk" type="text" class="live_talk_talk white_input" id="AIuserText" autocomplete="off"
+                placeholder="要和我聊什么呀？" />
+            <button type="button" class="live_talk_send_btn" id="talk_send">发送</button>
+        </div>
+    </div>
+    <input name="live_talk" id="live_talk" value="1" type="hidden" />
+    <div class="live_ico_box">
+        <div class="live_ico_item type_info" id="showInfoBtn"></div>
+        <div class="live_ico_item type_talk" id="showTalkBtn"></div>
+        <div class="live_ico_item type_music" id="musicButton"></div>
+        <div class="live_ico_item type_youdu" id="youduButton"></div>
+        <div class="live_ico_item type_quit" id="hideButton"></div>
+        <input name="live_statu_val" id="live_statu_val" value="0" type="hidden" />
+        <audio src="" style="display:none;" id="live2d_bgm" data-bgm="0" preload="none"></audio>
+        <input name="live2dBGM" value="http://music.163.com/song/media/outer/url?id=1313102578.mp3" type="hidden">
+        <input id="duType" value="douqilai,l2d_caihong" type="hidden">
+    </div>
+</div>
+<div id="open_live2d">召唤伊斯特瓦尔</div>
+
+<script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/1.7.1/jquery.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+    var message_Path = '/media/live2d/'; //资源目录，如果目录不对请更改
+    var talkAPI = ""; //如果有类似图灵机器人的聊天接口请填写接口路径
+</script>
+<script type="text/javascript" src="/media/live2d/js/live2d.js"></script>
+<script type="text/javascript" src="/media/live2d/js/message.js"></script>
+<!-- <script src="//code.tidio.co/fkwn1bueaqmcolzjchxzh7xoz5ahzrtw.js" async></script> -->
+
+    </div>
+</div>
+</body>
+</html>

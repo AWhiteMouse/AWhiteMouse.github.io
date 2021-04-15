@@ -1,0 +1,358 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="一位前端开发者的学习笔记与踩坑指南" />
+<meta name="keywords" content="web,html,css,js,es6,nodejs,react,antd,webpack,redux,jenkins,踩坑,学习笔记,微信小程序,微信公众号,适配,git,github,gitee" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>有趣的代码 | 白山</title>
+<link rel="shortcut icon" href="https://awhitemouse.github.io//favicon.ico?v=1618473992960">
+<!-- <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.css" rel="stylesheet"> -->
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+<link rel="stylesheet" href="https://awhitemouse.github.io//styles/main.css">
+<link rel="stylesheet" href="https://awhitemouse.github.io//media/live2d/css/live2d.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/go.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+</script>
+
+<!-- DEMO JS -->
+<!-- <script src="/media/scripts/index.js"></script> -->
+
+<!-- 百度统计 -->
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?d67319f5aed3ec93a230772fe9c25ab5";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            白山
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fa fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="/" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/archives" class="menu gt-a-link">
+                            归档
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/navigation" class="menu gt-a-link">
+                            导航
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/post/about" class="menu gt-a-link">
+                            关于
+                        </a>
+                    
+                </div>
+            
+        </div>
+    </div>
+</nav>
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    有趣的代码
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2019-12-16 02:49:48 ·
+                    </time>
+                    
+                </div>
+                <div class="post-content">
+                    <p>我在日常coding中，有时候会遇到一些让我眼前一亮的代码，在此小记。</p>
+<!-- more -->
+<h1 id="减少条件嵌套">减少条件嵌套</h1>
+<p><em>此节暂不考虑三元表达式。</em></p>
+<p><code>if...else...</code>在代码中使用的频率非常高，每写一次<code>if...else...</code>就增加了一层代码嵌套，如果存在多层嵌套，会让代码看起来非常不整洁，也不便于理解。</p>
+<p>其实在<em>条件允许情况下</em>，我们可以使用一个小技巧来减少嵌套的层级数。</p>
+<p>比如原始代码是这样的：</p>
+<pre><code class="language-js">function setName(value) {
+    if (value) {
+        this.name = value;
+    } else {
+        this.name = 'Bob';
+        this.hasInput = false;
+    }
+}
+</code></pre>
+<p>上述代码是可以简化的，<strong>使用<code>return</code>截断函数</strong>，可以省去<code>else</code>的嵌套如下：</p>
+<pre><code class="language-js">function setName(value) {
+    if (value) {
+        this.name = value;
+        return;
+    }
+    this.name = 'Bob';
+    this.hasInput = false;
+}
+</code></pre>
+<p>当然，这样的写法是有条件的，那就是<code>else</code>后面没有其他代码。如果原始代码是下面这样，那就无法使用这个小技巧：</p>
+<pre><code class="language-js">function setName(value) {
+    if (value) {
+        this.name = value;
+    } else {
+        this.name = 'Bob';
+        this.hasInput = false;
+    }
+    this.lastName = 'Mr.' + this.name;
+}
+</code></pre>
+<p><strong>参考：</strong><a href="https://blog.csdn.net/yulin_ganbo/article/details/78650173">代码重构实践</a></p>
+<h1 id="短路原则">短路原则</h1>
+<p>如果存着这样的场景，当某个变量为<code>true</code>的时候，展示<code>&lt;div&gt;</code>，否则就不展示。</p>
+<p>可能我们会这样写：</p>
+<pre><code class="language-jsx">&lt;div&gt;
+    {
+        hasChild
+            ?
+            &lt;div&gt;……&lt;/div&gt;
+            :
+            null
+    }
+&lt;/div&gt;
+</code></pre>
+<p>这样写也能实现，但是还有更简洁的写法，那就是运用短路原则：</p>
+<pre><code class="language-jsx">&lt;div&gt;
+    {
+        hasChild &amp;&amp; (
+            &lt;div&gt;……&lt;/div&gt;
+        )
+    }
+&lt;/div&gt;
+</code></pre>
+<p>这样写是不是要简洁多了~~😚</p>
+<h1 id="连续柯里化">连续柯里化</h1>
+<p>官方释义：</p>
+<blockquote>
+<p>把接受多个参数的函数变换成接受一个单一参数的函数，并且返回（接受余下的参数而且返回结果的）新函数的技术</p>
+</blockquote>
+<p>比如，我们需要完成如下功能：</p>
+<pre><code class="language-js">add(1)(2)(3);   // 6
+</code></pre>
+<p>比较麻烦点的方法是不断地嵌套函数：</p>
+<pre><code class="language-js">const add = function(x) {
+    return function(y) {
+        return function(z) {
+            return x + y + z;
+        };
+    };
+};
+</code></pre>
+<p>虽然这样写也能实现效果，但总是麻烦了些。可以利用箭头函数完成代码优化：</p>
+<pre><code class="language-js">const add = x =&gt; y =&gt; z =&gt; x + y + z;
+</code></pre>
+<p>这样是不是代码量大幅度减少了呢。嗯，ES6真香！</p>
+<h1 id="干掉你的switch">干掉你的switch</h1>
+<p><code>switch case</code>是应用非常广的语句，但是有时候我们能有更好的替换方法。</p>
+<p>原代码：</p>
+<pre><code class="language-js">let res = '';
+switch(type) {
+    case 'waiting':
+        res = 'haha';
+        break;
+    case 'success':
+        res = 'heihei';
+        break;
+    case 'fail':
+        res = function() {
+            return 'NO！';
+        };
+        break;
+    default:
+}
+</code></pre>
+<p>其实上面的代码可以换一种写法：</p>
+<pre><code class="language-js">const obj = {
+    waiting: 'haha',
+    success: 'heihei',
+    fail: function() {
+        return 'NO!'
+    },
+};
+const res = obj[type];
+</code></pre>
+<p>实现了同样的效果，但是代码量却少了不少哦。是不是很妙啊，我第一次看到这样的写法是在antd的源码中，自从看到了这美妙的代码，我几乎就没怎么写过<code>switch case</code>了。</p>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://awhitemouse.github.io/post/git-commit-ti-jiao-gui-fan/" class="post-title gt-a-link">
+                    Git commit 提交规范
+                </a>
+            </div>
+        
+
+        
+            
+                <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '1c7817279f236848ef3b',
+    clientSecret: 'cc9a052a730aca58df4ac91361957979a7fb5396',
+    repo: 'AWhiteMouse.github.io',
+    owner: 'AWhiteMouse',
+    admin: ['AWhiteMouse'],
+    id: location.pathname,      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+            
+
+            
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">温故而知新。</div>
+    <div class="social-container">
+        
+        
+        <a href="https://github.com/AWhiteMouse" target="_blank">
+            <i class="fa fa-github gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        <a href="https://wpa.qq.com/msgrd?v=3&amp;uin=1586671591&amp;site=qq&amp;menu=yes" target="_blank">
+            <i class="fa fa-qq gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        <a href="https://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=r9vOwc7NzsPa797egczAwg" target="_blank">
+            <i class="fa fa-envelope gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        <a href="https://blog.csdn.net/i_dont_know_a" target="_blank">
+            <i class="fa fa-rss gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    </div>
+    Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a href="https://awhitemouse.github.io//atom.xml" target="_blank">RSS</a>
+</div>
+
+<div id="landlord" style="left:5px;bottom:0px;">
+    <div class="message" style="opacity:0"></div>
+    <canvas id="live2d" width="500" height="560" class="live2d"></canvas>
+    <div class="live_talk_input_body">
+        <div class="live_talk_input_name_body">
+            <input name="name" type="text" class="live_talk_name white_input" id="AIuserName" autocomplete="off"
+                placeholder="你的名字" />
+        </div>
+        <div class="live_talk_input_text_body">
+            <input name="talk" type="text" class="live_talk_talk white_input" id="AIuserText" autocomplete="off"
+                placeholder="要和我聊什么呀？" />
+            <button type="button" class="live_talk_send_btn" id="talk_send">发送</button>
+        </div>
+    </div>
+    <input name="live_talk" id="live_talk" value="1" type="hidden" />
+    <div class="live_ico_box">
+        <div class="live_ico_item type_info" id="showInfoBtn"></div>
+        <div class="live_ico_item type_talk" id="showTalkBtn"></div>
+        <div class="live_ico_item type_music" id="musicButton"></div>
+        <div class="live_ico_item type_youdu" id="youduButton"></div>
+        <div class="live_ico_item type_quit" id="hideButton"></div>
+        <input name="live_statu_val" id="live_statu_val" value="0" type="hidden" />
+        <audio src="" style="display:none;" id="live2d_bgm" data-bgm="0" preload="none"></audio>
+        <input name="live2dBGM" value="http://music.163.com/song/media/outer/url?id=1313102578.mp3" type="hidden">
+        <input id="duType" value="douqilai,l2d_caihong" type="hidden">
+    </div>
+</div>
+<div id="open_live2d">召唤伊斯特瓦尔</div>
+
+<script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/1.7.1/jquery.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+    var message_Path = '/media/live2d/'; //资源目录，如果目录不对请更改
+    var talkAPI = ""; //如果有类似图灵机器人的聊天接口请填写接口路径
+</script>
+<script type="text/javascript" src="/media/live2d/js/live2d.js"></script>
+<script type="text/javascript" src="/media/live2d/js/message.js"></script>
+<!-- <script src="//code.tidio.co/fkwn1bueaqmcolzjchxzh7xoz5ahzrtw.js" async></script> -->
+
+    </div>
+</div>
+</body>
+</html>

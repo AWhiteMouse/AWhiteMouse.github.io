@@ -1,0 +1,329 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="一位前端开发者的学习笔记与踩坑指南" />
+<meta name="keywords" content="web,html,css,js,es6,nodejs,react,antd,webpack,redux,jenkins,踩坑,学习笔记,微信小程序,微信公众号,适配,git,github,gitee" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>如何将create-react-app项目部署到Github Pages | 白山</title>
+<link rel="shortcut icon" href="https://awhitemouse.github.io//favicon.ico?v=1618473992960">
+<!-- <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.css" rel="stylesheet"> -->
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+<link rel="stylesheet" href="https://awhitemouse.github.io//styles/main.css">
+<link rel="stylesheet" href="https://awhitemouse.github.io//media/live2d/css/live2d.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/go.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+</script>
+
+<!-- DEMO JS -->
+<!-- <script src="/media/scripts/index.js"></script> -->
+
+<!-- 百度统计 -->
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?d67319f5aed3ec93a230772fe9c25ab5";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            白山
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fa fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="/" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/archives" class="menu gt-a-link">
+                            归档
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/navigation" class="menu gt-a-link">
+                            导航
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/post/about" class="menu gt-a-link">
+                            关于
+                        </a>
+                    
+                </div>
+            
+        </div>
+    </div>
+</nav>
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    如何将create-react-app项目部署到Github Pages
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2020-04-20 09:49:43 ·
+                    </time>
+                    
+                        <a href="https://awhitemouse.github.io/tag/M9JFSzGuU/" class="post-tags">
+                            # React
+                        </a>
+                    
+                        <a href="https://awhitemouse.github.io/tag/vau2C2Y2S/" class="post-tags">
+                            # Github
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <p>昨天写了个项目，使用create-react-app搭建的，在本地能跑通。我还想给这个项目部署上去，让我随时随地能访问。</p>
+<!-- more -->
+<h1 id="前提条件">前提条件</h1>
+<ol>
+<li>项目使用 <code>create-react-app</code> 构建；</li>
+<li><code>react-scripts</code> 版本需在 <code>0.2.0</code> 或以上；</li>
+<li>项目在本地 <code>yarn start</code> 或者 <code>npm start</code> 能跑通；</li>
+<li>在 GitHub 远程存在一个与这个本地项目对应的代码仓库。</li>
+</ol>
+<h1 id="部署流程">部署流程</h1>
+<ol>
+<li>删除或者注释掉 <code>.gitgnore</code> 文件中的 <code>/build</code>.</li>
+</ol>
+<pre><code class="language-c"># production
+/build     // 把这行注释掉或者直接删除
+</code></pre>
+<ol start="2">
+<li>在 <code>package.json</code> 中加入 <code>&quot;homepage&quot;: &quot;./&quot;,</code> .</li>
+</ol>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;cool-nav&quot;,
+  &quot;version&quot;: &quot;0.1.0&quot;,
+  &quot;private&quot;: true,
+  &quot;homepage&quot;: &quot;./&quot;,   // 添加这一行
+  ……
+}
+</code></pre>
+<ol start="3">
+<li>安装 <code>gh-pages</code> 包.</li>
+</ol>
+<pre><code class="language-shell">yarn add gh-pages --save-dev
+</code></pre>
+<ol start="4">
+<li>在 <code>package.json</code> 中的 <code>scripts</code> 配置中添加配置项：<code>&quot;deploy&quot;: &quot;gh-pages -d build&quot;</code>.</li>
+</ol>
+<pre><code class="language-json">{
+    ……,
+    &quot;scripts&quot;: {
+        &quot;start&quot;: &quot;react-app-rewired start&quot;,
+        &quot;build&quot;: &quot;react-app-rewired build&quot;,
+        &quot;test&quot;: &quot;react-app-rewired test&quot;,
+        &quot;eject&quot;: &quot;react-scripts eject&quot;,
+        &quot;deploy&quot;: &quot;gh-pages -d build&quot;    // 新增这一行
+    },
+    ……
+}
+</code></pre>
+<ol start="5">
+<li>构建项目：在命令行中输入 <code>yarn build</code> 构建项目.</li>
+</ol>
+<pre><code class="language-shell">yarn build
+</code></pre>
+<ol start="6">
+<li>发布项目：构建成功后，使用 <code>yarn deploy</code> 命令将项目发布到GitHub Pages上.</li>
+</ol>
+<pre><code class="language-shell">yarn deploy
+</code></pre>
+<p>发布之后，gh-pages 会在远程创建一个 <code>gh-pages</code> 分支，并且将编译出来的 <code>build</code> 文件夹发布到该分支上。</p>
+<ol start="7">
+<li>确认分支：在该项目的GitHub远程库中是否有 <code>gh-pages</code> 分支，并确认该分支的代码是否是 <code>build</code> 文件夹下的内容。</li>
+</ol>
+<figure data-type="image" tabindex="1"><img src="https://awhitemouse.github.io//post-images/1587349164502.png" alt="" loading="lazy"></figure>
+<ol start="8">
+<li>确认发布成功：找到该项目的<code>Setting</code> =&gt; <code>Options</code> =&gt; <code>GitHub Pages</code>，看到这样的绿条就说明构建成功。</li>
+</ol>
+<figure data-type="image" tabindex="2"><img src="https://awhitemouse.github.io//post-images/1587348840512.png" alt="" loading="lazy"></figure>
+<ol start="9">
+<li>访问：发布成功后，需要静待一段时间才能访问到最新的代码。</li>
+</ol>
+<h1 id="注意事项">注意事项</h1>
+<p>每次发布之前都需要先执行 <code>yarn build</code> 编译项目后，再执行 <code>yarn deploy</code> 将项目发布上去。</p>
+<h1 id="参考">参考</h1>
+<ol>
+<li><a href="https://monsoir.github.io/Notes/React/react/react-github-pages.html">将 React 项目部署到 GitHub Pages</a>.</li>
+</ol>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://awhitemouse.github.io/post/mei-ri-yi-ti-or-20200417/" class="post-title gt-a-link">
+                    每日一题 | 2020.04.17
+                </a>
+            </div>
+        
+
+        
+            
+                <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '1c7817279f236848ef3b',
+    clientSecret: 'cc9a052a730aca58df4ac91361957979a7fb5396',
+    repo: 'AWhiteMouse.github.io',
+    owner: 'AWhiteMouse',
+    admin: ['AWhiteMouse'],
+    id: location.pathname,      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+            
+
+            
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">温故而知新。</div>
+    <div class="social-container">
+        
+        
+        <a href="https://github.com/AWhiteMouse" target="_blank">
+            <i class="fa fa-github gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        <a href="https://wpa.qq.com/msgrd?v=3&amp;uin=1586671591&amp;site=qq&amp;menu=yes" target="_blank">
+            <i class="fa fa-qq gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        <a href="https://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=r9vOwc7NzsPa797egczAwg" target="_blank">
+            <i class="fa fa-envelope gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        <a href="https://blog.csdn.net/i_dont_know_a" target="_blank">
+            <i class="fa fa-rss gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    </div>
+    Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a href="https://awhitemouse.github.io//atom.xml" target="_blank">RSS</a>
+</div>
+
+<div id="landlord" style="left:5px;bottom:0px;">
+    <div class="message" style="opacity:0"></div>
+    <canvas id="live2d" width="500" height="560" class="live2d"></canvas>
+    <div class="live_talk_input_body">
+        <div class="live_talk_input_name_body">
+            <input name="name" type="text" class="live_talk_name white_input" id="AIuserName" autocomplete="off"
+                placeholder="你的名字" />
+        </div>
+        <div class="live_talk_input_text_body">
+            <input name="talk" type="text" class="live_talk_talk white_input" id="AIuserText" autocomplete="off"
+                placeholder="要和我聊什么呀？" />
+            <button type="button" class="live_talk_send_btn" id="talk_send">发送</button>
+        </div>
+    </div>
+    <input name="live_talk" id="live_talk" value="1" type="hidden" />
+    <div class="live_ico_box">
+        <div class="live_ico_item type_info" id="showInfoBtn"></div>
+        <div class="live_ico_item type_talk" id="showTalkBtn"></div>
+        <div class="live_ico_item type_music" id="musicButton"></div>
+        <div class="live_ico_item type_youdu" id="youduButton"></div>
+        <div class="live_ico_item type_quit" id="hideButton"></div>
+        <input name="live_statu_val" id="live_statu_val" value="0" type="hidden" />
+        <audio src="" style="display:none;" id="live2d_bgm" data-bgm="0" preload="none"></audio>
+        <input name="live2dBGM" value="http://music.163.com/song/media/outer/url?id=1313102578.mp3" type="hidden">
+        <input id="duType" value="douqilai,l2d_caihong" type="hidden">
+    </div>
+</div>
+<div id="open_live2d">召唤伊斯特瓦尔</div>
+
+<script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/1.7.1/jquery.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+    var message_Path = '/media/live2d/'; //资源目录，如果目录不对请更改
+    var talkAPI = ""; //如果有类似图灵机器人的聊天接口请填写接口路径
+</script>
+<script type="text/javascript" src="/media/live2d/js/live2d.js"></script>
+<script type="text/javascript" src="/media/live2d/js/message.js"></script>
+<!-- <script src="//code.tidio.co/fkwn1bueaqmcolzjchxzh7xoz5ahzrtw.js" async></script> -->
+
+    </div>
+</div>
+</body>
+</html>

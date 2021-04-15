@@ -1,0 +1,416 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="一位前端开发者的学习笔记与踩坑指南" />
+<meta name="keywords" content="web,html,css,js,es6,nodejs,react,antd,webpack,redux,jenkins,踩坑,学习笔记,微信小程序,微信公众号,适配,git,github,gitee" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>小程序多次点击会多次跳转页面问题 | 白山</title>
+<link rel="shortcut icon" href="https://awhitemouse.github.io//favicon.ico?v=1618473992960">
+<!-- <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.css" rel="stylesheet"> -->
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+<link rel="stylesheet" href="https://awhitemouse.github.io//styles/main.css">
+<link rel="stylesheet" href="https://awhitemouse.github.io//media/live2d/css/live2d.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/go.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+</script>
+
+<!-- DEMO JS -->
+<!-- <script src="/media/scripts/index.js"></script> -->
+
+<!-- 百度统计 -->
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?d67319f5aed3ec93a230772fe9c25ab5";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            白山
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fa fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="/" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/archives" class="menu gt-a-link">
+                            归档
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/navigation" class="menu gt-a-link">
+                            导航
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/post/about" class="menu gt-a-link">
+                            关于
+                        </a>
+                    
+                </div>
+            
+        </div>
+    </div>
+</nav>
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    小程序多次点击会多次跳转页面问题
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2021-01-11 10:49:29 ·
+                    </time>
+                    
+                        <a href="https://awhitemouse.github.io/tag/ufGbQYqvJv/" class="post-tags">
+                            # 踩坑
+                        </a>
+                    
+                        <a href="https://awhitemouse.github.io/tag/_HICEyo5P3/" class="post-tags">
+                            # 微信小程序
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <p>目前可以想到的方案有两种：</p>
+<ol>
+<li>通过变量进行控制；</li>
+<li>节流函数。</li>
+</ol>
+<!-- more -->
+<h2 id="解决方案">解决方案</h2>
+<h3 id="方案一通过变量进行控制">方案一：通过变量进行控制</h3>
+<p><em>book.vue</em></p>
+<pre><code class="language-html">&lt;template&gt;
+    &lt;view @tap=&quot;handleClickBook(bookId)&quot;&gt;点我试试看&lt;/view&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import Taro from '@taro/tarojs';
+import {throttle} from '../utils/utils';
+
+export default {
+    data: {
+        // 初始为可以跳转的状态
+        canJump: true,
+    },
+    onHide() {
+        this.canJump = true;
+    },
+    methods: {
+        handleClickBook(bookId: number) {
+            if (this.canJump) {
+                // 当触发跳转函数的时候，需要将跳转的标志位设为false，表示在跳转完成之前，不能重复进行操作
+                this.canJump = false;
+                Taro.navigateTo({
+                    url: '/pages/detail/index' + bookId
+                });
+            }
+        },
+    }
+};
+&lt;/script&gt;
+</code></pre>
+<p>这种方式是满足我们的需求的，但却不是最好的方案，更好的方案是使用 ** 节流函数** 。为什么说它更好呢？我们接着往下看👇</p>
+<h3 id="方案二节流函数推荐">方案二：节流函数（推荐）</h3>
+<p>首先来看一看如何来编写我们的节流函数，这里给出一个示例，这个示例中的节流方法有两种：</p>
+<ol>
+<li>时间戳；</li>
+<li>setTimeout。</li>
+</ol>
+<p><em>utils/utils.js</em></p>
+<pre><code class="language-js">/**
+ * @desc 函数节流
+ * @param func 函数
+ * @param wait 延迟执行毫秒数
+ * @param type 1 表时间戳版，2 表定时器版
+ */
+export function throttle(func, wait, type = 1) {
+    let previous = 0;
+    let timeout: null | NodeJS.Timeout = null;
+    if (type === 1) {
+        previous = 0;
+    }
+    else if (type === 2) {
+        timeout = null;
+    }
+    return function () {
+        const context = this;
+        const args = arguments;
+        if (type === 1) {
+            const now = Date.now();
+
+            if (now - previous &gt; wait) {
+                func.apply(context, args);
+                previous = now;
+            }
+        }
+        else if (type === 2) {
+            if (!timeout) {
+                timeout = setTimeout(() =&gt; {
+                    timeout = null;
+                    func.apply(context, args);
+                }, wait);
+            }
+        }
+    };
+}
+</code></pre>
+<p>好了，已经变写好了我们的节流函数，接下来看看如何去应用它：</p>
+<p><em>book.vue</em></p>
+<pre><code class="language-html">&lt;template&gt;
+    &lt;view @tap=&quot;handleClickBook(bookId)&quot;&gt;点我试试看&lt;/view&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import Taro from '@taro/tarojs';
+import {throttle} from '../utils/utils';
+
+export default {
+    data: {
+        bookId: 1,
+    },
+    methods: {
+        handleClickBook: throttle(function nav(bookId: number) {
+            Taro.navigateTo({
+                url: '/pages/detail/index' + bookId
+            })
+        }, 1500),
+    }
+};
+&lt;/script&gt;
+</code></pre>
+<p>🙆‍♂️OK，这样我们就解决了我们遇到的重复跳转的问题啦！</p>
+<p>❓那为什么我更推荐使用节流函数的方案呢？是因为节流函数的方案更便于将跳转api封装成工具方法，避免在所有涉及到跳转的地方都需要做一次防止重复点击的处理。</p>
+<p>👁那我们又该如何将跳转api封装成工具方法？如何去使用被封装的工具方法呢？</p>
+<p><em>util/index.js</em>：封装跳转api</p>
+<pre><code class="language-js">import Taro from '@taro/tarojs';
+import {throttle} from '../utils/utils';
+
+export const navigateTo = throttle(function nav(bookId: number): void {
+    Taro.navigateTo({
+        url: '/pages/detail/index' + bookId
+    })
+}, 1500);
+</code></pre>
+<p><em>book.vue</em></p>
+<pre><code class="language-html">&lt;template&gt;
+    &lt;view @tap=&quot;handleClickBook(bookId)&quot;&gt;点我试试看&lt;/view&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import Taro from '@taro/tarojs';
+import {throttle} from '../utils/utils';
+import {navigateTo} from '../utils/index';
+
+export default {
+    data: {
+        bookId: 1,
+    },
+    methods: {
+        // 只需要调用一下封装好的api就好了
+        handleClickBook() {
+            navigateTo(bookId);
+        },
+    }
+};
+&lt;/script&gt;
+</code></pre>
+<p>👀你看，这样是不是更简单了，仅仅需要在一个地方做防止重复跳转的逻辑就好了！</p>
+<p><em><font color="gray">以下为我的踩坑记录，不用看。</font></em></p>
+<h2 id="踩坑">踩坑</h2>
+<p>在开发过程中，我在以上两种方案上都踩过坑。</p>
+<p><strong>方案一踩的坑</strong></p>
+<p>我曾在 <code>Taro.navigate</code> 的 <code>success</code> 回调中去复原 <code>canump</code> 的值，但是发现根本没有解决问题。原因在于 <code>Taro.navigate</code> 的 <code>success</code> 回调并不是在跳转完成之后执行的，而是在程序确认改路径可以跳转后就已经执行，但是在那个时候，页面还处于存在的状态。一旦<code>canump</code> 的值被复原，那么用户又可以重复点击重复跳转了。</p>
+<p><strong>方案二踩的坑</strong></p>
+<p>这个坑踩在封装跳转函数的时候，先看踩坑的代码：</p>
+<pre><code class="language-js">import Taro from '@taro/tarojs';
+import {throttle} from '../utils/utils';
+
+export const navigateTo = (bookId): void =&gt; throttle(function nav() {
+    Taro.navigateTo({
+        url: '/pages/detail/index' + bookId
+    })
+}, 1500);
+</code></pre>
+<p>拿这里的代码跟上面可用的工具方法对比一下就知道问题出在哪里了：我将 <code>throttle</code> 外面又包装了一个函数，这样的话 <code>throttle</code> 函数就没有起到它应有的作用。因为每次 <code>navigateTo</code> 执行的都是一个新函数。</p>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://awhitemouse.github.io/post/lian-shi-diao-yong-shi-xian-yuan-li/" class="post-title gt-a-link">
+                    链式调用实现原理
+                </a>
+            </div>
+        
+
+        
+            
+                <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '1c7817279f236848ef3b',
+    clientSecret: 'cc9a052a730aca58df4ac91361957979a7fb5396',
+    repo: 'AWhiteMouse.github.io',
+    owner: 'AWhiteMouse',
+    admin: ['AWhiteMouse'],
+    id: location.pathname,      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+            
+
+            
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">温故而知新。</div>
+    <div class="social-container">
+        
+        
+        <a href="https://github.com/AWhiteMouse" target="_blank">
+            <i class="fa fa-github gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        <a href="https://wpa.qq.com/msgrd?v=3&amp;uin=1586671591&amp;site=qq&amp;menu=yes" target="_blank">
+            <i class="fa fa-qq gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        <a href="https://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=r9vOwc7NzsPa797egczAwg" target="_blank">
+            <i class="fa fa-envelope gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        <a href="https://blog.csdn.net/i_dont_know_a" target="_blank">
+            <i class="fa fa-rss gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    </div>
+    Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a href="https://awhitemouse.github.io//atom.xml" target="_blank">RSS</a>
+</div>
+
+<div id="landlord" style="left:5px;bottom:0px;">
+    <div class="message" style="opacity:0"></div>
+    <canvas id="live2d" width="500" height="560" class="live2d"></canvas>
+    <div class="live_talk_input_body">
+        <div class="live_talk_input_name_body">
+            <input name="name" type="text" class="live_talk_name white_input" id="AIuserName" autocomplete="off"
+                placeholder="你的名字" />
+        </div>
+        <div class="live_talk_input_text_body">
+            <input name="talk" type="text" class="live_talk_talk white_input" id="AIuserText" autocomplete="off"
+                placeholder="要和我聊什么呀？" />
+            <button type="button" class="live_talk_send_btn" id="talk_send">发送</button>
+        </div>
+    </div>
+    <input name="live_talk" id="live_talk" value="1" type="hidden" />
+    <div class="live_ico_box">
+        <div class="live_ico_item type_info" id="showInfoBtn"></div>
+        <div class="live_ico_item type_talk" id="showTalkBtn"></div>
+        <div class="live_ico_item type_music" id="musicButton"></div>
+        <div class="live_ico_item type_youdu" id="youduButton"></div>
+        <div class="live_ico_item type_quit" id="hideButton"></div>
+        <input name="live_statu_val" id="live_statu_val" value="0" type="hidden" />
+        <audio src="" style="display:none;" id="live2d_bgm" data-bgm="0" preload="none"></audio>
+        <input name="live2dBGM" value="http://music.163.com/song/media/outer/url?id=1313102578.mp3" type="hidden">
+        <input id="duType" value="douqilai,l2d_caihong" type="hidden">
+    </div>
+</div>
+<div id="open_live2d">召唤伊斯特瓦尔</div>
+
+<script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/1.7.1/jquery.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+    var message_Path = '/media/live2d/'; //资源目录，如果目录不对请更改
+    var talkAPI = ""; //如果有类似图灵机器人的聊天接口请填写接口路径
+</script>
+<script type="text/javascript" src="/media/live2d/js/live2d.js"></script>
+<script type="text/javascript" src="/media/live2d/js/message.js"></script>
+<!-- <script src="//code.tidio.co/fkwn1bueaqmcolzjchxzh7xoz5ahzrtw.js" async></script> -->
+
+    </div>
+</div>
+</body>
+</html>

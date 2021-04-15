@@ -1,0 +1,517 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="一位前端开发者的学习笔记与踩坑指南" />
+<meta name="keywords" content="web,html,css,js,es6,nodejs,react,antd,webpack,redux,jenkins,踩坑,学习笔记,微信小程序,微信公众号,适配,git,github,gitee" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>React | 白山</title>
+<link rel="shortcut icon" href="https://awhitemouse.github.io//favicon.ico?v=1618473992960">
+<!-- <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.css" rel="stylesheet"> -->
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+<link rel="stylesheet" href="https://awhitemouse.github.io//styles/main.css">
+<link rel="stylesheet" href="https://awhitemouse.github.io//media/live2d/css/live2d.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/go.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+</script>
+
+<!-- DEMO JS -->
+<!-- <script src="/media/scripts/index.js"></script> -->
+
+<!-- 百度统计 -->
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?d67319f5aed3ec93a230772fe9c25ab5";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <div class="main-content">
+        <nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            白山
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fa fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="/" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/archives" class="menu gt-a-link">
+                            归档
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/navigation" class="menu gt-a-link">
+                            导航
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/post/about" class="menu gt-a-link">
+                            关于
+                        </a>
+                    
+                </div>
+            
+        </div>
+    </div>
+</nav>
+        <div class="current-tag-container">
+            <h2 class="title gt-c-content-color-first">
+                #React
+            </h2>
+        </div>
+        <div class="post-list-container">
+    <div class="post-inner">
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://awhitemouse.github.io/post/ru-he-zai-react-zhong-wan-cheng-huan-xing/">
+                            <span class="post-title gt-c-content-color-first">如何在React中完成换行</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2020-05-27 10:49:51 ·
+                        </time>
+                        
+                            <a href="https://awhitemouse.github.io/tag/PyjodOK1i/" class="post-tag">
+                                # CSS
+                            </a>
+                        
+                            <a href="https://awhitemouse.github.io/tag/M9JFSzGuU/" class="post-tag">
+                                # React
+                            </a>
+                        
+                    </div>
+                </div>
+                
+                    <a href="https://awhitemouse.github.io/post/ru-he-zai-react-zhong-wan-cheng-huan-xing/" class="post-feature-image"
+                       style="background-image: url('https://img.php.cn/upload/article/000/000/024/5ceb7e76b8c78636.jpg')">
+                    </a>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://awhitemouse.github.io/post/react-proptypes-ke-xuan-lei-xing/">
+                            <span class="post-title gt-c-content-color-first">React PropTypes可选类型</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        <p>我们在编写 <code>jsx</code> 文件时经常需要定义由 <code>props</code> 传入的值的类型，有利于开发者及时发现由于参数类型不对而导致的错误。</p>
+
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2020-05-06 03:10:06 ·
+                        </time>
+                        
+                            <a href="https://awhitemouse.github.io/tag/M9JFSzGuU/" class="post-tag">
+                                # React
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://awhitemouse.github.io/post/componentwillreceivepropsfang-fa-cai-keng/">
+                            <span class="post-title gt-c-content-color-first">componentWillReceiveProps()方法踩坑</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2020-05-05 10:56:29 ·
+                        </time>
+                        
+                            <a href="https://awhitemouse.github.io/tag/ufGbQYqvJv/" class="post-tag">
+                                # 踩坑
+                            </a>
+                        
+                            <a href="https://awhitemouse.github.io/tag/M9JFSzGuU/" class="post-tag">
+                                # React
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://awhitemouse.github.io/post/react-hui-diao-hui-chuan-chuan-can/">
+                            <span class="post-title gt-c-content-color-first">React回调函数回传传参方案</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        <p>本文主要讲述如何在 React 回调中回传参数。</p>
+
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2020-04-27 10:21:31 ·
+                        </time>
+                        
+                            <a href="https://awhitemouse.github.io/tag/M9JFSzGuU/" class="post-tag">
+                                # React
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://awhitemouse.github.io/post/ru-he-jiang-create-react-app-xiang-mu-bu-shu-dao-github-pages/">
+                            <span class="post-title gt-c-content-color-first">如何将create-react-app项目部署到Github Pages</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        <p>昨天写了个项目，使用create-react-app搭建的，在本地能跑通。我还想给这个项目部署上去，让我随时随地能访问。</p>
+
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2020-04-20 09:49:43 ·
+                        </time>
+                        
+                            <a href="https://awhitemouse.github.io/tag/M9JFSzGuU/" class="post-tag">
+                                # React
+                            </a>
+                        
+                            <a href="https://awhitemouse.github.io/tag/vau2C2Y2S/" class="post-tag">
+                                # Github
+                            </a>
+                        
+                    </div>
+                </div>
+                
+                    <a href="https://awhitemouse.github.io/post/ru-he-jiang-create-react-app-xiang-mu-bu-shu-dao-github-pages/" class="post-feature-image"
+                       style="background-image: url('https://awhitemouse.github.io//post-images/ru-he-jiang-create-react-app-xiang-mu-bu-shu-dao-github-pages.png')">
+                    </a>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://awhitemouse.github.io/post/draglua-tuo-zhuai-zhong-de-render-cuo-wu/">
+                            <span class="post-title gt-c-content-color-first">Draglua拖拽中的render错误</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        <p>最近在做一个需求，使用了Draglua这个拖拽库，在使用的时候出现了莫名的render错误：被拖拽的元素排序错乱，甚至是神秘消失或者突然增加……</p>
+
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2020-03-16 03:05:10 ·
+                        </time>
+                        
+                            <a href="https://awhitemouse.github.io/tag/ufGbQYqvJv/" class="post-tag">
+                                # 踩坑
+                            </a>
+                        
+                            <a href="https://awhitemouse.github.io/tag/M9JFSzGuU/" class="post-tag">
+                                # React
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://awhitemouse.github.io/post/create-react-app-yin-ru-styl/">
+                            <span class="post-title gt-c-content-color-first">create-react-app中不暴露如何支持stylus？</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        <p><code>create-react-app</code>默认是不支持<code>stylus</code>的，那么如何让<code>create-react-app</code>在不暴露的情况下支持<code>stylus</code>呢？</p>
+
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2020-02-12 10:23:44 ·
+                        </time>
+                        
+                            <a href="https://awhitemouse.github.io/tag/M9JFSzGuU/" class="post-tag">
+                                # React
+                            </a>
+                        
+                    </div>
+                </div>
+                
+                    <a href="https://awhitemouse.github.io/post/create-react-app-yin-ru-styl/" class="post-feature-image"
+                       style="background-image: url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxANDQ4ODQ0NDw0NDRYQFQ0NDQ8ODQ0PFh0YGBQRFhgYHCghGR0lGx8TITEhJSk3Li4yFyIzODMsNygvLjcBCgoKDg0OGRAPGzchHyUtKy8xMC0tNzc3LTcsNys3NTcyKzUsLS03NzczLTArNy8tKzUrLjA3LTc3NzcrKy0tMf/AABEIAKEBOQMBEQACEQEDEQH/xAAbAAEBAAMBAQEAAAAAAAAAAAAAAQMEBQYCB//EADYQAQACAQIEAwUFBwUAAAAAAAABAgMEEQUSITEGE0EiMlFhgUJScZHBBxQzcoKhsUNTYuHw/8QAGQEBAAMBAQAAAAAAAAAAAAAAAAMEBQIB/8QAKREBAAIBAgMIAgMAAAAAAAAAAAECAwQRITFBBRITUXGBodEy8CKR4f/aAAwDAQACEQMRAD8A/agAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAABQAAAAAAUAAGlqNRe1px4IibR0tkn3KfL5yz82oyXtOPTxx6z0j/Rgx6TNTJS05OeJttbrPSPqr00upx5a2m2/HiOo2ABAAAAQAAAAAAAAAAAAAAAAAAAAFAAAAAABQAAa+pvMzGOk7XvG82/26etvx9I/6VdRe0zGLHznr5R5/Qy4cUUrFaxtEf+3TYsVcdYrXkPtIAAAIAACSAAAAAAAAAAAAAAAAAAABAKAAAAAAAAD5y5YpW1rTtWsbzPyhHlyVx0m9uUDDoqTyze8bZMvtTH3Y+zT6R+qHS0nuzkv+VuPp5R7DYWgAAAAAABAAAAAAAAAAAAAAAAAAAAAIBQAAAAec4/x/Ji1WDQ6OlL6rPtM2ybzTBT70xG287Rae/aPmD0UduvWfj23BQaGtt5mXHgjt/Fv/AC192PrP+GZq7eLnpp45flb0jl8jfaYAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAJNtomZ7RG+/yB5nhXiLPr6ajNpceCmDBaa1nUTe2TNMRzfZmIpG23x7g6GXi2WNDj1VdPTmtgjNemXN5dMNeXmneeWZn8Ij8geX8E4dTqc2p4py4JvnvOOs5rXjlrG28Visdvdrv/AMZB7LPqctaTFaUtmrTmttM+VWe+3XrM/JS1WoyVi0Ya7zEbzvyj98hj4JrrZ6XnJy71ttvWNo223Vuyddk1OK1snSeg+ODW82+fP9+/JX5Ur2/Rx2VbxsmXUT1naPSBj8ReI8PD8c2yRa+Tptix9+u+3NPasTtPfrO07RO0tkZ+AarPn09c2px0x2ze3XFTm3x4p25YtMz1t69o79gc3h/iS+r4ll0unxUnTaaJ8zUWtabWmOm1YjpHtdOveImQZ/FHiGNBXDWuPzc+ovyUpNuSnpE2tPw3mPzBnwazU11WLBnpp7Vy4b5PMweZXyppNYmsxaZ3ieaNp6fgDqgAAAAAAAAAAAAAAAAAAAAAAAAAAA+L3rExW013vE7VmY3tEd9o9QfnnDJtwXi86Sd50ettHJv9nmmYxz+MTvWfjHUHa/aVrvJ4dOOJ2nUZK4+nflj2rf4iPqDteHNFGm0Wmw9pphrv/Pb2rf3mQbeuvy4ctvhjt/hW1l4pgvafKRx9HHk8PyX7Tk3/AL+zDB0u+n7Lvfrbf54PW9wOIrpcfpvvPX4zO0fo0ux6xTR0367/ADLx5Hxbb994xotBP8LHMXvX70z7don+iIj+qWqPQ+LeKW0+my0wztnnBa/NH+hijpOSfrtWvzn5SDmfsv0cU0Fsu3tZ81uvry09mI/Pm/MGx464TGu0Xm4bRbLpebJSaTvz1jpkpEx69N/xqDa8FcanX6Ot8n8bFbyrz96YiJi/1iY+u4O+AAAAAAAAAAAAAAAAAAAAAAAACAAA42r0eprro1eHysuOdP5M4Ml5x2p15ueltpjrO28Tt2BpZuAZtZr8Or1nlY8el28vT4r2yWtaJ5ote01iI67dI+AL458PZOI4cUYL0jJhvNuXJM1reLRtPWInaewNzhWh1VoxW4hkw2th25cOni0Y+aOkZLzPvW+Edo79Z2mA2ON2mcUY6+9mvFI/PeWV2vaZwxirzvMR9jLrND5mn8msxXaIiJmOnRLqtDGXS+BSdtttvYfHDtBbFWsZMnPye7WI2pX5/OfxcaHQWw0iMtu9tyjpA83xXwzq54r+/aTLgrE7Tvl5pnHtXktHLEe1G3z9fTu0x19bwDzNFqcHmzfUaqvt6nJHW942msTEe7SNtorHaJ9ZBzuA8A1uLRzpc2ox4aVjJyTp+a2TmvvtN7Tt7MTMztHfpvPoDd0+DXYtHXS1xaTzKYYwxn8+/l8sRyxfk8vffb07b+oNjwvwKvDtP5UX573vz3vttFrbRG0R6RERAOwAAACgAAAAAAAAAAAAAAAAAAAAgIAAAAADSpHm6ib/AGcEckfPJPvT9I2hm1r4+rm/SnCPWef9chutIAAAAAAAAUAAFAAAAAAAAAAAAAAAAAABJABAAAAAYtTlmtenW9p5ax8bT2+nr9EGoyzSn8ec8I9RdPijHSKx127z62tPWZ/N7gwxixxSP2eoyJgAAAAAAABQAAUAAAAAAAAAAAAAAAAAAEkAEAAAB83tFYmbTtEesub3ikd63IYsNZtbzLRt02rWe9a/GfnKvhrOS3i29o8o+5GdaAAAFAAAAAAAABQAAAAAAAAAAAAAAAAAASQAQAAGlqJy1yb0jmrNYjbbeIZ2edRTLvjjeJgfeLBa0xbNO+3WKR7sT8Zd49PkvMWzz6QNpeAFAAAAAAAAAABQAAAAAAAAAAAAAAAAAAAAQDYDYDYDYDYAAAAAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB/9k=')">
+                    </a>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://awhitemouse.github.io/post/cai-keng-or-setstate-hou-shu-ju-wei-geng-xin/">
+                            <span class="post-title gt-c-content-color-first">踩坑 | setState后数据更新，但页面不重新渲染</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        <p>之前在做React开发时，<code>setState</code>后数据更新了，但是页面却没有重新渲染，这是个什么情况😳</p>
+
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2020-02-04 07:10:27 ·
+                        </time>
+                        
+                            <a href="https://awhitemouse.github.io/tag/ufGbQYqvJv/" class="post-tag">
+                                # 踩坑
+                            </a>
+                        
+                            <a href="https://awhitemouse.github.io/tag/M9JFSzGuU/" class="post-tag">
+                                # React
+                            </a>
+                        
+                    </div>
+                </div>
+                
+                    <a href="https://awhitemouse.github.io/post/cai-keng-or-setstate-hou-shu-ju-wei-geng-xin/" class="post-feature-image"
+                       style="background-image: url('http://img.mp.sohu.com/q_70,c_zoom,w_640/upload/20170804/bd96d1d49e4740178005edb628164a8b_th.jpg')">
+                    </a>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://awhitemouse.github.io/post/ant-design-an-xu-jia-zai/">
+                            <span class="post-title gt-c-content-color-first">Ant Design Mobile按需加载</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        <p>我们在使用React开发的时候，常常与Ant Design搭配使用。</p>
+
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2020-02-02 10:03:32 ·
+                        </time>
+                        
+                            <a href="https://awhitemouse.github.io/tag/gf_3G38fZ/" class="post-tag">
+                                # Antd
+                            </a>
+                        
+                            <a href="https://awhitemouse.github.io/tag/M9JFSzGuU/" class="post-tag">
+                                # React
+                            </a>
+                        
+                    </div>
+                </div>
+                
+                    <a href="https://awhitemouse.github.io/post/ant-design-an-xu-jia-zai/" class="post-feature-image"
+                       style="background-image: url('https://awhitemouse.github.io//post-images/ant-design-an-xu-jia-zai.png')">
+                    </a>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://awhitemouse.github.io/post/react-hooks-xue-xi-bi-ji/">
+                            <span class="post-title gt-c-content-color-first">React Hooks学习笔记</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        <p>react hooks将会是react未来的趋势。</p>
+
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2020-02-01 10:11:53 ·
+                        </time>
+                        
+                            <a href="https://awhitemouse.github.io/tag/6WltqJasa/" class="post-tag">
+                                # 学习笔记
+                            </a>
+                        
+                            <a href="https://awhitemouse.github.io/tag/M9JFSzGuU/" class="post-tag">
+                                # React
+                            </a>
+                        
+                    </div>
+                </div>
+                
+                    <a href="https://awhitemouse.github.io/post/react-hooks-xue-xi-bi-ji/" class="post-feature-image"
+                       style="background-image: url('https://pic2.zhimg.com/v2-3637df1098a590708a1fd467f0768599_1200x500.jpg')">
+                    </a>
+                
+            </div>
+        
+    </div>
+</div>
+        <div class="pagination-container">
+    
+    
+        <a href="https://awhitemouse.github.io/tag/M9JFSzGuU/page/2" class="prev-page gt-a-link">下一页</a>
+    
+</div>
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">温故而知新。</div>
+    <div class="social-container">
+        
+        
+        <a href="https://github.com/AWhiteMouse" target="_blank">
+            <i class="fa fa-github gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        <a href="https://wpa.qq.com/msgrd?v=3&amp;uin=1586671591&amp;site=qq&amp;menu=yes" target="_blank">
+            <i class="fa fa-qq gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        <a href="https://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=r9vOwc7NzsPa797egczAwg" target="_blank">
+            <i class="fa fa-envelope gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        <a href="https://blog.csdn.net/i_dont_know_a" target="_blank">
+            <i class="fa fa-rss gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    </div>
+    Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a href="https://awhitemouse.github.io//atom.xml" target="_blank">RSS</a>
+</div>
+
+<div id="landlord" style="left:5px;bottom:0px;">
+    <div class="message" style="opacity:0"></div>
+    <canvas id="live2d" width="500" height="560" class="live2d"></canvas>
+    <div class="live_talk_input_body">
+        <div class="live_talk_input_name_body">
+            <input name="name" type="text" class="live_talk_name white_input" id="AIuserName" autocomplete="off"
+                placeholder="你的名字" />
+        </div>
+        <div class="live_talk_input_text_body">
+            <input name="talk" type="text" class="live_talk_talk white_input" id="AIuserText" autocomplete="off"
+                placeholder="要和我聊什么呀？" />
+            <button type="button" class="live_talk_send_btn" id="talk_send">发送</button>
+        </div>
+    </div>
+    <input name="live_talk" id="live_talk" value="1" type="hidden" />
+    <div class="live_ico_box">
+        <div class="live_ico_item type_info" id="showInfoBtn"></div>
+        <div class="live_ico_item type_talk" id="showTalkBtn"></div>
+        <div class="live_ico_item type_music" id="musicButton"></div>
+        <div class="live_ico_item type_youdu" id="youduButton"></div>
+        <div class="live_ico_item type_quit" id="hideButton"></div>
+        <input name="live_statu_val" id="live_statu_val" value="0" type="hidden" />
+        <audio src="" style="display:none;" id="live2d_bgm" data-bgm="0" preload="none"></audio>
+        <input name="live2dBGM" value="http://music.163.com/song/media/outer/url?id=1313102578.mp3" type="hidden">
+        <input id="duType" value="douqilai,l2d_caihong" type="hidden">
+    </div>
+</div>
+<div id="open_live2d">召唤伊斯特瓦尔</div>
+
+<script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/1.7.1/jquery.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+    var message_Path = '/media/live2d/'; //资源目录，如果目录不对请更改
+    var talkAPI = ""; //如果有类似图灵机器人的聊天接口请填写接口路径
+</script>
+<script type="text/javascript" src="/media/live2d/js/live2d.js"></script>
+<script type="text/javascript" src="/media/live2d/js/message.js"></script>
+<!-- <script src="//code.tidio.co/fkwn1bueaqmcolzjchxzh7xoz5ahzrtw.js" async></script> -->
+    </div>
+</div>
+</body>
+</html>

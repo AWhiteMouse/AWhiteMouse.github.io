@@ -1,0 +1,276 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="一位前端开发者的学习笔记与踩坑指南" />
+<meta name="keywords" content="web,html,css,js,es6,nodejs,react,antd,webpack,redux,jenkins,踩坑,学习笔记,微信小程序,微信公众号,适配,git,github,gitee" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>H5 文本域左上角出现了一个小点，这是个什么操作？ | 白山</title>
+<link rel="shortcut icon" href="https://awhitemouse.github.io//favicon.ico?v=1618473992960">
+<!-- <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.css" rel="stylesheet"> -->
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+<link rel="stylesheet" href="https://awhitemouse.github.io//styles/main.css">
+<link rel="stylesheet" href="https://awhitemouse.github.io//media/live2d/css/live2d.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/go.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+</script>
+
+<!-- DEMO JS -->
+<!-- <script src="/media/scripts/index.js"></script> -->
+
+<!-- 百度统计 -->
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?d67319f5aed3ec93a230772fe9c25ab5";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            白山
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fa fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="/" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/archives" class="menu gt-a-link">
+                            归档
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/navigation" class="menu gt-a-link">
+                            导航
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/post/about" class="menu gt-a-link">
+                            关于
+                        </a>
+                    
+                </div>
+            
+        </div>
+    </div>
+</nav>
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    H5 文本域左上角出现了一个小点，这是个什么操作？
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2020-05-29 08:20:55 ·
+                    </time>
+                    
+                </div>
+                <div class="post-content">
+                    <p>最近测试给我提了一个bug：在文本域的左上角出现了一个小灰点。</p>
+<!-- more -->
+<h1 id="bug">bug</h1>
+<p>先上图：</p>
+<figure data-type="image" tabindex="1"><img src="https://awhitemouse.github.io//post-images/1590755008877.png" alt="" loading="lazy"></figure>
+<p>这个问题我从没见过，感觉十分的诡异。更有趣的是，当文本框中输入了文本之后，这个小灰点就消失了。</p>
+<h1 id="fix同事帮找的思路">fix（同事帮找的思路）</h1>
+<p>出现问题的时候，原因的可能总是只有两种：要么是代码问题，可以通过修改代码解决；要么是系统问题，这样的问题只能期望系统来解决或者提供解决方案。</p>
+<p>思路是这样的：</p>
+<p>既然文本域的上面多了一个点，最直接的可能就是文本域上画了一个dom元素，这种情况只要使用电脑链接手机并进行调试，看一看文本域的左上角有没有dom元素就可以知道了。</p>
+<p>在我这不是这个问题。</p>
+<p>既然不是dom元素，那么有可能是样式的问题。这个问题是在文本域上出现的，我首先想到的是在控制台中删减属性试试，可是在控制台中，不管我删减什么属性，那个灰点都会消失掉。</p>
+<p>此时就可以证明想从控制台寻找问题原因基本上是不可能的。</p>
+<p>所以这是后就需要手动实践比对样式了，该如何比对呢？</p>
+<p>首先我在相同的页面中放了一个不带样式的文本域，我发现这个用来测试的文本域左上角是不带小灰点的。这让我感觉到我离问题原因非常接近了，而且也让我更加确定了是样式引起的问题（因为其他的设计都是几近相同的）。</p>
+<p>然后我就把给原来文本域设置的样式一句一句的搬到用来测试的文本域这里，每般一句样式过来，都查看一下测试的文本域左上方是否出现了小灰点。</p>
+<p>这期间我搬过来了好几句样式，小灰点都没有出现，直到我搬了一句<code>overflow-y: scroll;</code>过来的时候，测试文本域的小灰点也出现了！！问题终于定位到了，出现小灰点的原因是这句样式，我把它改成了<code>overflow-y: auto;</code>之后，小灰点就没了。</p>
+<p>问题终于解决了。</p>
+<p><strong>综上，问题的原因是<code>overflow-y: scroll;</code>这句样式，解决的方法是把它换成<code>overflow-y: auto;</code>。但是至于深层次的原因，我无从查起。所以问题至此为止了。</strong></p>
+<h1 id="反思为什么我最初没有想到这种解决方案呢">反思：为什么我最初没有想到这种解决方案呢？</h1>
+<p>其实这种逐行增减的方法之前我之前就在他们的帮助下使用过，那么这一次为什么我在独立思考的时候，没有去这种寻找问题的方案呢？</p>
+<p>其实最初我是有意识到可能是css的问题，但是我是用的排查问题的方案是在控制台中尝试着删减css属性。但是每次只要我一在控制台中删减属性，这个小点就会马上消失。</p>
+<p>这让我感觉迷失了方向。。。潜意识里认为这个东西跟所有的样式有关，即使我主观上不这么认为。但是这样的潜意识却在影响我的行为更偏向“偷懒”、“好像解决不了”、“不好做”、“太难了”。</p>
+<p>从而干扰了正常应该有的思路，而是钻入了牛角尖，总想着我运气会不会非常好，只要我随便尝试尝试就能找到解决问题的方案。</p>
+<h1 id="总结">总结</h1>
+<ol>
+<li>在遇到样式相关问题一时间没有很明确的解决方案的时候，可以尝试模拟出一个非常类似，但是没有样式的模块。通过逐行增加样式的方式，比较前后两者的效果是否一致，一直到定位到问题为止。虽然这种方法比较笨拙，却非常的实用。</li>
+<li>始终记住实践出真知，遇到问题问题时思想上要时刻提醒自己不要偷懒，越是偷懒就越容易偏离正确的解决问题的思路。往往比较笨拙的排查问题的方法都能排查到问题，可能在时间上要耗费的长一些，但如果从效率上来讲，这种粗暴的逐行排查的方法效率并不算太差。</li>
+<li>不要抱着侥幸心理随机的排查问题，随机检查问题的可能性，可能会漏掉最佳的解决方案，也可能会让相同的无用的方案多次被尝试到，这是一种效率很低的行为。并且当你随机尝试解决方案时，又碰到已经被使用过的无效方案，你的心理会进入“所有的方案你都尝试过了，却依旧没有解决问题”的误区，从而产生焦虑感。如果自己的心理防线被击溃，想要在这种心理状况下寻找到问题的原因和解决方案，基本上是不可能的。</li>
+</ol>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://awhitemouse.github.io/post/ru-he-zai-react-zhong-wan-cheng-huan-xing/" class="post-title gt-a-link">
+                    如何在React中完成换行
+                </a>
+            </div>
+        
+
+        
+            
+                <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '1c7817279f236848ef3b',
+    clientSecret: 'cc9a052a730aca58df4ac91361957979a7fb5396',
+    repo: 'AWhiteMouse.github.io',
+    owner: 'AWhiteMouse',
+    admin: ['AWhiteMouse'],
+    id: location.pathname,      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+            
+
+            
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">温故而知新。</div>
+    <div class="social-container">
+        
+        
+        <a href="https://github.com/AWhiteMouse" target="_blank">
+            <i class="fa fa-github gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        <a href="https://wpa.qq.com/msgrd?v=3&amp;uin=1586671591&amp;site=qq&amp;menu=yes" target="_blank">
+            <i class="fa fa-qq gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        <a href="https://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=r9vOwc7NzsPa797egczAwg" target="_blank">
+            <i class="fa fa-envelope gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        <a href="https://blog.csdn.net/i_dont_know_a" target="_blank">
+            <i class="fa fa-rss gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    </div>
+    Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a href="https://awhitemouse.github.io//atom.xml" target="_blank">RSS</a>
+</div>
+
+<div id="landlord" style="left:5px;bottom:0px;">
+    <div class="message" style="opacity:0"></div>
+    <canvas id="live2d" width="500" height="560" class="live2d"></canvas>
+    <div class="live_talk_input_body">
+        <div class="live_talk_input_name_body">
+            <input name="name" type="text" class="live_talk_name white_input" id="AIuserName" autocomplete="off"
+                placeholder="你的名字" />
+        </div>
+        <div class="live_talk_input_text_body">
+            <input name="talk" type="text" class="live_talk_talk white_input" id="AIuserText" autocomplete="off"
+                placeholder="要和我聊什么呀？" />
+            <button type="button" class="live_talk_send_btn" id="talk_send">发送</button>
+        </div>
+    </div>
+    <input name="live_talk" id="live_talk" value="1" type="hidden" />
+    <div class="live_ico_box">
+        <div class="live_ico_item type_info" id="showInfoBtn"></div>
+        <div class="live_ico_item type_talk" id="showTalkBtn"></div>
+        <div class="live_ico_item type_music" id="musicButton"></div>
+        <div class="live_ico_item type_youdu" id="youduButton"></div>
+        <div class="live_ico_item type_quit" id="hideButton"></div>
+        <input name="live_statu_val" id="live_statu_val" value="0" type="hidden" />
+        <audio src="" style="display:none;" id="live2d_bgm" data-bgm="0" preload="none"></audio>
+        <input name="live2dBGM" value="http://music.163.com/song/media/outer/url?id=1313102578.mp3" type="hidden">
+        <input id="duType" value="douqilai,l2d_caihong" type="hidden">
+    </div>
+</div>
+<div id="open_live2d">召唤伊斯特瓦尔</div>
+
+<script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/1.7.1/jquery.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+    var message_Path = '/media/live2d/'; //资源目录，如果目录不对请更改
+    var talkAPI = ""; //如果有类似图灵机器人的聊天接口请填写接口路径
+</script>
+<script type="text/javascript" src="/media/live2d/js/live2d.js"></script>
+<script type="text/javascript" src="/media/live2d/js/message.js"></script>
+<!-- <script src="//code.tidio.co/fkwn1bueaqmcolzjchxzh7xoz5ahzrtw.js" async></script> -->
+
+    </div>
+</div>
+</body>
+</html>

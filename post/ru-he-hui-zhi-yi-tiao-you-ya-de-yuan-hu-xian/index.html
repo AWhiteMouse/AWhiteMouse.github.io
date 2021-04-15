@@ -1,0 +1,338 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="一位前端开发者的学习笔记与踩坑指南" />
+<meta name="keywords" content="web,html,css,js,es6,nodejs,react,antd,webpack,redux,jenkins,踩坑,学习笔记,微信小程序,微信公众号,适配,git,github,gitee" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>如何绘制一条优雅的圆弧线 | 白山</title>
+<link rel="shortcut icon" href="https://awhitemouse.github.io//favicon.ico?v=1618473992960">
+<!-- <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.css" rel="stylesheet"> -->
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+<link rel="stylesheet" href="https://awhitemouse.github.io//styles/main.css">
+<link rel="stylesheet" href="https://awhitemouse.github.io//media/live2d/css/live2d.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/go.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+</script>
+
+<!-- DEMO JS -->
+<!-- <script src="/media/scripts/index.js"></script> -->
+
+<!-- 百度统计 -->
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?d67319f5aed3ec93a230772fe9c25ab5";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            白山
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fa fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="/" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/archives" class="menu gt-a-link">
+                            归档
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/navigation" class="menu gt-a-link">
+                            导航
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/post/about" class="menu gt-a-link">
+                            关于
+                        </a>
+                    
+                </div>
+            
+        </div>
+    </div>
+</nav>
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    如何绘制一条优雅的圆弧线
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2021-04-12 08:55:19 ·
+                    </time>
+                    
+                        <a href="https://awhitemouse.github.io/tag/PyjodOK1i/" class="post-tags">
+                            # CSS
+                        </a>
+                    
+                        <a href="https://awhitemouse.github.io/tag/_HICEyo5P3/" class="post-tags">
+                            # 微信小程序
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <p>你知道多少种绘制圆弧线的方法呢？</p>
+<!-- more -->
+<p>目前在做的一个需求里需要绘制一条优雅的圆弧线，就是下面这样的👇（看中间的那条白色圆弧线）</p>
+<figure data-type="image" tabindex="1"><img src="https://awhitemouse.github.io//post-images/1618456618748.png" alt="" loading="lazy"></figure>
+<p>跟UE对设计稿的时候，UE问我这个圆弧要不要切图？<del><em>嗯！？这么简单的圆弧还切图，看不起谁呢？</em><del></p>
+<p>👀之前也绘制过圆弧线，是使用 <a href="#%E7%94%BB%E5%A4%A7%E5%9C%86">画大圆</a> 的方式实现的。而这一次，我突然想到应该还有其他的办法也可以实现相同的效果吧。</p>
+<p>于是查阅了一些资料，结合自身的经验总结了有如下几种画圆弧的方式：</p>
+<ul>
+<li>画大圆</li>
+<li>定制border-radius</li>
+<li>box-shadow</li>
+<li>transform：scaleX/Y</li>
+<li>svg</li>
+<li>canvas</li>
+<li>图片</li>
+</ul>
+<h2 id="画大圆">画大圆</h2>
+<p>画大圆是最直接的实现方案了，也应该是很多开发者首先想到的方案之一了。</p>
+<p>需要注意的地方是外部容器需要 <code>overflow: hidden</code> 用于隐藏圆形超过容器的部分。</p>
+<iframe height="474" style="width: 100%;" scrolling="no" title="绘制圆弧 - 画大圆" src="https://codepen.io/awhitemouse/embed/gOgzpvX?height=265&theme-id=dark&default-tab=css,result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/awhitemouse/pen/gOgzpvX'>绘制圆弧 - 画大圆</a> by chenxin
+  (<a href='https://codepen.io/awhitemouse'>@awhitemouse</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+<p><br><br></p>
+<h2 id="定制border-radius">定制border-radius</h2>
+<p>我们常用 <code>border-radius</code> 画圆角，或者是画一个圆形。使用方法大概是这样的：</p>
+<pre><code class="language-css">.demo {
+    border-radius: 4px;
+    /* or */
+    border-radius: 50%;
+}
+</code></pre>
+<p>而这里的定制  <code>border-radius</code> 使用了它的一项不常用的技能：为每一个单边设置圆角。</p>
+<pre><code class="language-css">.demo {
+    border-radius: 0 12px 12px 0 / 0 50% 50% 0;
+}
+</code></pre>
+<p>这里不详细描述关于定制 <code>border-radius</code> 的内容，详细了解可以参考这篇文章：<a href="https://juejin.cn/post/6844903693423214600">border-radius结合动画创建酷炫的效果</a>.</p>
+<p>从下方的演示效果看，越靠近两端，边框被压缩得越细，这与我们想要的效果还是有一定差别的。</p>
+<iframe height="474" style="width: 100%;" scrolling="no" title="绘制圆弧 - 定制border-radius" src="https://codepen.io/awhitemouse/embed/NWdMqNy?height=265&theme-id=dark&default-tab=css,result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/awhitemouse/pen/NWdMqNy'>绘制圆弧 - 定制border-radius</a> by chenxin
+  (<a href='https://codepen.io/awhitemouse'>@awhitemouse</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+<p><br><br></p>
+<h2 id="box-shadow">box-shadow</h2>
+<p>关于 <code>box-shadow</code> 的方案，仔细对比下方的代码和 <a href="#%E5%AE%9A%E5%88%B6border-radius">定制border-radius</a> 的代码可以发现，其实就是将白色边框的绘制方式从 <code>border-right</code> 换成了<code>box-shadow</code>。</p>
+<p>更换以后解决了 <a href="#%E5%AE%9A%E5%88%B6border-radius">定制border-radius</a> 方案中提到的边框压缩的问题，但是这个方案绘制出来的圆弧并不够圆润，并没有达到我所想要的效果。</p>
+<iframe height="474" style="width: 100%;" scrolling="no" title="绘制圆弧 - box-shadow" src="https://codepen.io/awhitemouse/embed/xxgjwxR?height=265&theme-id=dark&default-tab=css,result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/awhitemouse/pen/xxgjwxR'>绘制圆弧 - box-shadow</a> by chenxin
+  (<a href='https://codepen.io/awhitemouse'>@awhitemouse</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+<p><br><br></p>
+<h2 id="transformscalexy">transform：scaleX/Y</h2>
+<p>这个方案还挺有趣的，通过旋转的方式从视觉效果上改变了圆角的大小。</p>
+<p>但是我简单写了一个demo之后就发现，这个方案的产生的问题跟 <a href="#%E5%AE%9A%E5%88%B6border-radius">定制border-radius</a> 方案产生的问题相同。</p>
+<iframe height="265" style="width: 100%;" scrolling="no" title="绘制圆弧 - transfrom" src="https://codepen.io/awhitemouse/embed/vYgjxjB?height=265&theme-id=dark&default-tab=css,result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/awhitemouse/pen/vYgjxjB'>绘制圆弧 - transfrom</a> by chenxin
+  (<a href='https://codepen.io/awhitemouse'>@awhitemouse</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+<p><br><br></p>
+<h2 id="svg">svg</h2>
+<p>使用 <code>svg</code> 的方案无论从使用方法还是从展示效果上，跟 <a href="#%E7%94%BB%E5%A4%A7%E5%9C%86">#画大圆</a> 效果是相同的。</p>
+<iframe height="474" style="width: 100%;" scrolling="no" title="绘制圆弧 - svg" src="https://codepen.io/awhitemouse/embed/VwPxpxo?height=265&theme-id=dark&default-tab=html,result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/awhitemouse/pen/VwPxpxo'>绘制圆弧 - svg</a> by chenxin
+  (<a href='https://codepen.io/awhitemouse'>@awhitemouse</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+<p><br><br></p>
+<h2 id="canvas">canvas</h2>
+<p>而 <code>canvas</code> 的方案与 <a href="#svg">svg 方案</a> 实现方法也是类似的，同样是绘制一个大圆环，然后使用 <code>overflow: hidden</code> 隐藏掉了溢出的部分。<em>也可以只绘制需要显示的一部分圆弧，只需要调整绘制圆弧的起始角度和终止角度即可</em>。</p>
+<iframe height="474" style="width: 100%;" scrolling="no" title="绘制圆弧 - canvas" src="https://codepen.io/awhitemouse/embed/BapxZPe?height=265&theme-id=dark&default-tab=js,result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/awhitemouse/pen/BapxZPe'>绘制圆弧 - canvas</a> by chenxin
+  (<a href='https://codepen.io/awhitemouse'>@awhitemouse</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+<p><br><br></p>
+<h2 id="总结">总结</h2>
+<p>方案罗列完毕之后就该选择方案了，从实际展示效果上进行筛选的话，可以达到操作效果的是<a href="#%E7%94%BB%E5%A4%A7%E5%9C%86">画大圆</a>、<a href="#svg">svg</a>、<a href="#canvas">canvas</a>。</p>
+<p>我当前这个需求所基于的场景时小程序，小程序对 <code>svg</code> 的兼容程度并不好，而 <code>canvas</code> 无论从操作难度还是性能上，跟纯css是无法相提并论的。</p>
+<p>所以最终还是选择了 <a href="#%E7%94%BB%E5%A4%A7%E5%9C%86">画大圆</a> 的解决方案。<del><em>绕了一圈又回来了</em></del></p>
+<h2 id="我是尾巴">我是尾巴</h2>
+<p>本文一共列举了 7 中绘制圆弧的方式，如果你还有更优的方案，或者对本文提出的方案有异议，请在评论区提出，谢谢。</p>
+<h2 id="参考">参考</h2>
+<ol>
+<li><a href="https://zhuanlan.zhihu.com/p/28142155">网页中弧线的几种实现方法</a>.</li>
+</ol>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://awhitemouse.github.io/post/react-yu-vue-de-qu-bie-shi-shi-me/" class="post-title gt-a-link">
+                    React 与 Vue 的区别是什么？
+                </a>
+            </div>
+        
+
+        
+            
+                <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '1c7817279f236848ef3b',
+    clientSecret: 'cc9a052a730aca58df4ac91361957979a7fb5396',
+    repo: 'AWhiteMouse.github.io',
+    owner: 'AWhiteMouse',
+    admin: ['AWhiteMouse'],
+    id: location.pathname,      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+            
+
+            
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">温故而知新。</div>
+    <div class="social-container">
+        
+        
+        <a href="https://github.com/AWhiteMouse" target="_blank">
+            <i class="fa fa-github gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        <a href="https://wpa.qq.com/msgrd?v=3&amp;uin=1586671591&amp;site=qq&amp;menu=yes" target="_blank">
+            <i class="fa fa-qq gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        <a href="https://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=r9vOwc7NzsPa797egczAwg" target="_blank">
+            <i class="fa fa-envelope gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        <a href="https://blog.csdn.net/i_dont_know_a" target="_blank">
+            <i class="fa fa-rss gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    </div>
+    Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a href="https://awhitemouse.github.io//atom.xml" target="_blank">RSS</a>
+</div>
+
+<div id="landlord" style="left:5px;bottom:0px;">
+    <div class="message" style="opacity:0"></div>
+    <canvas id="live2d" width="500" height="560" class="live2d"></canvas>
+    <div class="live_talk_input_body">
+        <div class="live_talk_input_name_body">
+            <input name="name" type="text" class="live_talk_name white_input" id="AIuserName" autocomplete="off"
+                placeholder="你的名字" />
+        </div>
+        <div class="live_talk_input_text_body">
+            <input name="talk" type="text" class="live_talk_talk white_input" id="AIuserText" autocomplete="off"
+                placeholder="要和我聊什么呀？" />
+            <button type="button" class="live_talk_send_btn" id="talk_send">发送</button>
+        </div>
+    </div>
+    <input name="live_talk" id="live_talk" value="1" type="hidden" />
+    <div class="live_ico_box">
+        <div class="live_ico_item type_info" id="showInfoBtn"></div>
+        <div class="live_ico_item type_talk" id="showTalkBtn"></div>
+        <div class="live_ico_item type_music" id="musicButton"></div>
+        <div class="live_ico_item type_youdu" id="youduButton"></div>
+        <div class="live_ico_item type_quit" id="hideButton"></div>
+        <input name="live_statu_val" id="live_statu_val" value="0" type="hidden" />
+        <audio src="" style="display:none;" id="live2d_bgm" data-bgm="0" preload="none"></audio>
+        <input name="live2dBGM" value="http://music.163.com/song/media/outer/url?id=1313102578.mp3" type="hidden">
+        <input id="duType" value="douqilai,l2d_caihong" type="hidden">
+    </div>
+</div>
+<div id="open_live2d">召唤伊斯特瓦尔</div>
+
+<script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/1.7.1/jquery.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+    var message_Path = '/media/live2d/'; //资源目录，如果目录不对请更改
+    var talkAPI = ""; //如果有类似图灵机器人的聊天接口请填写接口路径
+</script>
+<script type="text/javascript" src="/media/live2d/js/live2d.js"></script>
+<script type="text/javascript" src="/media/live2d/js/message.js"></script>
+<!-- <script src="//code.tidio.co/fkwn1bueaqmcolzjchxzh7xoz5ahzrtw.js" async></script> -->
+
+    </div>
+</div>
+</body>
+</html>

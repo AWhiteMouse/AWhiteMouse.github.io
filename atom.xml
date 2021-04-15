@@ -1,0 +1,1257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://awhitemouse.github.io/</id>
+    <title>白山</title>
+    <updated>2021-04-15T08:06:53.683Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://awhitemouse.github.io/"/>
+    <link rel="self" href="https://awhitemouse.github.io/atom.xml"/>
+    <subtitle>温故而知新。</subtitle>
+    <logo>https://awhitemouse.github.io/images/avatar.png</logo>
+    <icon>https://awhitemouse.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2021, 白山</rights>
+    <entry>
+        <title type="html"><![CDATA[关于儿童交互产品的设计理念]]></title>
+        <id>https://awhitemouse.github.io/post/guan-yu-er-tong-jiao-hu-chan-pin-de-she-ji-li-nian/</id>
+        <link href="https://awhitemouse.github.io/post/guan-yu-er-tong-jiao-hu-chan-pin-de-she-ji-li-nian/">
+        </link>
+        <updated>2021-04-15T02:39:52.000Z</updated>
+        <summary type="html"><![CDATA[<p>今天早会的时候，产品总监提出目前我们的产品还是有一部分偏向于成人化。这让我好奇：成人交互与儿童交互的区别在哪里呢？</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>今天早会的时候，产品总监提出目前我们的产品还是有一部分偏向于成人化。这让我好奇：成人交互与儿童交互的区别在哪里呢？</p>
+<!-- more -->
+<p>我在查找资料的过程中，发现了一篇文章：<a href="http://www.gx-id.com/new/265.html">不同年龄阶段儿童交互产品设计理念需要加以区分利用</a>，其中对于成人与儿童交互应有的区别的做了详细的论述：</p>
+<figure data-type="image" tabindex="1"><img src="https://awhitemouse.github.io//post-images/1618454763745.png" alt="" loading="lazy"></figure>
+<p>另外还有一篇文章：<a href="https://zhuanlan.zhihu.com/p/130241756">儿童和成人学习英语的区别</a>，其中关于儿童英语学习路径的观点可以参考一下：</p>
+<figure data-type="image" tabindex="2"><img src="https://awhitemouse.github.io//post-images/1618454933806.png" alt="" loading="lazy"></figure>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[如何绘制一条优雅的圆弧线]]></title>
+        <id>https://awhitemouse.github.io/post/ru-he-hui-zhi-yi-tiao-you-ya-de-yuan-hu-xian/</id>
+        <link href="https://awhitemouse.github.io/post/ru-he-hui-zhi-yi-tiao-you-ya-de-yuan-hu-xian/">
+        </link>
+        <updated>2021-04-12T12:55:19.000Z</updated>
+        <summary type="html"><![CDATA[<p>你知道多少种绘制圆弧线的方法呢？</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>你知道多少种绘制圆弧线的方法呢？</p>
+<!-- more -->
+<p>目前在做的一个需求里需要绘制一条优雅的圆弧线，就是下面这样的👇（看中间的那条白色圆弧线）</p>
+<figure data-type="image" tabindex="1"><img src="https://awhitemouse.github.io//post-images/1618456618748.png" alt="" loading="lazy"></figure>
+<p>跟UE对设计稿的时候，UE问我这个圆弧要不要切图？<del><em>嗯！？这么简单的圆弧还切图，看不起谁呢？</em><del></p>
+<p>👀之前也绘制过圆弧线，是使用 <a href="#%E7%94%BB%E5%A4%A7%E5%9C%86">画大圆</a> 的方式实现的。而这一次，我突然想到应该还有其他的办法也可以实现相同的效果吧。</p>
+<p>于是查阅了一些资料，结合自身的经验总结了有如下几种画圆弧的方式：</p>
+<ul>
+<li>画大圆</li>
+<li>定制border-radius</li>
+<li>box-shadow</li>
+<li>transform：scaleX/Y</li>
+<li>svg</li>
+<li>canvas</li>
+<li>图片</li>
+</ul>
+<h2 id="画大圆">画大圆</h2>
+<p>画大圆是最直接的实现方案了，也应该是很多开发者首先想到的方案之一了。</p>
+<p>需要注意的地方是外部容器需要 <code>overflow: hidden</code> 用于隐藏圆形超过容器的部分。</p>
+<iframe height="474" style="width: 100%;" scrolling="no" title="绘制圆弧 - 画大圆" src="https://codepen.io/awhitemouse/embed/gOgzpvX?height=265&theme-id=dark&default-tab=css,result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/awhitemouse/pen/gOgzpvX'>绘制圆弧 - 画大圆</a> by chenxin
+  (<a href='https://codepen.io/awhitemouse'>@awhitemouse</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+<p><br><br></p>
+<h2 id="定制border-radius">定制border-radius</h2>
+<p>我们常用 <code>border-radius</code> 画圆角，或者是画一个圆形。使用方法大概是这样的：</p>
+<pre><code class="language-css">.demo {
+    border-radius: 4px;
+    /* or */
+    border-radius: 50%;
+}
+</code></pre>
+<p>而这里的定制  <code>border-radius</code> 使用了它的一项不常用的技能：为每一个单边设置圆角。</p>
+<pre><code class="language-css">.demo {
+    border-radius: 0 12px 12px 0 / 0 50% 50% 0;
+}
+</code></pre>
+<p>这里不详细描述关于定制 <code>border-radius</code> 的内容，详细了解可以参考这篇文章：<a href="https://juejin.cn/post/6844903693423214600">border-radius结合动画创建酷炫的效果</a>.</p>
+<p>从下方的演示效果看，越靠近两端，边框被压缩得越细，这与我们想要的效果还是有一定差别的。</p>
+<iframe height="474" style="width: 100%;" scrolling="no" title="绘制圆弧 - 定制border-radius" src="https://codepen.io/awhitemouse/embed/NWdMqNy?height=265&theme-id=dark&default-tab=css,result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/awhitemouse/pen/NWdMqNy'>绘制圆弧 - 定制border-radius</a> by chenxin
+  (<a href='https://codepen.io/awhitemouse'>@awhitemouse</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+<p><br><br></p>
+<h2 id="box-shadow">box-shadow</h2>
+<p>关于 <code>box-shadow</code> 的方案，仔细对比下方的代码和 <a href="#%E5%AE%9A%E5%88%B6border-radius">定制border-radius</a> 的代码可以发现，其实就是将白色边框的绘制方式从 <code>border-right</code> 换成了<code>box-shadow</code>。</p>
+<p>更换以后解决了 <a href="#%E5%AE%9A%E5%88%B6border-radius">定制border-radius</a> 方案中提到的边框压缩的问题，但是这个方案绘制出来的圆弧并不够圆润，并没有达到我所想要的效果。</p>
+<iframe height="474" style="width: 100%;" scrolling="no" title="绘制圆弧 - box-shadow" src="https://codepen.io/awhitemouse/embed/xxgjwxR?height=265&theme-id=dark&default-tab=css,result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/awhitemouse/pen/xxgjwxR'>绘制圆弧 - box-shadow</a> by chenxin
+  (<a href='https://codepen.io/awhitemouse'>@awhitemouse</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+<p><br><br></p>
+<h2 id="transformscalexy">transform：scaleX/Y</h2>
+<p>这个方案还挺有趣的，通过旋转的方式从视觉效果上改变了圆角的大小。</p>
+<p>但是我简单写了一个demo之后就发现，这个方案的产生的问题跟 <a href="#%E5%AE%9A%E5%88%B6border-radius">定制border-radius</a> 方案产生的问题相同。</p>
+<iframe height="265" style="width: 100%;" scrolling="no" title="绘制圆弧 - transfrom" src="https://codepen.io/awhitemouse/embed/vYgjxjB?height=265&theme-id=dark&default-tab=css,result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/awhitemouse/pen/vYgjxjB'>绘制圆弧 - transfrom</a> by chenxin
+  (<a href='https://codepen.io/awhitemouse'>@awhitemouse</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+<p><br><br></p>
+<h2 id="svg">svg</h2>
+<p>使用 <code>svg</code> 的方案无论从使用方法还是从展示效果上，跟 <a href="#%E7%94%BB%E5%A4%A7%E5%9C%86">#画大圆</a> 效果是相同的。</p>
+<iframe height="474" style="width: 100%;" scrolling="no" title="绘制圆弧 - svg" src="https://codepen.io/awhitemouse/embed/VwPxpxo?height=265&theme-id=dark&default-tab=html,result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/awhitemouse/pen/VwPxpxo'>绘制圆弧 - svg</a> by chenxin
+  (<a href='https://codepen.io/awhitemouse'>@awhitemouse</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+<p><br><br></p>
+<h2 id="canvas">canvas</h2>
+<p>而 <code>canvas</code> 的方案与 <a href="#svg">svg 方案</a> 实现方法也是类似的，同样是绘制一个大圆环，然后使用 <code>overflow: hidden</code> 隐藏掉了溢出的部分。<em>也可以只绘制需要显示的一部分圆弧，只需要调整绘制圆弧的起始角度和终止角度即可</em>。</p>
+<iframe height="474" style="width: 100%;" scrolling="no" title="绘制圆弧 - canvas" src="https://codepen.io/awhitemouse/embed/BapxZPe?height=265&theme-id=dark&default-tab=js,result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/awhitemouse/pen/BapxZPe'>绘制圆弧 - canvas</a> by chenxin
+  (<a href='https://codepen.io/awhitemouse'>@awhitemouse</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+<p><br><br></p>
+<h2 id="总结">总结</h2>
+<p>方案罗列完毕之后就该选择方案了，从实际展示效果上进行筛选的话，可以达到操作效果的是<a href="#%E7%94%BB%E5%A4%A7%E5%9C%86">画大圆</a>、<a href="#svg">svg</a>、<a href="#canvas">canvas</a>。</p>
+<p>我当前这个需求所基于的场景时小程序，小程序对 <code>svg</code> 的兼容程度并不好，而 <code>canvas</code> 无论从操作难度还是性能上，跟纯css是无法相提并论的。</p>
+<p>所以最终还是选择了 <a href="#%E7%94%BB%E5%A4%A7%E5%9C%86">画大圆</a> 的解决方案。<del><em>绕了一圈又回来了</em></del></p>
+<h2 id="我是尾巴">我是尾巴</h2>
+<p>本文一共列举了 7 中绘制圆弧的方式，如果你还有更优的方案，或者对本文提出的方案有异议，请在评论区提出，谢谢。</p>
+<h2 id="参考">参考</h2>
+<ol>
+<li><a href="https://zhuanlan.zhihu.com/p/28142155">网页中弧线的几种实现方法</a>.</li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[React 与 Vue 的区别是什么？]]></title>
+        <id>https://awhitemouse.github.io/post/react-yu-vue-de-qu-bie-shi-shi-me/</id>
+        <link href="https://awhitemouse.github.io/post/react-yu-vue-de-qu-bie-shi-shi-me/">
+        </link>
+        <updated>2021-04-12T03:47:59.000Z</updated>
+        <content type="html"><![CDATA[<p>目前国内前端应用的两个主流框架分别是 <code>Vue</code> 和 <code>React</code>，那么在技术选型时该选哪一个呢？它们之间的区别又是什么？</p>
+<h2 id="react和vue的区别">React和Vue的区别</h2>
+<h3 id="监听数据变化的实现原理可变和不可变">监听数据变化的实现原理：可变和不可变</h3>
+<p>Vue通过（getter/setter）的方式进行数据劫持，然后对数据进行比对。而React在不做优化的情况下，直接通过比较引用来判断数据是否发生了变化。</p>
+<p>两种数据监听原理的不同于它们本身的设计原理有关：Vue更强调数据的可变性，即它会修改原来的数据；而React更强调数据的不可变性，即它会生成一份新的数据返回，不对原来的数据进行修改。</p>
+<p>React的比较方法在进行数据比对时会更加简便，但同时也会增大内存的开销。</p>
+<h3 id="数据流单向和双向">数据流：单向和双向</h3>
+<p>虽然在Vue2.0中取消了父子组件之间的数据双向绑定，但是仍然保留了组件和dom之间的双向绑定（即v-model）；但是React从始至终都提倡单项数据流。</p>
+<h3 id="组合功能模块高阶组件hoc和混入mixin">组合功能模块：高阶组件（HOC）和混入（mixin）</h3>
+<p>在组合功能模块时，Vue通常使用混入的方式，在React中通常是使用高阶组件的方式。虽然React也可以使用混入，但是在它的文档里是并不推荐这种写法的，它认为混入会让页面的逻辑变得难以摸索。</p>
+<h3 id="组件的嵌套嵌套和插槽">组件的嵌套：嵌套和插槽</h3>
+<p>Vue通过插槽的方式完成组件的嵌套，并且Vue还支持多插槽；而React使用props.children拿到子组件进行渲染。</p>
+<h3 id="编写语法">编写语法</h3>
+<p>Vue更加提倡单文件组件，而React更推荐JSX语法。</p>
+<h2 id="参考">参考</h2>
+<ol>
+<li><a href="https://juejin.cn/post/6844903668446134286">个人理解Vue和React区别</a>.</li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[如何做一场高质量的分享]]></title>
+        <id>https://awhitemouse.github.io/post/ru-he-zuo-yi-chang-gao-zhi-liang-de-fen-xiang/</id>
+        <link href="https://awhitemouse.github.io/post/ru-he-zuo-yi-chang-gao-zhi-liang-de-fen-xiang/">
+        </link>
+        <updated>2021-04-02T03:52:08.000Z</updated>
+        <summary type="html"><![CDATA[<p>最近做了两次分享，第二次分享完之后，自我感觉不是很理想。正好看到这样一篇分析高质量分享的<a href="https://mp.weixin.qq.com/s/ZcHkIs00kVeyZ2-7u3cg5A">文章</a>，看完之后确有所得，所以这里对这篇文章里提到的自己踩过坑的地方列出来，结合自己的经历做一个总结。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>最近做了两次分享，第二次分享完之后，自我感觉不是很理想。正好看到这样一篇分析高质量分享的<a href="https://mp.weixin.qq.com/s/ZcHkIs00kVeyZ2-7u3cg5A">文章</a>，看完之后确有所得，所以这里对这篇文章里提到的自己踩过坑的地方列出来，结合自己的经历做一个总结。</p>
+<!-- more -->
+<p>在每次分享之前都需要先反思以下几点：</p>
+<h2 id="为什么要分享">为什么要分享</h2>
+<p>做一次分享最重要的前提是知道为什么要做这次分享，其他伙伴能从这次分享中学习到什么呢？</p>
+<blockquote>
+<p>分享的本意就是总结并传播知识，分享的核心是利他。</p>
+</blockquote>
+<p>切忌为了展示自己的优秀而分享。</p>
+<h2 id="什么是好的内容">什么是好的内容</h2>
+<blockquote>
+<p>高度总结的知识<br>
+可以借鉴的经验：建设经验、推导过程……<br>
+晦涩难懂的技术：深入浅出</p>
+</blockquote>
+<p>听众都比较熟识或者上网一查就能马上查到的内容就不要专门拿出来分享了，自己讲起来也没有底气，听众也没有兴趣听下去。</p>
+<p>对于技术分享，如果把知识分为<code>基础</code>、 <code>进阶</code> 和 <code>精深</code> 三个阶段的话，分享的主题最好属于 <code>进阶</code> 和 <code>精深</code> 这两个阶段。</p>
+<h2 id="如何去组织内容">如何去组织内容</h2>
+<ol>
+<li>结构性</li>
+</ol>
+<p>内容的讲解形式最好是总分总，即 <code>结论 -&gt; 论证讲解 -&gt; 总结</code> 三步走。</p>
+<p>首先讲解结论，让听众先了解自己要讲什么内容。最后总结，帮助归纳总结， 加深听众对于内容的记忆深度。</p>
+<ol start="2">
+<li>故事性</li>
+</ol>
+<p>能把内容像讲故事一样讲出来当然更好，讲故事这方面不行的话就算了。</p>
+<h2 id="如何去展示内容">如何去展示内容</h2>
+<blockquote>
+<p>少字多图！切忌念稿子！</p>
+</blockquote>
+<h2 id="如何去表达内容">如何去表达内容</h2>
+<blockquote>
+<p>吸引人的开场<br>
+与观众有互动<br>
+有停顿有节奏</p>
+</blockquote>
+<h2 id="必要条件">必要条件</h2>
+<blockquote>
+<p>保证质量！</p>
+</blockquote>
+<h2 id="参考">参考</h2>
+<ol>
+<li><a href="https://mp.weixin.qq.com/s/ZcHkIs00kVeyZ2-7u3cg5A">如何做一场高质量的分享</a>.</li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[如何拦截Elementui RadioGroup的数据变更]]></title>
+        <id>https://awhitemouse.github.io/post/ru-he-lan-jie-elementui-raio-group-de-shu-ju-bian-geng/</id>
+        <link href="https://awhitemouse.github.io/post/ru-he-lan-jie-elementui-raio-group-de-shu-ju-bian-geng/">
+        </link>
+        <updated>2021-03-30T02:00:12.000Z</updated>
+        <summary type="html"><![CDATA[<p>最近在做的一个业务场景需要劫持掉 <code>RadioGroup</code> 的内部的数据自动更新行为，然后根据外部的条件动态判断能否更新数据。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>最近在做的一个业务场景需要劫持掉 <code>RadioGroup</code> 的内部的数据自动更新行为，然后根据外部的条件动态判断能否更新数据。</p>
+<!-- more -->
+<h2 id="问题简述">问题简述</h2>
+<p>界面如下图。最上方的Tabs标签页是一级分类（Tabs）；中间的按钮组（即RadioGroup）是二级分类；下方是数据展示面板，用于展示当前分类下的数据。</p>
+<figure data-type="image" tabindex="1"><img src="https://awhitemouse.github.io//post-images/1617161503433.png" alt="" loading="lazy"></figure>
+<p>如果数据展示面板被手动操作导致数据发生更改后，此时去切换上方的一级分类或者二级分类都需要弹出二次确认弹窗如下：</p>
+<figure data-type="image" tabindex="2"><img src="https://awhitemouse.github.io//post-images/1617161868698.png" alt="" loading="lazy"></figure>
+<h2 id="解决方案">解决方案</h2>
+<p>我们的使用的组件库是<a href="https://element.eleme.cn/#/zh-CN/component/installation">element-ui 2</a>。</p>
+<p>下面将针对不同的组件提出不同的数据劫持的方案。</p>
+<h3 id="一级分类tabs">一级分类：Tabs</h3>
+<p>Tabs组件提供了 <code>before-leave</code> 钩子，可以使用这个钩子完成对数据变更的劫持。</p>
+<figure data-type="image" tabindex="3"><img src="https://awhitemouse.github.io//post-images/1617162183098.png" alt="" loading="lazy"></figure>
+<p>使用示例如下：<br>
+<img src="https://awhitemouse.github.io//post-images/1617162565503.png" alt="" loading="lazy"><br>
+<img src="https://awhitemouse.github.io//post-images/1617162382412.png" alt="" loading="lazy"></p>
+<h3 id="二级分类radiogroup">二级分类：RadioGroup</h3>
+<p>相较于Tabs，RadioGroup的处理方案要复杂一些，因为这个组件并没有提供类似于 <code>before-leave</code> 的钩子，所以需要自行实现这一过程。</p>
+<p>最初的想法是利用官方提供的 <code>value</code> 属性以及<code>chang</code>回调来完成这一过程。因为如果用 <code>v-model</code> 的话，Vue内部就会代理所有的数据处理，就不能完成自定义的数据劫持了。</p>
+<figure data-type="image" tabindex="4"><img src="https://awhitemouse.github.io//post-images/1617163290456.png" alt="" loading="lazy"></figure>
+<p>关键代码如下：</p>
+<pre><code class="language-html">&lt;template&gt;
+    &lt;el-tabs v-model=&quot;activeLevelGroup&quot; :before-leave=&quot;beforeLeave&quot; :class=&quot;$style['tabs']&quot;&gt;
+        &lt;el-tab-pane
+            v-for=&quot;key in bigCatLevelManage&quot;
+            :key=&quot;key&quot;
+            :label=&quot;BigCatLevelGroupName[key]&quot;
+            :name=&quot;`${key}`&quot;
+        &gt;
+            &lt;!-- FIXME: value + change --&gt;
+            &lt;el-radio-group :value=&quot;activeLevel&quot; size=&quot;small&quot; @change=&quot;onRadioChange&quot;&gt;
+                &lt;el-radio-button
+                    v-for=&quot;level in BigCatLevelManage[key]&quot;
+                    :key=&quot;level&quot;
+                    :label=&quot;level&quot;
+                    :data-level=&quot;level&quot;
+                &gt;
+                    {{BigCatBookLevelName[level]}}
+                &lt;/el-radio-button&gt;
+            &lt;/el-radio-group&gt;
+        &lt;/el-tab-pane&gt;
+    &lt;/el-tabs&gt;
+&lt;/template&gt;
+
+&lt;script lang=&quot;ts&quot;&gt;
+import {Vue, Prop, Component, Watch} from 'vue-property-decorator';
+
+@Component
+export default class LevelTab extends Vue {
+    activeLevel = 0;
+
+    onRadioChange(value) {
+        // 这里拦截数据变更
+        if (this.allowChange) {
+            this.activeLevel = value;
+        }
+        else {
+            // ……
+        }
+    }
+}
+&lt;/script&gt;
+</code></pre>
+<p>当我兴高采烈地去运行代码的时候发现实际效果与预想的效果差的十万八千里。</p>
+<p>无论我点选哪个选项，该选项都会被点亮，并且再次点击也无法取消选中……😰</p>
+<figure data-type="image" tabindex="5"><img src="https://awhitemouse.github.io//post-images/1617172179228.png" alt="" loading="lazy"></figure>
+<p>到这里，继续靠推测去研究方案效率就很低了。不如干脆去看看element-ui 源码，看看<a href="https://github.com/ElemeFE/element/blob/dev/packages/radio/src/radio-group.vue">RadioGroup</a>和<a href="https://github.com/ElemeFE/element/blob/dev/packages/radio/src/radio-button.vue">RadioButton</a>的数据是怎么传递和更新的.</p>
+<h2 id="radiogroup-与-radiobutton">RadioGroup 与 RadioButton</h2>
+<p>先看了 RadioGroup 的源码，只在 <code>created</code> 钩子里看见了数据处理相关的代码。它监听了 <code>handleChange</code> 事件，并在监听到该事件后向上层发送 <code>change</code> 回调。</p>
+<pre><code class="language-js">created() {
+    this.$on('handleChange', value =&gt; {
+        this.$emit('change', value);
+    });
+},
+</code></pre>
+<p>RadioGroup 没有更多关于数据处理的代码了，那么玄机就应该在 RadioButton 的源码里了，这里先贴一下 RadioButton 代码里有关数据处理的部分。</p>
+<pre><code class="language-html">&lt;template&gt;
+  &lt;label
+    class=&quot;el-radio-button&quot;
+    :class=&quot;[
+      size ? 'el-radio-button--' + size : '',
+      { 'is-active': value === label },
+      { 'is-disabled': isDisabled },
+      { 'is-focus': focus }
+    ]&quot;
+    role=&quot;radio&quot;
+    :aria-checked=&quot;value === label&quot;
+    :aria-disabled=&quot;isDisabled&quot;
+    :tabindex=&quot;tabIndex&quot;
+    @keydown.space.stop.prevent=&quot;value = isDisabled ? value : label&quot;
+  &gt;
+    &lt;input
+      class=&quot;el-radio-button__orig-radio&quot;
+      :value=&quot;label&quot;
+      type=&quot;radio&quot;
+      v-model=&quot;value&quot;
+      :name=&quot;name&quot;
+      @change=&quot;handleChange&quot;
+      :disabled=&quot;isDisabled&quot;
+      tabindex=&quot;-1&quot;
+      @focus=&quot;focus = true&quot;
+      @blur=&quot;focus = false&quot;
+    &gt;
+    &lt;span
+      class=&quot;el-radio-button__inner&quot;
+      :style=&quot;value === label ? activeStyle : null&quot;
+      @keydown.stop&gt;
+      &lt;slot&gt;&lt;/slot&gt;
+      &lt;template v-if=&quot;!$slots.default&quot;&gt;{{label}}&lt;/template&gt;
+    &lt;/span&gt;
+  &lt;/label&gt;
+&lt;/template&gt;
+&lt;script&gt;
+  import Emitter from 'element-ui/src/mixins/emitter';
+
+  export default {
+    name: 'ElRadioButton',
+
+    mixins: [Emitter],
+    
+    computed: {
+      // **注意这里**
+      value: {
+        get() {
+          return this._radioGroup.value;
+        },
+        set(value) {
+          this._radioGroup.$emit('input', value);
+        }
+      },
+      _radioGroup() {
+        let parent = this.$parent;
+        while (parent) {
+          if (parent.$options.componentName !== 'ElRadioGroup') {
+            parent = parent.$parent;
+          } else {
+            return parent;
+          }
+        }
+        return false;
+      },
+    },
+
+    methods: {
+      handleChange() {
+        this.$nextTick(() =&gt; {
+          this.dispatch('ElRadioGroup', 'handleChange', this.value);
+        });
+      }
+    }
+  };
+&lt;/script&gt;
+</code></pre>
+<p>从源码里可以看到，内部是使用 <code>&lt;input type=&quot;radio&quot; /&gt;</code> 实现的单选按钮。</p>
+<p>当我们的使用了 <code>value</code> 来传递数据时，可以监听 <code>input</code> 回调来劫持数据的更改。</p>
+<p>然后当我使用 <code>value</code> + <code>input</code> 的组合时，展示效果依然跟上面一样，所有的选项都会被点亮。我用Vue devtools查看数据的时候发现，数据传递确实中断了。而我所看到的<strong>点亮</strong>的效果，居然是 <code>input:checked</code> 样式造成的，而不是数据。</p>
+<p>那么想要用 <code>value</code> 就必须要消除 <code>input</code> 的 <code>checked</code> 状态对样式的影响。所以当前最佳的办法就是自定义 <code>click</code> 方法，然后使用 <code>.prevent</code> 修饰符来屏蔽掉内部的点击事件。</p>
+<h2 id="劫持radiogroup终极方案">“劫持”RadioGroup终极方案</h2>
+<pre><code class="language-html">&lt;template&gt;
+    &lt;el-tabs v-model=&quot;activeLevelGroup&quot; :before-leave=&quot;beforeLeave&quot; :class=&quot;$style['tabs']&quot;&gt;
+        &lt;el-tab-pane
+            v-for=&quot;key in bigCatLevelManage&quot;
+            :key=&quot;key&quot;
+            :label=&quot;BigCatLevelGroupName[key]&quot;
+            :name=&quot;`${key}`&quot;
+        &gt;
+            &lt;el-radio-group :value=&quot;activeLevel&quot; size=&quot;small&quot;&gt;
+                &lt;!-- NOTE：这里拦截了radio-button的向上冒泡。主要为了实现数据切换前进行一系列的判断 --&gt;
+                &lt;el-radio-button
+                    v-for=&quot;level in BigCatLevelManage[key]&quot;
+                    :key=&quot;level&quot;
+                    :label=&quot;level&quot;
+                    :data-level=&quot;level&quot;
+                    @click.native.prevent=&quot;handeClickRadio(level)&quot;
+                &gt;
+                    {{BigCatBookLevelName[level]}}
+                &lt;/el-radio-button&gt;
+            &lt;/el-radio-group&gt;
+        &lt;/el-tab-pane&gt;
+    &lt;/el-tabs&gt;
+&lt;/template&gt;
+
+&lt;script lang=&quot;ts&quot;&gt;
+import {Vue, Prop, Component, Watch} from 'vue-property-decorator';
+
+@Component
+export default class LevelTab extends Vue {
+
+    activeLevel =0;
+
+    // 拦截radio-button向上冒泡，用于判断当前是否允许切换选项
+    handeClickRadio(level: BigCatBookLevel) {
+        // 如果当前点击的radio已经是选中状态，则不作处理
+        if (level === this.activeLevel) {
+            return;
+        }
+        this.beforeLeave().then(() =&gt; {
+            this.activeLevel = level;
+        });
+    }
+}
+&lt;/script&gt;
+</code></pre>
+<h2 id="我是尾巴">我是尾巴</h2>
+<p>至此，问题总算解决了，这也感谢其他小伙伴的帮助。</p>
+<p>遇到这种问题的时候，还是要多看源码是怎么设计的，从里面寻找突破口。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[GitHub Action: The process '/usr/bin/git' failed with exit code 128]]></title>
+        <id>https://awhitemouse.github.io/post/github-action-gou-jian-shi-bai-chu-li/</id>
+        <link href="https://awhitemouse.github.io/post/github-action-gou-jian-shi-bai-chu-li/">
+        </link>
+        <updated>2021-03-24T01:55:07.000Z</updated>
+        <content type="html"><![CDATA[<p>最近发现了<a href="https://vuepress-theme-hope.github.io/zh">vuepress-theme-hope</a>这个强大的静态博客生成工具，它使用了<code>GitHub Action</code>来构建生成静态网页，但是在我发布代码之后，构建了好几次都没有成功。</p>
+<h2 id="问题">问题</h2>
+<p>错误日志：</p>
+<blockquote>
+<p>The process '/usr/bin/git' failed with exit code 128.</p>
+</blockquote>
+<p>截图：</p>
+<figure data-type="image" tabindex="1"><img src="https://awhitemouse.github.io//post-images/1616550964478.png" alt="" loading="lazy"></figure>
+<p>构建脚本：</p>
+<pre><code class="language-yml">name: Deploy GitHub Pages
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - uses: actions/cache@v2.1.4
+        id: node-modules
+        with:
+          path: node_modules/
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-
+
+      - name: Install Deps
+        if: steps.node-modules.outputs.cache-hit != 'true'
+        run: yarn install --frozen-lockfile
+
+      - name: Build Template
+        run: yarn run build
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: dist
+</code></pre>
+<h2 id="处理">处理</h2>
+<p>经过多次的尝试，最后找到的原因是没有配置 <code>GITHUB_TOKEN</code> 属性。</p>
+<p>配置以后的代码是这样的</p>
+<pre><code class="language-yml">name: Deploy GitHub Pages
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - uses: actions/cache@v2.1.4
+        id: node-modules
+        with:
+          path: node_modules/
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-
+
+      - name: Install Deps
+        if: steps.node-modules.outputs.cache-hit != 'true'
+        run: yarn install --frozen-lockfile
+
+      - name: Build Template
+        run: yarn run build
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   /* 注意：这行是新加的 */
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: dist
+</code></pre>
+<p>大功告成。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[为什么要在function之前加上"!"]]></title>
+        <id>https://awhitemouse.github.io/post/wei-shi-me-yao-zai-function-zhi-qian-jia-shang/</id>
+        <link href="https://awhitemouse.github.io/post/wei-shi-me-yao-zai-function-zhi-qian-jia-shang/">
+        </link>
+        <updated>2021-03-19T09:51:28.000Z</updated>
+        <summary type="html"><![CDATA[<p>在某些第三方包中，会见到以 <code>!</code> 开头的代码，那么为什么要这么做呢？</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>在某些第三方包中，会见到以 <code>!</code> 开头的代码，那么为什么要这么做呢？</p>
+<!-- more -->
+<p>这种代码的框架是这样的：</p>
+<pre><code class="language-js">!function() {
+
+}();
+</code></pre>
+<p>以这样的形式展现，可能不容易看出来是怎么回事，这么写的用意是什么？</p>
+<p>接下来再看另外一个常见的第三方包的导出代码形式：</p>
+<pre><code class="language-js">(function() {
+
+})()
+</code></pre>
+<p>其实， <code>!</code> 的作用跟 <code>()</code> 的作用相同，都是将后面的部分解析成函数表达式去执行。</p>
+<p>同样作用的还有 <code>~</code>、<code>+</code>、<code>-</code> 等等。</p>
+<h2 id="参考">参考</h2>
+<ol>
+<li><a href="https://swordair.com/function-and-exclamation-mark/">function与感叹号</a>.</li>
+<li><a href="https://segmentfault.com/q/1010000000117476">javascript里function之前加上感叹号 ' ! ' 会怎么样？</a>.</li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[JS实现字符串的批量替换]]></title>
+        <id>https://awhitemouse.github.io/post/js-shi-xian-zi-fu-chuan-de-pi-liang-ti-huan/</id>
+        <link href="https://awhitemouse.github.io/post/js-shi-xian-zi-fu-chuan-de-pi-liang-ti-huan/">
+        </link>
+        <updated>2021-03-15T07:26:33.000Z</updated>
+        <content type="html"><![CDATA[<p>有一个对象数据结构如下：</p>
+<pre><code class="language-js">obj = {
+    content: '准备将#网址导航项目#由静态网页项目改装为#React项目#，减少重复代码。',
+    links: ['https://github.com/WebStackPage/WebStackPage.github.io', 'http: //www.baidu.com'],
+}
+</code></pre>
+<p>现在需要使用原生JS完成字符串替换工作：找到<code>content</code>中使用<code>#</code>号标识符包裹的字符串，将其改成使用<code>a标签</code>包裹，<code>a标签</code>的<code>href</code>依次使用<code>links</code>中的数据项。</p>
+<p>替换后的结果应如下：</p>
+<pre><code class="language-html">学习react hooks：&lt;a href=&quot;http://hbuecx.com/post/react-hooks-xue-xi-bi-ji/&quot;&gt;React Hooks学习笔记&lt;/a&gt;useState&lt;a href=&quot;http://baidu.com&quot;&gt;和&lt;/a&gt;useEffect部分d
+</code></pre>
+<h2 id="实现">实现</h2>
+<pre><code class="language-js">// 先将字符串拆解
+const textArr = a.content.split('#');
+// 最后的结果
+let result = '';
+// 标志位：用于判断当前应该添加开标签还是闭标签
+let flag = 0;
+// 如果第一个字符就是#号，那么从第一个字符开始添加开标签
+if (a.content[0] === '#') {
+    result += '&lt;a href=&quot;' + a.links[0] + '&quot;&gt;';
+    flag = ~flag;
+}
+textArr.forEach((text, index) =&gt; {
+    if (flag) {
+        // 如果已经添加过开标签，则现在应该添加标签
+        result += text + '&lt;/a&gt;';
+    }
+    else if (index !== textArr.length - 1) {
+        // 如果前一个添加的标签是闭标签，并且当前不是数组的最后一个数据，则添加开标签
+        result += text + '&lt;a href=&quot;' + a.links[index / 2] + '&quot;&gt;';
+    }
+    else {
+        // 最后一个数据项，前一个添加的是闭标签，则直接连接文本
+        result += text;
+    }
+    // 每次连接文本都更改一下标志位
+    flag = ~flag;
+})
+console.log(result);
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Git 提交部分代码]]></title>
+        <id>https://awhitemouse.github.io/post/git-ti-jiao-bu-fen-dai-ma/</id>
+        <link href="https://awhitemouse.github.io/post/git-ti-jiao-bu-fen-dai-ma/">
+        </link>
+        <updated>2021-03-11T07:40:28.000Z</updated>
+        <content type="html"><![CDATA[<p>如果我们开发过程中，需要先提交一部分代码，该怎么做呢？</p>
+<h2 id="关键步骤">关键步骤</h2>
+<pre><code class="language-shell">git add demo.html // 提交到暂存区
+git stash -u -k  // 忽略其他修改，关键一步
+git commit -m '修改演示文件' // 提交暂存区
+git pull // 拉取合并
+git push origin master // 推到远程仓库
+git stash pop // 恢复之前忽略的文件（非常重要的一步）
+</code></pre>
+<h2 id="参考链接">参考链接</h2>
+<ol>
+<li><a href="https://blog.csdn.net/DongFuPanda/article/details/104246064">git 只提交部分文件到远程仓库</a>.</li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Redux与Vuex的区别]]></title>
+        <id>https://awhitemouse.github.io/post/redux-yu-vuex-de-qu-bie/</id>
+        <link href="https://awhitemouse.github.io/post/redux-yu-vuex-de-qu-bie/">
+        </link>
+        <updated>2021-03-08T08:51:17.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="相同点">相同点</h2>
+<ol>
+<li>唯一的数据源</li>
+<li>全局注入store</li>
+</ol>
+<h2 id="不同点">不同点</h2>
+<ol>
+<li>vuex直接修改原来的数据；redux根据原来的数据进行计算后返回新的数据</li>
+<li>vuex定义了 state 、getter 、mutation 、 action四个对象；redux定义了state  、 reducer 、 action三个对象</li>
+<li>vuex中mutation用于同步操作，action用于异步操作；redux中action既用于同步操作，也用于异步操作，用于异步操作时需要引入引入第三方包（redux-thunk\redux-saga）</li>
+<li>vuex使用commit派发同步方法，dispatch派发异步方法；redux都用dispatch派发</li>
+<li>vuex使用mutation修改状态；redux使用reducer修改状态</li>
+</ol>
+<h2 id="参考链接">参考链接</h2>
+<ol>
+<li><a href="https://lq782655835.github.io/blogs/react/diff-vuex-redux.html">Vuex与Redux比较</a>.</li>
+<li><a href="https://juejin.cn/post/6844903929063424013">Redux 和 Vuex 的对比</a>.</li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[腾讯移动端开发规范]]></title>
+        <id>https://awhitemouse.github.io/post/teng-xun-yi-dong-duan-kai-fa-gui-fan/</id>
+        <link href="https://awhitemouse.github.io/post/teng-xun-yi-dong-duan-kai-fa-gui-fan/">
+        </link>
+        <updated>2021-02-20T07:33:47.000Z</updated>
+        <content type="html"><![CDATA[<p>要考虑Android低端机与2G网络场景下性能 <code>注意！</code></p>
+<h3 id="发布前必要检查项">发布前必要检查项</h3>
+<ul>
+<li>所有图片必须有进行过压缩</li>
+<li>考虑适度的有损压缩，如转化为80%质量的jpg图片</li>
+<li>考虑把大图切成多张小图，常见在banner图过大的场景</li>
+</ul>
+<h3 id="加载性能优化-达到打开足够快">加载性能优化, 达到打开足够快</h3>
+<ul>
+<li>数据离线化，考虑将数据缓存在 localStorage</li>
+<li>初始请求资源数 &lt; 4 注意！</li>
+<li>图片使用CSS Sprites 或 DataURI</li>
+<li>外链 CSS 中避免 @import 引入</li>
+<li>考虑内嵌小型的静态资源内容</li>
+<li>初始请求资源gzip后总体积 &lt; 50kb</li>
+<li>静态资源(HTML/CSS/JS/Image)是否优化压缩？</li>
+<li>避免打包大型类库</li>
+<li>确保接入层已开启Gzip压缩（考虑提升Gzip级别，使用CPU开销换取加载时间）<code>注意！</code></li>
+<li>尽量使用CSS3代替图片</li>
+<li>初始首屏之外的静态资源（JS/CSS）延迟加载 <code>注意！</code></li>
+<li>初始首屏之外的图片资源按需加载（判断可视区域） <code>注意！</code></li>
+<li>单页面应用(SPA)考虑延迟加载非首屏业务模块</li>
+<li>开启Keep-Alive链路复用</li>
+</ul>
+<h3 id="运行性能优化-达到操作足够流畅">运行性能优化, 达到操作足够流畅</h3>
+<ul>
+<li>避免 iOS 300+ms 点击延时问题 <code>注意！</code></li>
+<li>缓存 DOM 选择与计算</li>
+<li>避免触发页面重绘的操作</li>
+<li>Debounce连续触发的事件(scroll / resize / touchmove等)，避免高频繁触发执行 <code>注意！</code></li>
+<li>尽可能使用事件代理，避免批量绑定事件</li>
+<li>使用CSS3动画代替JS动画</li>
+<li>避免在低端机上使用大量CSS3渐变阴影效果，可考虑降级效果来提升流畅度</li>
+<li>HTML结构层级保持足够简单</li>
+<li>尽能少的使用CSS高级选择器与通配选择器</li>
+<li>Keep it simple</li>
+</ul>
+<h2 id="参考链接">参考链接</h2>
+<ol>
+<li><a href="http://alloyteam.github.io/Spirit/modules/Standard/index.html">移动开发规范概述</a>.</li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Chrome浏览器截长屏]]></title>
+        <id>https://awhitemouse.github.io/post/chrome-liu-lan-qi-jie-chang-ping/</id>
+        <link href="https://awhitemouse.github.io/post/chrome-liu-lan-qi-jie-chang-ping/">
+        </link>
+        <updated>2021-02-15T03:26:27.000Z</updated>
+        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://awhitemouse.github.io//post-images/1613359611986.png" alt="" loading="lazy"></figure>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[微信小程序字体加载缓慢的问题]]></title>
+        <id>https://awhitemouse.github.io/post/wei-xin-xiao-cheng-xu-zi-ti-jia-zai-huan-man-de-wen-ti/</id>
+        <link href="https://awhitemouse.github.io/post/wei-xin-xiao-cheng-xu-zi-ti-jia-zai-huan-man-de-wen-ti/">
+        </link>
+        <updated>2021-01-12T02:13:52.000Z</updated>
+        <content type="html"><![CDATA[<p>使用小程序自带的字体加载api辅助字体加载。</p>
+<h2 id="解决方案">解决方案</h2>
+<pre><code class="language-js">wx.loadFontFace({
+    global: true,
+    family: 'Bitstream Vera Serif Bold',
+    source: 'url(&quot;https://sungd.github.io/Pacifico.ttf&quot;)',
+    success: console.log
+})
+</code></pre>
+<h2 id="参考链接">参考链接</h2>
+<ol>
+<li><a href="https://developers.weixin.qq.com/miniprogram/dev/api/ui/font/wx.loadFontFace.html">wx.loadFontFace</a>.</li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[小程序多次点击会多次跳转页面问题]]></title>
+        <id>https://awhitemouse.github.io/post/xiao-cheng-xu-duo-ci-dian-ji-hui-duo-ci-tiao-zhuan-ye-mian-wen-ti/</id>
+        <link href="https://awhitemouse.github.io/post/xiao-cheng-xu-duo-ci-dian-ji-hui-duo-ci-tiao-zhuan-ye-mian-wen-ti/">
+        </link>
+        <updated>2021-01-11T14:49:29.000Z</updated>
+        <summary type="html"><![CDATA[<p>目前可以想到的方案有两种：</p>
+<ol>
+<li>通过变量进行控制；</li>
+<li>节流函数。</li>
+</ol>
+]]></summary>
+        <content type="html"><![CDATA[<p>目前可以想到的方案有两种：</p>
+<ol>
+<li>通过变量进行控制；</li>
+<li>节流函数。</li>
+</ol>
+<!-- more -->
+<h2 id="解决方案">解决方案</h2>
+<h3 id="方案一通过变量进行控制">方案一：通过变量进行控制</h3>
+<p><em>book.vue</em></p>
+<pre><code class="language-html">&lt;template&gt;
+    &lt;view @tap=&quot;handleClickBook(bookId)&quot;&gt;点我试试看&lt;/view&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import Taro from '@taro/tarojs';
+import {throttle} from '../utils/utils';
+
+export default {
+    data: {
+        // 初始为可以跳转的状态
+        canJump: true,
+    },
+    onHide() {
+        this.canJump = true;
+    },
+    methods: {
+        handleClickBook(bookId: number) {
+            if (this.canJump) {
+                // 当触发跳转函数的时候，需要将跳转的标志位设为false，表示在跳转完成之前，不能重复进行操作
+                this.canJump = false;
+                Taro.navigateTo({
+                    url: '/pages/detail/index' + bookId
+                });
+            }
+        },
+    }
+};
+&lt;/script&gt;
+</code></pre>
+<p>这种方式是满足我们的需求的，但却不是最好的方案，更好的方案是使用 ** 节流函数** 。为什么说它更好呢？我们接着往下看👇</p>
+<h3 id="方案二节流函数推荐">方案二：节流函数（推荐）</h3>
+<p>首先来看一看如何来编写我们的节流函数，这里给出一个示例，这个示例中的节流方法有两种：</p>
+<ol>
+<li>时间戳；</li>
+<li>setTimeout。</li>
+</ol>
+<p><em>utils/utils.js</em></p>
+<pre><code class="language-js">/**
+ * @desc 函数节流
+ * @param func 函数
+ * @param wait 延迟执行毫秒数
+ * @param type 1 表时间戳版，2 表定时器版
+ */
+export function throttle(func, wait, type = 1) {
+    let previous = 0;
+    let timeout: null | NodeJS.Timeout = null;
+    if (type === 1) {
+        previous = 0;
+    }
+    else if (type === 2) {
+        timeout = null;
+    }
+    return function () {
+        const context = this;
+        const args = arguments;
+        if (type === 1) {
+            const now = Date.now();
+
+            if (now - previous &gt; wait) {
+                func.apply(context, args);
+                previous = now;
+            }
+        }
+        else if (type === 2) {
+            if (!timeout) {
+                timeout = setTimeout(() =&gt; {
+                    timeout = null;
+                    func.apply(context, args);
+                }, wait);
+            }
+        }
+    };
+}
+</code></pre>
+<p>好了，已经变写好了我们的节流函数，接下来看看如何去应用它：</p>
+<p><em>book.vue</em></p>
+<pre><code class="language-html">&lt;template&gt;
+    &lt;view @tap=&quot;handleClickBook(bookId)&quot;&gt;点我试试看&lt;/view&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import Taro from '@taro/tarojs';
+import {throttle} from '../utils/utils';
+
+export default {
+    data: {
+        bookId: 1,
+    },
+    methods: {
+        handleClickBook: throttle(function nav(bookId: number) {
+            Taro.navigateTo({
+                url: '/pages/detail/index' + bookId
+            })
+        }, 1500),
+    }
+};
+&lt;/script&gt;
+</code></pre>
+<p>🙆‍♂️OK，这样我们就解决了我们遇到的重复跳转的问题啦！</p>
+<p>❓那为什么我更推荐使用节流函数的方案呢？是因为节流函数的方案更便于将跳转api封装成工具方法，避免在所有涉及到跳转的地方都需要做一次防止重复点击的处理。</p>
+<p>👁那我们又该如何将跳转api封装成工具方法？如何去使用被封装的工具方法呢？</p>
+<p><em>util/index.js</em>：封装跳转api</p>
+<pre><code class="language-js">import Taro from '@taro/tarojs';
+import {throttle} from '../utils/utils';
+
+export const navigateTo = throttle(function nav(bookId: number): void {
+    Taro.navigateTo({
+        url: '/pages/detail/index' + bookId
+    })
+}, 1500);
+</code></pre>
+<p><em>book.vue</em></p>
+<pre><code class="language-html">&lt;template&gt;
+    &lt;view @tap=&quot;handleClickBook(bookId)&quot;&gt;点我试试看&lt;/view&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import Taro from '@taro/tarojs';
+import {throttle} from '../utils/utils';
+import {navigateTo} from '../utils/index';
+
+export default {
+    data: {
+        bookId: 1,
+    },
+    methods: {
+        // 只需要调用一下封装好的api就好了
+        handleClickBook() {
+            navigateTo(bookId);
+        },
+    }
+};
+&lt;/script&gt;
+</code></pre>
+<p>👀你看，这样是不是更简单了，仅仅需要在一个地方做防止重复跳转的逻辑就好了！</p>
+<p><em><font color="gray">以下为我的踩坑记录，不用看。</font></em></p>
+<h2 id="踩坑">踩坑</h2>
+<p>在开发过程中，我在以上两种方案上都踩过坑。</p>
+<p><strong>方案一踩的坑</strong></p>
+<p>我曾在 <code>Taro.navigate</code> 的 <code>success</code> 回调中去复原 <code>canump</code> 的值，但是发现根本没有解决问题。原因在于 <code>Taro.navigate</code> 的 <code>success</code> 回调并不是在跳转完成之后执行的，而是在程序确认改路径可以跳转后就已经执行，但是在那个时候，页面还处于存在的状态。一旦<code>canump</code> 的值被复原，那么用户又可以重复点击重复跳转了。</p>
+<p><strong>方案二踩的坑</strong></p>
+<p>这个坑踩在封装跳转函数的时候，先看踩坑的代码：</p>
+<pre><code class="language-js">import Taro from '@taro/tarojs';
+import {throttle} from '../utils/utils';
+
+export const navigateTo = (bookId): void =&gt; throttle(function nav() {
+    Taro.navigateTo({
+        url: '/pages/detail/index' + bookId
+    })
+}, 1500);
+</code></pre>
+<p>拿这里的代码跟上面可用的工具方法对比一下就知道问题出在哪里了：我将 <code>throttle</code> 外面又包装了一个函数，这样的话 <code>throttle</code> 函数就没有起到它应有的作用。因为每次 <code>navigateTo</code> 执行的都是一个新函数。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[链式调用实现原理]]></title>
+        <id>https://awhitemouse.github.io/post/lian-shi-diao-yong-shi-xian-yuan-li/</id>
+        <link href="https://awhitemouse.github.io/post/lian-shi-diao-yong-shi-xian-yuan-li/">
+        </link>
+        <updated>2021-01-06T03:01:03.000Z</updated>
+        <summary type="html"><![CDATA[<p>中心思想是在函数的结尾 <code>return this;</code> .</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>中心思想是在函数的结尾 <code>return this;</code> .</p>
+<!-- more -->
+<p>场景：实现一个可以实现简单的加减乘除的类，可以通过链式调用的方式进行加减乘除，最终返回最后的结果。</p>
+<h2 id="基础版">基础版</h2>
+<pre><code class="language-js">class MyMath {
+    constructor(num) {
+        this.num = num;
+    }
+
+    add(num) {
+        this.num += num;
+        return this;
+    }
+
+    sub(num) {
+        this.num -= num;
+        return this;
+    }
+
+    mul(num) {
+        this.num *= num;
+        return this;
+    }
+
+    div(num) {
+        this.num /= num;
+        return this;
+    }
+}
+
+const result = new MyMath(2).add(5).mul(2).sub(7);
+console.log(result);   // {num: 7}
+</code></pre>
+<p>在上面的demo中，我们可以通过 <code>return this;</code> 来完成链式调用。</p>
+<p>但是上面的demo有一点缺陷，因为最终返回的还不是我们的想要的结果，所以还需要添加一个用于导出最后结果的方法。</p>
+<h2 id="加强版">加强版</h2>
+<p>这里我添加了一个 <code>run</code> 方法，用于导出最后的结果。</p>
+<pre><code class="language-js">class MyMath {
+    constructor(num) {
+        this.num = num;
+    }
+
+    add(num) {
+        this.num += num;
+        return this;
+    }
+
+    sub(num) {
+        this.num -= num;
+        return this;
+    }
+
+    mul(num) {
+        this.num *= num;
+        return this;
+    }
+
+    div(num) {
+        this.num /= num;
+        return this;
+    }
+
+    run() {
+        return this.num;
+    }
+}
+
+const result = new MyMath(2).add(5).mul(2).sub(7).run();
+console.log(result);  // 7
+</code></pre>
+<h2 id="我是尾巴">我是尾巴</h2>
+<p>在实际业务场景中，链式调用常见于 <code>Promise</code> 。那么想象一下， <code>Promise</code> 的链式调用是如何实现的呢？</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[css实现不足一屏置底，超出一屏随页面滚动]]></title>
+        <id>https://awhitemouse.github.io/post/css-shi-xian-bu-zu-yi-ping-zhi-di-chao-chu-yi-ping-sui-ye-mian-gun-dong/</id>
+        <link href="https://awhitemouse.github.io/post/css-shi-xian-bu-zu-yi-ping-zhi-di-chao-chu-yi-ping-sui-ye-mian-gun-dong/">
+        </link>
+        <updated>2021-01-05T02:19:01.000Z</updated>
+        <summary type="html"><![CDATA[<p>css实现不足一屏置底，超出一屏随页面滚动</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>css实现不足一屏置底，超出一屏随页面滚动</p>
+<!-- more -->
+<h2 id="实现方案">实现方案</h2>
+<p>主要实现原理：内容区使用<code>min-height: 100%, padding-bottom: **px</code>，footer使用<code>margin-top: -**px</code>。</p>
+<h2 id="参考链接">参考链接</h2>
+<ol>
+<li><a href="http://www.poorren.com/css-footer-fixed-bottom">纯CSS实现Footer固定底部，超过一屏自动撑开</a>.</li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Ts断言对象的某个属性肯定存在]]></title>
+        <id>https://awhitemouse.github.io/post/ts-duan-yan-dui-xiang-de-mou-ge-shu-xing-ken-ding-cun-zai/</id>
+        <link href="https://awhitemouse.github.io/post/ts-duan-yan-dui-xiang-de-mou-ge-shu-xing-ken-ding-cun-zai/">
+        </link>
+        <updated>2020-12-31T09:29:38.000Z</updated>
+        <content type="html"><![CDATA[<p>我声明了一个接口如下：</p>
+<pre><code class="language-js">export interface Material {
+    readonly id?: number;
+    pictureUrl?: string;
+    word?: string;
+}
+</code></pre>
+<p>实际在某种情况下，这里的id是肯定存在的，这时我需要利用做一些处理，但是我在用的时候才发现事情并没有那么简单。</p>
+<p>使用方法如下：</p>
+<pre><code class="language-js">this.materialList.forEach((material, index) =&gt; {
+    materialConfig[material.id] = index;
+});
+</code></pre>
+<p>在使用时，ts飘红了.</p>
+<figure data-type="image" tabindex="1"><img src="https://awhitemouse.github.io//post-images/1609407052063.png" alt="" loading="lazy"></figure>
+<p>具体给出的警告是这样的：<code>Type 'undefined' cannot be used as an index type.</code>。因为在定义接口的时候<code>id</code>是有可能为空的（即undefined），而undefind不能被用做索引值，所以ts向我给出了警告！</p>
+<p>那么遇到这种问题，该如何处理呢？</p>
+<h2 id="解决方案">解决方案</h2>
+<p>这个时候处理方法有两种：</p>
+<ol>
+<li>在取值之前先判断变量已经存在；</li>
+<li>强制断言该变量存在。</li>
+</ol>
+<h3 id="方案1">方案1</h3>
+<p>先判断变量是否存在，当存在时才使用它。</p>
+<pre><code class="language-js">this.materialList.forEach((material, index) =&gt; {
+    if (material.id) {
+        materialConfig[material.id] = index;
+    }
+});
+</code></pre>
+<h3 id="方案2">方案2</h3>
+<p>在变量后面加上<code>!</code>强制断言变量已经存在。</p>
+<pre><code class="language-js">this.materialList.forEach((material, index) =&gt; {
+    materialConfig[material.id!] = index;
+});
+</code></pre>
+<h2 id="我是尾巴">我是尾巴</h2>
+<p>使用方案2的时候代码飘黄了，警告<code>Forbidden non-null assertion.</code>，最终我使用了方案1。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Mac科学上网]]></title>
+        <id>https://awhitemouse.github.io/post/mac-ke-xue-shang-wang/</id>
+        <link href="https://awhitemouse.github.io/post/mac-ke-xue-shang-wang/">
+        </link>
+        <updated>2020-12-18T16:29:19.000Z</updated>
+        <summary type="html"><![CDATA[<p>Trojan + Proxy SwitchyOmega.</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>Trojan + Proxy SwitchyOmega.</p>
+<!-- more -->
+<h2 id="操作步骤">操作步骤</h2>
+<h4 id="下载并安装科学上网工具">下载并安装科学上网工具</h4>
+<ol>
+<li>
+<p>安装 Trojan 客户端。<br>
+链接: <a href="https://pan.baidu.com/s/1RTGyAihw--9KWxzhx0eKJw">https://pan.baidu.com/s/1RTGyAihw--9KWxzhx0eKJw</a> 提取码: <em>bpxk</em> .</p>
+</li>
+<li>
+<p>安装扩展工具 Proxy SwitchyOmega .<br>
+<img src="https://awhitemouse.github.io//post-images/1608364617251.png" alt="" loading="lazy"></p>
+</li>
+</ol>
+<h4 id="proxy-switchyomega-扩展配置">Proxy SwitchyOmega 扩展配置</h4>
+<p><a href="https://www.cnblogs.com/nicole-zhang/p/11955881.html">chrome浏览器SwitchyOmega安装与使用</a>.</p>
+<h4 id="获取代理服务器地址">获取代理服务器地址</h4>
+<ol>
+<li>访问 <a href="https://jiang.netlify.com/">https://jiang.netlify.com/</a>，获取代理服务器地址加密串。</li>
+<li>复制加密串至<a href="https://tool.oschina.net/encrypt?type=3">https://tool.oschina.net/encrypt?type=3</a>，执行<strong>BASE64解码</strong>。</li>
+<li>复制解码后的明文。</li>
+<li>打开工具，依次点击：【链接】=》【添加】=》【从粘贴板添加】。</li>
+<li>此时可以在工具首页中看见刚刚添加的代理服务器列表了。</li>
+</ol>
+<h4 id="测试网速并链接">测试网速并链接</h4>
+<ol>
+<li>依次点击【链接】=》【测试所有链接的延迟】。</li>
+<li>选择延迟较小的代理服务器并链接。</li>
+<li>当电脑弹出如下提示时，表示可以科学上网了。<br>
+<img src="https://awhitemouse.github.io//post-images/1608364439807.png" alt="" loading="lazy"></li>
+</ol>
+<h4 id="问题处理">问题处理</h4>
+<p>如果出现工具打不开的情况，输入如下命令：<code>rm -rf ~/.config/trojan-qt5</code>。然后再重新执行上述步骤。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Taro中监听小程序的onReady生命周期]]></title>
+        <id>https://awhitemouse.github.io/post/taro-zhong-jian-ting-xiao-cheng-xu-de-onready-sheng-ming-zhou-qi/</id>
+        <link href="https://awhitemouse.github.io/post/taro-zhong-jian-ting-xiao-cheng-xu-de-onready-sheng-ming-zhou-qi/">
+        </link>
+        <updated>2020-12-04T02:24:45.000Z</updated>
+        <summary type="html"><![CDATA[<p>在Taro vue中监听小程序 <code>onReady</code> 生命周期的方法。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>在Taro vue中监听小程序 <code>onReady</code> 生命周期的方法。</p>
+<!-- more -->
+<pre><code class="language-js">import {eventCenter, getCurrentInstance} from '@tarojs/taro';
+
+export default {
+    mounted(): void {
+        eventCenter.once(getCurrentInstance().router.onReady, () =&gt; {
+            console.log('onReady');
+        });
+    },
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[微信小程序自定义导航栏]]></title>
+        <id>https://awhitemouse.github.io/post/wei-xin-xiao-cheng-xu-zi-ding-yi-dao-hang-lan/</id>
+        <link href="https://awhitemouse.github.io/post/wei-xin-xiao-cheng-xu-zi-ding-yi-dao-hang-lan/">
+        </link>
+        <updated>2020-12-02T07:55:37.000Z</updated>
+        <content type="html"><![CDATA[<p>微信小程序自定义tab栏。</p>
+<h2 id="代码参考">代码参考</h2>
+<pre><code class="language-html">&lt;template&gt;
+    &lt;view&gt;
+        &lt;view v-if=&quot;!fixed&quot; :style=&quot;containerStyle&quot; /&gt;
+        &lt;view
+            :class=&quot;$style['nav']&quot;
+            :style=&quot;containerStyle&quot;
+        &gt;
+            &lt;view
+                :class=&quot;$style['bar']&quot;
+                :style=&quot;{height: `${statusBarHeight}px`}&quot;
+            /&gt;
+            &lt;view
+                :class=&quot;$style['title']&quot;
+                :style=&quot;{height: `${navHeight}px`}&quot;
+            &gt;
+                &lt;!-- 设置的默认标题为图片形式，所以需要让文字的展示优先级高于图片 --&gt;
+                &lt;image
+                    v-if=&quot;titleImg &amp;&amp; !titleText&quot;
+                    :src=&quot;titleImg&quot;
+                    :style=&quot;iconStyle&quot;
+                /&gt;
+                &lt;view
+                    v-if=&quot;titleText&quot;
+                    :style=&quot;titleStyle&quot;
+                &gt;
+                    {{titleText}}
+                &lt;/view&gt;
+            &lt;/view&gt;
+        &lt;/view&gt;
+    &lt;/view&gt;
+&lt;/template&gt;
+
+&lt;script lang=&quot;ts&quot;&gt;
+import Taro from '@tarojs/taro';
+import {COMMON} from '@/config/static.config';
+
+interface NavigateState {
+    statusBarHeight: number;
+    navHeight: number;
+    containerStyle: Record&lt;string, string&gt;;
+    iconStyle: Record&lt;string, string&gt;;
+    titleStyle: Record&lt;string, string&gt;;
+}
+
+export default {
+    props: {
+        fixed: {
+            type: Boolean,
+            default: false,
+        },
+        background: {
+            type: String,
+            default: '#fff'
+        },
+        titleText: {
+            type: String,
+            default: '',
+        },
+        titleImg: {
+            type: String,
+            default: COMMON.NAVIGATE_TITLE,
+        },
+        fontSize: {
+            type: Number,
+            default: 16
+        },
+        color: {
+            type: String,
+            default: '#404040'
+        },
+        iconHeight: {
+            type: Number,
+            default: 24
+        },
+        iconWidth: {
+            type: Number,
+            default: 82
+        }
+    },
+    data(): NavigateState {
+        return {
+            statusBarHeight: 0,
+            navHeight: 0,
+            containerStyle: {},
+            iconStyle: {},
+            titleStyle: {},
+        };
+    },
+    created(): void {
+        this.setNavHeight();
+        this.setStyle();
+    },
+    methods: {
+        setNavHeight(): void {
+            const {statusBarHeight}: {statusBarHeight: number} = Taro.getSystemInfoSync();
+            const menuButton = Taro.getMenuButtonBoundingClientRect();
+            const {top, height}: {top: number; height: number} = menuButton;
+            const navHeight = (top - statusBarHeight) * 2 + height;
+            this.statusBarHeight = statusBarHeight;
+            this.navHeight = navHeight;
+        },
+        setStyle(): void {
+            this.containerStyle = {
+                'background-color': this.background,
+                'height': `${this.statusBarHeight + this.navHeight}px`,
+                'width': '100%',
+            };
+            this.iconStyle = {
+                width: `${this.iconWidth}px`,
+                height: `${this.iconHeight}px`,
+            };
+            this.titleStyle = {
+                'font-size': this.fontSize,
+                'color': this.color,
+            };
+        },
+    }
+};
+&lt;/script&gt;
+
+&lt;style lang=&quot;scss&quot; module&gt;
+.nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: $zindex-fixed;
+}
+
+.title {
+    @include flex-center;
+}
+&lt;/style&gt;
+</code></pre>
+<h1 id="参考链接">参考链接</h1>
+<ol>
+<li><a href="https://segmentfault.com/a/1190000018733860">小程序自定义导航栏适配（完美版）</a>.</li>
+</ol>
+]]></content>
+    </entry>
+</feed>
