@@ -5,7 +5,7 @@
 <meta name="keywords" content="web,html,css,js,es6,nodejs,react,antd,webpack,redux,jenkins,踩坑,学习笔记,微信小程序,微信公众号,适配,git,github,gitee" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>如何绘制一条优雅的圆弧线 | 白山</title>
-<link rel="shortcut icon" href="https://awhitemouse.github.io//favicon.ico?v=1618475543194">
+<link rel="shortcut icon" href="https://awhitemouse.github.io//favicon.ico?v=1618833922419">
 <!-- <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.css" rel="stylesheet"> -->
 <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
 <link rel="stylesheet" href="https://awhitemouse.github.io//styles/main.css">
@@ -125,11 +125,11 @@
                     
                 </div>
                 <div class="post-content">
-                    <p>你知道多少种绘制圆弧线的方法呢？</p>
+                    <p>最近在做的一个需求里需要绘制一条优雅的圆弧线，UE问我要不要切图？？伤害性不大，侮辱性极强！</p>
 <!-- more -->
-<p>目前在做的一个需求里需要绘制一条优雅的圆弧线，就是下面这样的👇（看中间的那条白色圆弧线）</p>
+<p>UE给出的设计稿是下面这样的👇（看中间的那条白色圆弧线）</p>
 <figure data-type="image" tabindex="1"><img src="https://awhitemouse.github.io//post-images/1618456618748.png" alt="" loading="lazy"></figure>
-<p>跟UE对设计稿的时候，UE问我这个圆弧要不要切图？<del><em>嗯！？这么简单的圆弧还切图，看不起谁呢？</em><del></p>
+<p>跟UE对设计稿的时候，UE问我这个圆弧要不要切图？<del><em>嗯!? 这么简单的圆弧还切图，看不起谁呢？</em><del></p>
 <p>👀之前也绘制过圆弧线，是使用 <a href="#%E7%94%BB%E5%A4%A7%E5%9C%86">画大圆</a> 的方式实现的。而这一次，我突然想到应该还有其他的办法也可以实现相同的效果吧。</p>
 <p>于是查阅了一些资料，结合自身的经验总结了有如下几种画圆弧的方式：</p>
 <ul>
@@ -148,7 +148,7 @@
   See the Pen <a href='https://codepen.io/awhitemouse/pen/gOgzpvX'>绘制圆弧 - 画大圆</a> by chenxin
   (<a href='https://codepen.io/awhitemouse'>@awhitemouse</a>) on <a href='https://codepen.io'>CodePen</a>.
 </iframe>
-<p><br><br></p>
+<br>
 <h2 id="定制border-radius">定制border-radius</h2>
 <p>我们常用 <code>border-radius</code> 画圆角，或者是画一个圆形。使用方法大概是这样的：</p>
 <pre><code class="language-css">.demo {
@@ -168,7 +168,7 @@
   See the Pen <a href='https://codepen.io/awhitemouse/pen/NWdMqNy'>绘制圆弧 - 定制border-radius</a> by chenxin
   (<a href='https://codepen.io/awhitemouse'>@awhitemouse</a>) on <a href='https://codepen.io'>CodePen</a>.
 </iframe>
-<p><br><br></p>
+<br>
 <h2 id="box-shadow">box-shadow</h2>
 <p>关于 <code>box-shadow</code> 的方案，仔细对比下方的代码和 <a href="#%E5%AE%9A%E5%88%B6border-radius">定制border-radius</a> 的代码可以发现，其实就是将白色边框的绘制方式从 <code>border-right</code> 换成了<code>box-shadow</code>。</p>
 <p>更换以后解决了 <a href="#%E5%AE%9A%E5%88%B6border-radius">定制border-radius</a> 方案中提到的边框压缩的问题，但是这个方案绘制出来的圆弧并不够圆润，并没有达到我所想要的效果。</p>
@@ -176,7 +176,7 @@
   See the Pen <a href='https://codepen.io/awhitemouse/pen/xxgjwxR'>绘制圆弧 - box-shadow</a> by chenxin
   (<a href='https://codepen.io/awhitemouse'>@awhitemouse</a>) on <a href='https://codepen.io'>CodePen</a>.
 </iframe>
-<p><br><br></p>
+<br>
 <h2 id="transformscalexy">transform：scaleX/Y</h2>
 <p>这个方案还挺有趣的，通过旋转的方式从视觉效果上改变了圆角的大小。</p>
 <p>但是我简单写了一个demo之后就发现，这个方案的产生的问题跟 <a href="#%E5%AE%9A%E5%88%B6border-radius">定制border-radius</a> 方案产生的问题相同。</p>
@@ -184,21 +184,21 @@
   See the Pen <a href='https://codepen.io/awhitemouse/pen/vYgjxjB'>绘制圆弧 - transfrom</a> by chenxin
   (<a href='https://codepen.io/awhitemouse'>@awhitemouse</a>) on <a href='https://codepen.io'>CodePen</a>.
 </iframe>
-<p><br><br></p>
+<br>
 <h2 id="svg">svg</h2>
 <p>使用 <code>svg</code> 的方案无论从使用方法还是从展示效果上，跟 <a href="#%E7%94%BB%E5%A4%A7%E5%9C%86">#画大圆</a> 效果是相同的。</p>
 <iframe height="474" style="width: 100%;" scrolling="no" title="绘制圆弧 - svg" src="https://codepen.io/awhitemouse/embed/VwPxpxo?height=265&theme-id=dark&default-tab=html,result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
   See the Pen <a href='https://codepen.io/awhitemouse/pen/VwPxpxo'>绘制圆弧 - svg</a> by chenxin
   (<a href='https://codepen.io/awhitemouse'>@awhitemouse</a>) on <a href='https://codepen.io'>CodePen</a>.
 </iframe>
-<p><br><br></p>
+<br>
 <h2 id="canvas">canvas</h2>
 <p>而 <code>canvas</code> 的方案与 <a href="#svg">svg 方案</a> 实现方法也是类似的，同样是绘制一个大圆环，然后使用 <code>overflow: hidden</code> 隐藏掉了溢出的部分。<em>也可以只绘制需要显示的一部分圆弧，只需要调整绘制圆弧的起始角度和终止角度即可</em>。</p>
 <iframe height="474" style="width: 100%;" scrolling="no" title="绘制圆弧 - canvas" src="https://codepen.io/awhitemouse/embed/BapxZPe?height=265&theme-id=dark&default-tab=js,result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
   See the Pen <a href='https://codepen.io/awhitemouse/pen/BapxZPe'>绘制圆弧 - canvas</a> by chenxin
   (<a href='https://codepen.io/awhitemouse'>@awhitemouse</a>) on <a href='https://codepen.io'>CodePen</a>.
 </iframe>
-<p><br><br></p>
+<br>
 <h2 id="总结">总结</h2>
 <p>方案罗列完毕之后就该选择方案了，从实际展示效果上进行筛选的话，可以达到操作效果的是<a href="#%E7%94%BB%E5%A4%A7%E5%9C%86">画大圆</a>、<a href="#svg">svg</a>、<a href="#canvas">canvas</a>。</p>
 <p>我当前这个需求所基于的场景时小程序，小程序对 <code>svg</code> 的兼容程度并不好，而 <code>canvas</code> 无论从操作难度还是性能上，跟纯css是无法相提并论的。</p>

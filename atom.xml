@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://awhitemouse.github.io/</id>
     <title>白山</title>
-    <updated>2021-04-15T08:32:26.189Z</updated>
+    <updated>2021-04-19T12:05:41.014Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://awhitemouse.github.io/"/>
     <link rel="self" href="https://awhitemouse.github.io/atom.xml"/>
@@ -10,6 +10,46 @@
     <logo>https://awhitemouse.github.io/images/avatar.png</logo>
     <icon>https://awhitemouse.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, 白山</rights>
+    <entry>
+        <title type="html"><![CDATA[css扩大元素的点击范围]]></title>
+        <id>https://awhitemouse.github.io/post/css-kuo-da-yuan-su-de-dian-ji-fan-wei/</id>
+        <link href="https://awhitemouse.github.io/post/css-kuo-da-yuan-su-de-dian-ji-fan-wei/">
+        </link>
+        <updated>2021-04-19T11:45:35.000Z</updated>
+        <summary type="html"><![CDATA[<p>QA反映有个按钮有点难点到，但是UI稿设计的宽高就这么大啊，所以只能想办法在不改变元素展示样式的情况下扩大元素的点击范围。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>QA反映有个按钮有点难点到，但是UI稿设计的宽高就这么大啊，所以只能想办法在不改变元素展示样式的情况下扩大元素的点击范围。</p>
+<!-- more -->
+<p>有两种方案都可以实现我现在的需求，它们分别是：</p>
+<ul>
+<li>border + background</li>
+<li>伪元素</li>
+</ul>
+<h2 id="方案一border-background-clip">方案一：border + background-clip</h2>
+<p><code>background-clip</code>：设置元素的背景（背景图片或颜色）是否延伸到边框、内边距盒子、内容盒子下面。</p>
+<pre><code class="language-css">.target {
+    border: 20px solid transparent;
+    background-clip: padding-box;
+}
+</code></pre>
+<h2 id="方案二伪元素">方案二：伪元素</h2>
+<p>不改变元素的大小，扩大其元素的大小。</p>
+<pre><code class="language-css">.target {
+    position: relative;
+}
+
+.target::after {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    bottom: -10px;
+    left: -10px;
+}
+</code></pre>
+<h2 id="总结">总结</h2>
+<p>方案一虽然在展示效果上没有改变，但确实是改变了原始元素的大小，可能会引起一些不必要的问题。所以我<code>更推荐方案二</code>。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[关于儿童交互产品的设计理念]]></title>
         <id>https://awhitemouse.github.io/post/guan-yu-er-tong-jiao-hu-chan-pin-de-she-ji-li-nian/</id>
@@ -32,13 +72,13 @@
         <link href="https://awhitemouse.github.io/post/ru-he-hui-zhi-yi-tiao-you-ya-de-yuan-hu-xian/">
         </link>
         <updated>2021-04-12T12:55:19.000Z</updated>
-        <summary type="html"><![CDATA[<p>你知道多少种绘制圆弧线的方法呢？</p>
+        <summary type="html"><![CDATA[<p>最近在做的一个需求里需要绘制一条优雅的圆弧线，UE问我要不要切图？？伤害性不大，侮辱性极强！</p>
 ]]></summary>
-        <content type="html"><![CDATA[<p>你知道多少种绘制圆弧线的方法呢？</p>
+        <content type="html"><![CDATA[<p>最近在做的一个需求里需要绘制一条优雅的圆弧线，UE问我要不要切图？？伤害性不大，侮辱性极强！</p>
 <!-- more -->
-<p>目前在做的一个需求里需要绘制一条优雅的圆弧线，就是下面这样的👇（看中间的那条白色圆弧线）</p>
+<p>UE给出的设计稿是下面这样的👇（看中间的那条白色圆弧线）</p>
 <figure data-type="image" tabindex="1"><img src="https://awhitemouse.github.io//post-images/1618456618748.png" alt="" loading="lazy"></figure>
-<p>跟UE对设计稿的时候，UE问我这个圆弧要不要切图？<del><em>嗯！？这么简单的圆弧还切图，看不起谁呢？</em><del></p>
+<p>跟UE对设计稿的时候，UE问我这个圆弧要不要切图？<del><em>嗯!? 这么简单的圆弧还切图，看不起谁呢？</em><del></p>
 <p>👀之前也绘制过圆弧线，是使用 <a href="#%E7%94%BB%E5%A4%A7%E5%9C%86">画大圆</a> 的方式实现的。而这一次，我突然想到应该还有其他的办法也可以实现相同的效果吧。</p>
 <p>于是查阅了一些资料，结合自身的经验总结了有如下几种画圆弧的方式：</p>
 <ul>
@@ -57,7 +97,7 @@
   See the Pen <a href='https://codepen.io/awhitemouse/pen/gOgzpvX'>绘制圆弧 - 画大圆</a> by chenxin
   (<a href='https://codepen.io/awhitemouse'>@awhitemouse</a>) on <a href='https://codepen.io'>CodePen</a>.
 </iframe>
-<p><br><br></p>
+<br>
 <h2 id="定制border-radius">定制border-radius</h2>
 <p>我们常用 <code>border-radius</code> 画圆角，或者是画一个圆形。使用方法大概是这样的：</p>
 <pre><code class="language-css">.demo {
@@ -77,7 +117,7 @@
   See the Pen <a href='https://codepen.io/awhitemouse/pen/NWdMqNy'>绘制圆弧 - 定制border-radius</a> by chenxin
   (<a href='https://codepen.io/awhitemouse'>@awhitemouse</a>) on <a href='https://codepen.io'>CodePen</a>.
 </iframe>
-<p><br><br></p>
+<br>
 <h2 id="box-shadow">box-shadow</h2>
 <p>关于 <code>box-shadow</code> 的方案，仔细对比下方的代码和 <a href="#%E5%AE%9A%E5%88%B6border-radius">定制border-radius</a> 的代码可以发现，其实就是将白色边框的绘制方式从 <code>border-right</code> 换成了<code>box-shadow</code>。</p>
 <p>更换以后解决了 <a href="#%E5%AE%9A%E5%88%B6border-radius">定制border-radius</a> 方案中提到的边框压缩的问题，但是这个方案绘制出来的圆弧并不够圆润，并没有达到我所想要的效果。</p>
@@ -85,7 +125,7 @@
   See the Pen <a href='https://codepen.io/awhitemouse/pen/xxgjwxR'>绘制圆弧 - box-shadow</a> by chenxin
   (<a href='https://codepen.io/awhitemouse'>@awhitemouse</a>) on <a href='https://codepen.io'>CodePen</a>.
 </iframe>
-<p><br><br></p>
+<br>
 <h2 id="transformscalexy">transform：scaleX/Y</h2>
 <p>这个方案还挺有趣的，通过旋转的方式从视觉效果上改变了圆角的大小。</p>
 <p>但是我简单写了一个demo之后就发现，这个方案的产生的问题跟 <a href="#%E5%AE%9A%E5%88%B6border-radius">定制border-radius</a> 方案产生的问题相同。</p>
@@ -93,21 +133,21 @@
   See the Pen <a href='https://codepen.io/awhitemouse/pen/vYgjxjB'>绘制圆弧 - transfrom</a> by chenxin
   (<a href='https://codepen.io/awhitemouse'>@awhitemouse</a>) on <a href='https://codepen.io'>CodePen</a>.
 </iframe>
-<p><br><br></p>
+<br>
 <h2 id="svg">svg</h2>
 <p>使用 <code>svg</code> 的方案无论从使用方法还是从展示效果上，跟 <a href="#%E7%94%BB%E5%A4%A7%E5%9C%86">#画大圆</a> 效果是相同的。</p>
 <iframe height="474" style="width: 100%;" scrolling="no" title="绘制圆弧 - svg" src="https://codepen.io/awhitemouse/embed/VwPxpxo?height=265&theme-id=dark&default-tab=html,result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
   See the Pen <a href='https://codepen.io/awhitemouse/pen/VwPxpxo'>绘制圆弧 - svg</a> by chenxin
   (<a href='https://codepen.io/awhitemouse'>@awhitemouse</a>) on <a href='https://codepen.io'>CodePen</a>.
 </iframe>
-<p><br><br></p>
+<br>
 <h2 id="canvas">canvas</h2>
 <p>而 <code>canvas</code> 的方案与 <a href="#svg">svg 方案</a> 实现方法也是类似的，同样是绘制一个大圆环，然后使用 <code>overflow: hidden</code> 隐藏掉了溢出的部分。<em>也可以只绘制需要显示的一部分圆弧，只需要调整绘制圆弧的起始角度和终止角度即可</em>。</p>
 <iframe height="474" style="width: 100%;" scrolling="no" title="绘制圆弧 - canvas" src="https://codepen.io/awhitemouse/embed/BapxZPe?height=265&theme-id=dark&default-tab=js,result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
   See the Pen <a href='https://codepen.io/awhitemouse/pen/BapxZPe'>绘制圆弧 - canvas</a> by chenxin
   (<a href='https://codepen.io/awhitemouse'>@awhitemouse</a>) on <a href='https://codepen.io'>CodePen</a>.
 </iframe>
-<p><br><br></p>
+<br>
 <h2 id="总结">总结</h2>
 <p>方案罗列完毕之后就该选择方案了，从实际展示效果上进行筛选的话，可以达到操作效果的是<a href="#%E7%94%BB%E5%A4%A7%E5%9C%86">画大圆</a>、<a href="#svg">svg</a>、<a href="#canvas">canvas</a>。</p>
 <p>我当前这个需求所基于的场景时小程序，小程序对 <code>svg</code> 的兼容程度并不好，而 <code>canvas</code> 无论从操作难度还是性能上，跟纯css是无法相提并论的。</p>
@@ -1105,153 +1145,6 @@ export default {
     },
 }
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[微信小程序自定义导航栏]]></title>
-        <id>https://awhitemouse.github.io/post/wei-xin-xiao-cheng-xu-zi-ding-yi-dao-hang-lan/</id>
-        <link href="https://awhitemouse.github.io/post/wei-xin-xiao-cheng-xu-zi-ding-yi-dao-hang-lan/">
-        </link>
-        <updated>2020-12-02T07:55:37.000Z</updated>
-        <content type="html"><![CDATA[<p>微信小程序自定义tab栏。</p>
-<h2 id="代码参考">代码参考</h2>
-<pre><code class="language-html">&lt;template&gt;
-    &lt;view&gt;
-        &lt;view v-if=&quot;!fixed&quot; :style=&quot;containerStyle&quot; /&gt;
-        &lt;view
-            :class=&quot;$style['nav']&quot;
-            :style=&quot;containerStyle&quot;
-        &gt;
-            &lt;view
-                :class=&quot;$style['bar']&quot;
-                :style=&quot;{height: `${statusBarHeight}px`}&quot;
-            /&gt;
-            &lt;view
-                :class=&quot;$style['title']&quot;
-                :style=&quot;{height: `${navHeight}px`}&quot;
-            &gt;
-                &lt;!-- 设置的默认标题为图片形式，所以需要让文字的展示优先级高于图片 --&gt;
-                &lt;image
-                    v-if=&quot;titleImg &amp;&amp; !titleText&quot;
-                    :src=&quot;titleImg&quot;
-                    :style=&quot;iconStyle&quot;
-                /&gt;
-                &lt;view
-                    v-if=&quot;titleText&quot;
-                    :style=&quot;titleStyle&quot;
-                &gt;
-                    {{titleText}}
-                &lt;/view&gt;
-            &lt;/view&gt;
-        &lt;/view&gt;
-    &lt;/view&gt;
-&lt;/template&gt;
-
-&lt;script lang=&quot;ts&quot;&gt;
-import Taro from '@tarojs/taro';
-import {COMMON} from '@/config/static.config';
-
-interface NavigateState {
-    statusBarHeight: number;
-    navHeight: number;
-    containerStyle: Record&lt;string, string&gt;;
-    iconStyle: Record&lt;string, string&gt;;
-    titleStyle: Record&lt;string, string&gt;;
-}
-
-export default {
-    props: {
-        fixed: {
-            type: Boolean,
-            default: false,
-        },
-        background: {
-            type: String,
-            default: '#fff'
-        },
-        titleText: {
-            type: String,
-            default: '',
-        },
-        titleImg: {
-            type: String,
-            default: COMMON.NAVIGATE_TITLE,
-        },
-        fontSize: {
-            type: Number,
-            default: 16
-        },
-        color: {
-            type: String,
-            default: '#404040'
-        },
-        iconHeight: {
-            type: Number,
-            default: 24
-        },
-        iconWidth: {
-            type: Number,
-            default: 82
-        }
-    },
-    data(): NavigateState {
-        return {
-            statusBarHeight: 0,
-            navHeight: 0,
-            containerStyle: {},
-            iconStyle: {},
-            titleStyle: {},
-        };
-    },
-    created(): void {
-        this.setNavHeight();
-        this.setStyle();
-    },
-    methods: {
-        setNavHeight(): void {
-            const {statusBarHeight}: {statusBarHeight: number} = Taro.getSystemInfoSync();
-            const menuButton = Taro.getMenuButtonBoundingClientRect();
-            const {top, height}: {top: number; height: number} = menuButton;
-            const navHeight = (top - statusBarHeight) * 2 + height;
-            this.statusBarHeight = statusBarHeight;
-            this.navHeight = navHeight;
-        },
-        setStyle(): void {
-            this.containerStyle = {
-                'background-color': this.background,
-                'height': `${this.statusBarHeight + this.navHeight}px`,
-                'width': '100%',
-            };
-            this.iconStyle = {
-                width: `${this.iconWidth}px`,
-                height: `${this.iconHeight}px`,
-            };
-            this.titleStyle = {
-                'font-size': this.fontSize,
-                'color': this.color,
-            };
-        },
-    }
-};
-&lt;/script&gt;
-
-&lt;style lang=&quot;scss&quot; module&gt;
-.nav {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: $zindex-fixed;
-}
-
-.title {
-    @include flex-center;
-}
-&lt;/style&gt;
-</code></pre>
-<h1 id="参考链接">参考链接</h1>
-<ol>
-<li><a href="https://segmentfault.com/a/1190000018733860">小程序自定义导航栏适配（完美版）</a>.</li>
-</ol>
 ]]></content>
     </entry>
 </feed>
