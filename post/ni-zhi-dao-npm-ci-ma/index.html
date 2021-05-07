@@ -1,0 +1,287 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="一位前端开发者的学习笔记与踩坑指南" />
+<meta name="keywords" content="web,html,css,js,es6,nodejs,react,antd,webpack,redux,jenkins,踩坑,学习笔记,微信小程序,微信公众号,适配,git,github,gitee" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>还在用 npm install ? 试试 npm ci 吧！ | 白山</title>
+<link rel="shortcut icon" href="https://awhitemouse.github.io//favicon.ico?v=1620367777814">
+<!-- <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.css" rel="stylesheet"> -->
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+<link rel="stylesheet" href="https://awhitemouse.github.io//styles/main.css">
+<link rel="stylesheet" href="https://awhitemouse.github.io//media/live2d/css/live2d.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/go.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+</script>
+
+<!-- DEMO JS -->
+<!-- <script src="/media/scripts/index.js"></script> -->
+
+<!-- 百度统计 -->
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?d67319f5aed3ec93a230772fe9c25ab5";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            白山
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fa fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="/" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/archives" class="menu gt-a-link">
+                            归档
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/navigation" class="menu gt-a-link">
+                            导航
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/post/about" class="menu gt-a-link">
+                            关于
+                        </a>
+                    
+                </div>
+            
+        </div>
+    </div>
+</nav>
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    还在用 npm install ? 试试 npm ci 吧！
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2021-04-22 11:19:57 ·
+                    </time>
+                    
+                        <a href="https://awhitemouse.github.io/tag/QXbkbGufZ/" class="post-tags">
+                            # Jenkins
+                        </a>
+                    
+                        <a href="https://awhitemouse.github.io/tag/YePweIBlg/" class="post-tags">
+                            # 程序人生
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <p>在有 <code>package-lock</code> 的项目，我们可以使用 <code>npm ci</code> 来替代 <code>npm install</code>.</p>
+<!-- more -->
+<h2 id="前言">前言</h2>
+<p>在阅读本文之前，你应该先了解以下知识（点击链接可以快速了解相关知识）：</p>
+<ul>
+<li><a href="http://www.conardli.top/blog/article/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96%EF%BC%88%E4%B8%80%EF%BC%89npm%E5%8C%85%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86%EF%BC%9F.html#%E5%AE%9A%E6%9C%9F%E6%9B%B4%E6%96%B0%E4%BE%9D%E8%B5%96">npm 依赖版本管理</a></li>
+<li><a href="https://docs.taro.zone/docs/README">你至少应该知道Taro是什么</a>.</li>
+</ul>
+<h2 id="为什么使用-npm-ci">为什么使用 npm ci</h2>
+<p>最近出现了Jenkins构建成功，但是项目却运行失败的情况，排查问题的时候发现是Jenkins构建时安装依赖的版本不对导致的构建失败。</p>
+<p>本身这种情况发生的概率比较小，因为我们在安装依赖的时候默认都会在依赖的版本号前面加上 <code>^</code> 来限制安装依赖的大版本。</p>
+<p>这次的问题是在安装 <code>Taro</code> 时版本的不对齐导致的。如果我们需要使用 <code>Taro</code> ，除了安装 <code>@tarojs/cli</code> 之外，我们还需要安装一些依赖（使用 <code>Taro CLI</code> 创建项目时会自动安装），比如：<code>@tarojs/components</code>、 <code>@tarojs/runtime</code>、 <code>@tarojs/taro</code>等等。</p>
+<p><code>Taro</code> 要求我们在安装这些依赖的时候 <code>Taro CLI</code> 版本与项目中 <code>Taro</code> 相关依赖的版本保持一致，否则无法正常运行。关于这项规则的详情可以查阅<a href="https://nervjs.github.io/taro/blog/2020-09-01-taro-versions/#%E5%B0%86-taro-cli-%E7%89%88%E6%9C%AC%E4%B8%8E%E9%A1%B9%E7%9B%AE%E4%B8%AD-taro-%E7%9B%B8%E5%85%B3%E4%BE%9D%E8%B5%96%E7%9A%84%E7%89%88%E6%9C%AC%E4%BF%9D%E6%8C%81%E4%B8%80%E8%87%B4">Taro 官方文档</a>.</p>
+<p>在我们的 <code>package.json</code> 中，我们只是使用了 <code>^</code> 来限制这些依赖的大版本更新，这样的限制对于 <code>Taro</code> 来说是不足够的。</p>
+<p>原本我们的方案是去掉 <code>Taro</code> 相关依赖的前面的 <code>^</code>，这样这些依赖的版本就完全固定了，除非我们手动修改它，这样的方案当然是没有问题的。</p>
+<p>但除此之外，我们应该还有另一个方案。别忘了，我们在本地运行和调试项目的时候是完全正常的，也就是说我们本地安装的依赖是没问题的。</p>
+<p>所以另一个方案就是让 Jenkins 构建时安装和使用与我们本地相同的依赖，如果你说直接将 <code>node_modules</code> 推送到代码仓库中，这当然也能解决问题。但我不敢保证，你的同事听到你的这番言论会不会臭骂你两句，然后踹你一脚。</p>
+<p>此时我们应该想到另一个可能被我们遗忘的小机灵鬼：<code>package-lock.json</code>。这可是控制 <code>node_modules</code> 文件夹中所有依赖的源头啊。</p>
+<p>是的，我们完全可以通过锁定问题的源头来解决问题，即锁定 <code>package-lock.json</code>，让 Jenkins 在构建安装依赖时使用和我们本地依赖一致的包，这样我们的问题就可以解决了。</p>
+<p>而实现这一目标的的一个优雅工具就是：<code>npm ci</code>.我们可以使用 <code>npm ci</code> 取代 <code>npm install</code>，就像图里所演示的这样，将构建脚本里的 <code>npm install</code> 换成 <code>npm ci</code>，这样就可以实现我们所需要的效果了：</p>
+<figure data-type="image" tabindex="1"><img src="https://awhitemouse.github.io//post-images/1619501381269.png" alt="" loading="lazy"></figure>
+<p>关于使用 <code>npm ci</code> 的场景，它应该是这样的：</p>
+<blockquote>
+<p>在有 <code>package-lock</code> 的项目，我们可以使用 <code>npm ci</code> 来替代 <code>npm install</code>.</p>
+</blockquote>
+<h2 id="npm-ci-vs-npm-install">npm ci vs npm install</h2>
+<p>至于 <code>npm ci</code> 相较于 <code>npm install</code> 还有哪些区别与优势，可以参考这篇文章：<a href="https://blog.csdn.net/csdn_yudong/article/details/84929546">npm ci 命令</a>.这篇文章已经清晰地讲述了它们之间的联系。</p>
+<h2 id="我是尾巴">我是尾巴</h2>
+<p>当我写完这篇文章的时候，心里突然感觉非常的舒畅。这像是20世纪50年代里，在那个还只有黑白电影的年代，一位瘦高的英国绅士正站在剧幕正中的讲演台上侃侃而谈。</p>
+<h2 id="参考链接">参考链接</h2>
+<ol>
+<li><a href="https://blog.csdn.net/csdn_yudong/article/details/84929546">npm ci 命令</a>.</li>
+</ol>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://awhitemouse.github.io/post/css-kuo-da-yuan-su-de-dian-ji-fan-wei/" class="post-title gt-a-link">
+                    css扩大元素的点击范围
+                </a>
+            </div>
+        
+
+        
+            
+                <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '1c7817279f236848ef3b',
+    clientSecret: 'cc9a052a730aca58df4ac91361957979a7fb5396',
+    repo: 'AWhiteMouse.github.io',
+    owner: 'AWhiteMouse',
+    admin: ['AWhiteMouse'],
+    id: location.pathname,      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+            
+
+            
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">温故而知新。</div>
+    <div class="social-container">
+        
+        
+        <a href="https://github.com/AWhiteMouse" target="_blank">
+            <i class="fa fa-github gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        <a href="https://wpa.qq.com/msgrd?v=3&amp;uin=1586671591&amp;site=qq&amp;menu=yes" target="_blank">
+            <i class="fa fa-qq gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        <a href="https://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=r9vOwc7NzsPa797egczAwg" target="_blank">
+            <i class="fa fa-envelope gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        <a href="https://blog.csdn.net/i_dont_know_a" target="_blank">
+            <i class="fa fa-rss gt-c-content-color-first"></i>
+        </a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    </div>
+    Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a href="https://awhitemouse.github.io//atom.xml" target="_blank">RSS</a>
+</div>
+
+<div id="landlord" style="left:5px;bottom:0px;">
+    <div class="message" style="opacity:0"></div>
+    <canvas id="live2d" width="500" height="560" class="live2d"></canvas>
+    <div class="live_talk_input_body">
+        <div class="live_talk_input_name_body">
+            <input name="name" type="text" class="live_talk_name white_input" id="AIuserName" autocomplete="off"
+                placeholder="你的名字" />
+        </div>
+        <div class="live_talk_input_text_body">
+            <input name="talk" type="text" class="live_talk_talk white_input" id="AIuserText" autocomplete="off"
+                placeholder="要和我聊什么呀？" />
+            <button type="button" class="live_talk_send_btn" id="talk_send">发送</button>
+        </div>
+    </div>
+    <input name="live_talk" id="live_talk" value="1" type="hidden" />
+    <div class="live_ico_box">
+        <div class="live_ico_item type_info" id="showInfoBtn"></div>
+        <div class="live_ico_item type_talk" id="showTalkBtn"></div>
+        <div class="live_ico_item type_music" id="musicButton"></div>
+        <div class="live_ico_item type_youdu" id="youduButton"></div>
+        <div class="live_ico_item type_quit" id="hideButton"></div>
+        <input name="live_statu_val" id="live_statu_val" value="0" type="hidden" />
+        <audio src="" style="display:none;" id="live2d_bgm" data-bgm="0" preload="none"></audio>
+        <input name="live2dBGM" value="http://music.163.com/song/media/outer/url?id=1313102578.mp3" type="hidden">
+        <input id="duType" value="douqilai,l2d_caihong" type="hidden">
+    </div>
+</div>
+<div id="open_live2d">召唤伊斯特瓦尔</div>
+
+<script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/1.7.1/jquery.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+    var message_Path = '/media/live2d/'; //资源目录，如果目录不对请更改
+    var talkAPI = ""; //如果有类似图灵机器人的聊天接口请填写接口路径
+</script>
+<script type="text/javascript" src="/media/live2d/js/live2d.js"></script>
+<script type="text/javascript" src="/media/live2d/js/message.js"></script>
+<!-- <script src="//code.tidio.co/fkwn1bueaqmcolzjchxzh7xoz5ahzrtw.js" async></script> -->
+
+    </div>
+</div>
+</body>
+</html>

@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://awhitemouse.github.io/</id>
     <title>白山</title>
-    <updated>2021-04-21T11:57:00.112Z</updated>
+    <updated>2021-05-07T06:10:04.826Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://awhitemouse.github.io/"/>
     <link rel="self" href="https://awhitemouse.github.io/atom.xml"/>
@@ -10,6 +10,90 @@
     <logo>https://awhitemouse.github.io/images/avatar.png</logo>
     <icon>https://awhitemouse.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, 白山</rights>
+    <entry>
+        <title type="html"><![CDATA[JS复制canvas图片到剪切板]]></title>
+        <id>https://awhitemouse.github.io/post/js-fu-zhi-tu-pian-dao-jian-qie-ban/</id>
+        <link href="https://awhitemouse.github.io/post/js-fu-zhi-tu-pian-dao-jian-qie-ban/">
+        </link>
+        <updated>2021-04-27T04:10:55.000Z</updated>
+        <summary type="html"><![CDATA[<p>最近再写一个小工具：<a href="https://hbuecx.com/GImage/">生成指定宽高与颜色的图片</a>.我想给它添加可以一键复制图片到剪切板的功能，所以才有了这篇文章。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>最近再写一个小工具：<a href="https://hbuecx.com/GImage/">生成指定宽高与颜色的图片</a>.我想给它添加可以一键复制图片到剪切板的功能，所以才有了这篇文章。</p>
+<!-- more -->
+<p>作为一名前(面)端(向)高(谷)级(歌)开发人员，基本素养还是要具备的。前车之鉴，后事之师。不仅要汲取前人的经验，还需要注意避开前人踩过的坑。</p>
+<p>目前相关的文章讲解关于 <code>JS复制图片到剪切板</code> 的技术方案有两种：</p>
+<ul>
+<li><code>document.execCommand('copy')</code></li>
+<li><code>navigator.clipboard.write()</code></li>
+</ul>
+<p>但是 <code>document.execCommand('copy')</code> 再部分场景下会失效，秉持着高(偷)效(懒)得原则，果断选择了 <code>navigator.clipboard.write()</code> 的方案来实现图片复制。</p>
+<h2 id="源码">源码</h2>
+<pre><code class="language-js">// 复制图片到剪切板
+function clipboard() {
+    navigator.permissions.query({ name: 'clipboard-write' }).then(result =&gt; {
+        if (result.state === 'granted') {
+            var imageType = getImageType();
+            canvas.toBlob(function deal(blob) {
+                var clipboardItem = new ClipboardItem({[`image/${suffix}`]: blob});
+                navigator.clipboard.write([clipboardItem]).then(() =&gt; {
+                    alert('复制成功');
+                });
+            }, imageType);
+        }
+    });
+}
+</code></pre>
+<h2 id="参考">参考</h2>
+<ol>
+<li><a href="https://www.jianshu.com/p/eab9bab4d5b5">记js复制图片到剪贴板的坑</a>.</li>
+<li><a href="https://www.canvasapi.cn/HTMLCanvasElement/toBlob">canvas API中文网 - 中文文档 - HTMLCanvasElement.toBlob()</a>.</li>
+<li><a href="https://stackoverflow.com/questions/63561767/typeerror-failed-to-construct-clipboarditem-failed-to-convert-value-to-blob?newreg=6aa69267fb374f27aade256acaa0cfaf">javascript - TypeError: Failed to construct 'ClipboardItem': Failed to convert value to 'Blob' - Stack Overflow</a>.</li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[还在用 npm install ? 试试 npm ci 吧！]]></title>
+        <id>https://awhitemouse.github.io/post/ni-zhi-dao-npm-ci-ma/</id>
+        <link href="https://awhitemouse.github.io/post/ni-zhi-dao-npm-ci-ma/">
+        </link>
+        <updated>2021-04-22T03:19:57.000Z</updated>
+        <summary type="html"><![CDATA[<p>在有 <code>package-lock</code> 的项目，我们可以使用 <code>npm ci</code> 来替代 <code>npm install</code>.</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>在有 <code>package-lock</code> 的项目，我们可以使用 <code>npm ci</code> 来替代 <code>npm install</code>.</p>
+<!-- more -->
+<h2 id="前言">前言</h2>
+<p>在阅读本文之前，你应该先了解以下知识（点击链接可以快速了解相关知识）：</p>
+<ul>
+<li><a href="http://www.conardli.top/blog/article/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96%EF%BC%88%E4%B8%80%EF%BC%89npm%E5%8C%85%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86%EF%BC%9F.html#%E5%AE%9A%E6%9C%9F%E6%9B%B4%E6%96%B0%E4%BE%9D%E8%B5%96">npm 依赖版本管理</a></li>
+<li><a href="https://docs.taro.zone/docs/README">你至少应该知道Taro是什么</a>.</li>
+</ul>
+<h2 id="为什么使用-npm-ci">为什么使用 npm ci</h2>
+<p>最近出现了Jenkins构建成功，但是项目却运行失败的情况，排查问题的时候发现是Jenkins构建时安装依赖的版本不对导致的构建失败。</p>
+<p>本身这种情况发生的概率比较小，因为我们在安装依赖的时候默认都会在依赖的版本号前面加上 <code>^</code> 来限制安装依赖的大版本。</p>
+<p>这次的问题是在安装 <code>Taro</code> 时版本的不对齐导致的。如果我们需要使用 <code>Taro</code> ，除了安装 <code>@tarojs/cli</code> 之外，我们还需要安装一些依赖（使用 <code>Taro CLI</code> 创建项目时会自动安装），比如：<code>@tarojs/components</code>、 <code>@tarojs/runtime</code>、 <code>@tarojs/taro</code>等等。</p>
+<p><code>Taro</code> 要求我们在安装这些依赖的时候 <code>Taro CLI</code> 版本与项目中 <code>Taro</code> 相关依赖的版本保持一致，否则无法正常运行。关于这项规则的详情可以查阅<a href="https://nervjs.github.io/taro/blog/2020-09-01-taro-versions/#%E5%B0%86-taro-cli-%E7%89%88%E6%9C%AC%E4%B8%8E%E9%A1%B9%E7%9B%AE%E4%B8%AD-taro-%E7%9B%B8%E5%85%B3%E4%BE%9D%E8%B5%96%E7%9A%84%E7%89%88%E6%9C%AC%E4%BF%9D%E6%8C%81%E4%B8%80%E8%87%B4">Taro 官方文档</a>.</p>
+<p>在我们的 <code>package.json</code> 中，我们只是使用了 <code>^</code> 来限制这些依赖的大版本更新，这样的限制对于 <code>Taro</code> 来说是不足够的。</p>
+<p>原本我们的方案是去掉 <code>Taro</code> 相关依赖的前面的 <code>^</code>，这样这些依赖的版本就完全固定了，除非我们手动修改它，这样的方案当然是没有问题的。</p>
+<p>但除此之外，我们应该还有另一个方案。别忘了，我们在本地运行和调试项目的时候是完全正常的，也就是说我们本地安装的依赖是没问题的。</p>
+<p>所以另一个方案就是让 Jenkins 构建时安装和使用与我们本地相同的依赖，如果你说直接将 <code>node_modules</code> 推送到代码仓库中，这当然也能解决问题。但我不敢保证，你的同事听到你的这番言论会不会臭骂你两句，然后踹你一脚。</p>
+<p>此时我们应该想到另一个可能被我们遗忘的小机灵鬼：<code>package-lock.json</code>。这可是控制 <code>node_modules</code> 文件夹中所有依赖的源头啊。</p>
+<p>是的，我们完全可以通过锁定问题的源头来解决问题，即锁定 <code>package-lock.json</code>，让 Jenkins 在构建安装依赖时使用和我们本地依赖一致的包，这样我们的问题就可以解决了。</p>
+<p>而实现这一目标的的一个优雅工具就是：<code>npm ci</code>.我们可以使用 <code>npm ci</code> 取代 <code>npm install</code>，就像图里所演示的这样，将构建脚本里的 <code>npm install</code> 换成 <code>npm ci</code>，这样就可以实现我们所需要的效果了：</p>
+<figure data-type="image" tabindex="1"><img src="https://awhitemouse.github.io//post-images/1619501381269.png" alt="" loading="lazy"></figure>
+<p>关于使用 <code>npm ci</code> 的场景，它应该是这样的：</p>
+<blockquote>
+<p>在有 <code>package-lock</code> 的项目，我们可以使用 <code>npm ci</code> 来替代 <code>npm install</code>.</p>
+</blockquote>
+<h2 id="npm-ci-vs-npm-install">npm ci vs npm install</h2>
+<p>至于 <code>npm ci</code> 相较于 <code>npm install</code> 还有哪些区别与优势，可以参考这篇文章：<a href="https://blog.csdn.net/csdn_yudong/article/details/84929546">npm ci 命令</a>.这篇文章已经清晰地讲述了它们之间的联系。</p>
+<h2 id="我是尾巴">我是尾巴</h2>
+<p>当我写完这篇文章的时候，心里突然感觉非常的舒畅。这像是20世纪50年代里，在那个还只有黑白电影的年代，一位瘦高的英国绅士正站在剧幕正中的讲演台上侃侃而谈。</p>
+<h2 id="参考链接">参考链接</h2>
+<ol>
+<li><a href="https://blog.csdn.net/csdn_yudong/article/details/84929546">npm ci 命令</a>.</li>
+</ol>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[css扩大元素的点击范围]]></title>
         <id>https://awhitemouse.github.io/post/css-kuo-da-yuan-su-de-dian-ji-fan-wei/</id>
@@ -157,32 +241,6 @@
 <h2 id="参考">参考</h2>
 <ol>
 <li><a href="https://zhuanlan.zhihu.com/p/28142155">网页中弧线的几种实现方法</a>.</li>
-</ol>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[React 与 Vue 的区别是什么？]]></title>
-        <id>https://awhitemouse.github.io/post/react-yu-vue-de-qu-bie-shi-shi-me/</id>
-        <link href="https://awhitemouse.github.io/post/react-yu-vue-de-qu-bie-shi-shi-me/">
-        </link>
-        <updated>2021-04-12T03:47:59.000Z</updated>
-        <content type="html"><![CDATA[<p>目前国内前端应用的两个主流框架分别是 <code>Vue</code> 和 <code>React</code>，那么在技术选型时该选哪一个呢？它们之间的区别又是什么？</p>
-<h2 id="react和vue的区别">React和Vue的区别</h2>
-<h3 id="监听数据变化的实现原理可变和不可变">监听数据变化的实现原理：可变和不可变</h3>
-<p>Vue通过（getter/setter）的方式进行数据劫持，然后对数据进行比对。而React在不做优化的情况下，直接通过比较引用来判断数据是否发生了变化。</p>
-<p>两种数据监听原理的不同于它们本身的设计原理有关：Vue更强调数据的可变性，即它会修改原来的数据；而React更强调数据的不可变性，即它会生成一份新的数据返回，不对原来的数据进行修改。</p>
-<p>React的比较方法在进行数据比对时会更加简便，但同时也会增大内存的开销。</p>
-<h3 id="数据流单向和双向">数据流：单向和双向</h3>
-<p>虽然在Vue2.0中取消了父子组件之间的数据双向绑定，但是仍然保留了组件和dom之间的双向绑定（即v-model）；但是React从始至终都提倡单项数据流。</p>
-<h3 id="组合功能模块高阶组件hoc和混入mixin">组合功能模块：高阶组件（HOC）和混入（mixin）</h3>
-<p>在组合功能模块时，Vue通常使用混入的方式，在React中通常是使用高阶组件的方式。虽然React也可以使用混入，但是在它的文档里是并不推荐这种写法的，它认为混入会让页面的逻辑变得难以摸索。</p>
-<h3 id="组件的嵌套嵌套和插槽">组件的嵌套：嵌套和插槽</h3>
-<p>Vue通过插槽的方式完成组件的嵌套，并且Vue还支持多插槽；而React使用props.children拿到子组件进行渲染。</p>
-<h3 id="编写语法">编写语法</h3>
-<p>Vue更加提倡单文件组件，而React更推荐JSX语法。</p>
-<h2 id="参考">参考</h2>
-<ol>
-<li><a href="https://juejin.cn/post/6844903668446134286">个人理解Vue和React区别</a>.</li>
 </ol>
 ]]></content>
     </entry>
@@ -1123,28 +1181,6 @@ console.log(result);  // 7
 </ol>
 <h4 id="问题处理">问题处理</h4>
 <p>如果出现工具打不开的情况，输入如下命令：<code>rm -rf ~/.config/trojan-qt5</code>。然后再重新执行上述步骤。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Taro中监听小程序的onReady生命周期]]></title>
-        <id>https://awhitemouse.github.io/post/taro-zhong-jian-ting-xiao-cheng-xu-de-onready-sheng-ming-zhou-qi/</id>
-        <link href="https://awhitemouse.github.io/post/taro-zhong-jian-ting-xiao-cheng-xu-de-onready-sheng-ming-zhou-qi/">
-        </link>
-        <updated>2020-12-04T02:24:45.000Z</updated>
-        <summary type="html"><![CDATA[<p>在Taro vue中监听小程序 <code>onReady</code> 生命周期的方法。</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>在Taro vue中监听小程序 <code>onReady</code> 生命周期的方法。</p>
-<!-- more -->
-<pre><code class="language-js">import {eventCenter, getCurrentInstance} from '@tarojs/taro';
-
-export default {
-    mounted(): void {
-        eventCenter.once(getCurrentInstance().router.onReady, () =&gt; {
-            console.log('onReady');
-        });
-    },
-}
-</code></pre>
 ]]></content>
     </entry>
 </feed>
