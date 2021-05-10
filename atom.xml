@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://awhitemouse.github.io/</id>
     <title>白山</title>
-    <updated>2021-05-07T06:10:04.826Z</updated>
+    <updated>2021-05-10T12:53:33.550Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://awhitemouse.github.io/"/>
     <link rel="self" href="https://awhitemouse.github.io/atom.xml"/>
@@ -21,6 +21,7 @@
         <content type="html"><![CDATA[<p>最近再写一个小工具：<a href="https://hbuecx.com/GImage/">生成指定宽高与颜色的图片</a>.我想给它添加可以一键复制图片到剪切板的功能，所以才有了这篇文章。</p>
 <!-- more -->
 <p>作为一名前(面)端(向)高(谷)级(歌)开发人员，基本素养还是要具备的。前车之鉴，后事之师。不仅要汲取前人的经验，还需要注意避开前人踩过的坑。</p>
+<p>实现类似功能的第三库包有很多，但是我只是做了一个小工具，就一个html文件而已。如果为了这么一个功能去引用一个第三方包就有点多余。所以还是决定自己写简单的函数。</p>
 <p>目前相关的文章讲解关于 <code>JS复制图片到剪切板</code> 的技术方案有两种：</p>
 <ul>
 <li><code>document.execCommand('copy')</code></li>

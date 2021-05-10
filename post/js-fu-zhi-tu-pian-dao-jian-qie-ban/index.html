@@ -5,7 +5,7 @@
 <meta name="keywords" content="web,html,css,js,es6,nodejs,react,antd,webpack,redux,jenkins,踩坑,学习笔记,微信小程序,微信公众号,适配,git,github,gitee" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>JS复制canvas图片到剪切板 | 白山</title>
-<link rel="shortcut icon" href="https://awhitemouse.github.io//favicon.ico?v=1620367777814">
+<link rel="shortcut icon" href="https://awhitemouse.github.io//favicon.ico?v=1620651183443">
 <!-- <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.css" rel="stylesheet"> -->
 <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
 <link rel="stylesheet" href="https://awhitemouse.github.io//styles/main.css">
@@ -36,7 +36,8 @@
     var _hmt = _hmt || [];
     (function () {
         var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?d67319f5aed3ec93a230772fe9c25ab5";
+        hm.src = "https://hm.baidu.com/hm.js?3349a47f297f4ca395881d504c2856e6";
+        // hm.src = "https://hm.baidu.com/hm.js?d67319f5aed3ec93a230772fe9c25ab5";
         var s = document.getElementsByTagName("script")[0];
         s.parentNode.insertBefore(hm, s);
     })();
@@ -124,6 +125,7 @@
                     <p>最近再写一个小工具：<a href="https://hbuecx.com/GImage/">生成指定宽高与颜色的图片</a>.我想给它添加可以一键复制图片到剪切板的功能，所以才有了这篇文章。</p>
 <!-- more -->
 <p>作为一名前(面)端(向)高(谷)级(歌)开发人员，基本素养还是要具备的。前车之鉴，后事之师。不仅要汲取前人的经验，还需要注意避开前人踩过的坑。</p>
+<p>实现类似功能的第三库包有很多，但是我只是做了一个小工具，就一个html文件而已。如果为了这么一个功能去引用一个第三方包就有点多余。所以还是决定自己写简单的函数。</p>
 <p>目前相关的文章讲解关于 <code>JS复制图片到剪切板</code> 的技术方案有两种：</p>
 <ul>
 <li><code>document.execCommand('copy')</code></li>
