@@ -4,7 +4,7 @@
 <meta name="description" content="一位前端开发者的学习笔记与踩坑指南" />
 <meta name="keywords" content="web,html,css,js,es6,nodejs,react,antd,webpack,redux,jenkins,踩坑,学习笔记,微信小程序,微信公众号,适配,git,github,gitee" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>每日一题 | 2020.04.16 | 白山</title>
+<title>Antd Form表单设置validateFields校验无飘红提示 | 白山</title>
 <link rel="shortcut icon" href="https://awhitemouse.github.io//favicon.ico?v=1623294466798">
 <!-- <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.css" rel="stylesheet"> -->
 <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
@@ -109,29 +109,104 @@
         <div class="post-detail gt-bg-theme-color-second">
             <article class="gt-post-content">
                 <h2 class="post-title">
-                    每日一题 | 2020.04.16
+                    Antd Form表单设置validateFields校验无飘红提示
                 </h2>
                 <div class="post-info">
                     <time class="post-time gt-c-content-color-first">
-                        · 2020-04-16 10:39:25 ·
+                        · 2021-06-10 10:48:06 ·
                     </time>
                     
-                        <a href="https://awhitemouse.github.io/tag/VH7lmHwnZ/" class="post-tags">
-                            # 每日一题
+                        <a href="https://awhitemouse.github.io/tag/gf_3G38fZ/" class="post-tags">
+                            # Antd
+                        </a>
+                    
+                        <a href="https://awhitemouse.github.io/tag/ufGbQYqvJv/" class="post-tags">
+                            # 踩坑
                         </a>
                     
                 </div>
                 <div class="post-content">
-                    <h1 id="题目">题目</h1>
-<figure data-type="image" tabindex="1"><img src="https://awhitemouse.github.io//post-images/1587004809320.jpg" alt="" loading="lazy"></figure>
-<h1 id="答案">答案</h1>
-<pre><code class="language-js">function() {}   0
-1                   0
-1                   1
-21                 1
+                    <p>点击保存的时候控制台会打印警告，但是表单中无飘红提示。</p>
+<!-- more -->
+<figure data-type="image" tabindex="1"><img src="https://awhitemouse.github.io//post-images/1623294251997.png" alt="" loading="lazy"></figure>
+<p>通过查找相关问题发现原因在于 <code>validator</code> 方法的编写上。原来我是这样写的：</p>
+<pre><code class="language-jsx">&lt;FormItem
+    label=&quot;规格&quot;
+    className=&quot;contact-detail-info-form-item&quot;
+    {...formItemLayout}
+&gt;
+    {
+        getFieldDecorator('specification', {
+            initialValue: data.specification,
+            rules: [
+                {
+                    required: true,
+                    message: '请输入规格',
+                },
+                {
+                    validator: (rule, value, callback) =&gt; {
+                        /* 注意看这里！！！ */
+                        if (value.length &amp;&amp; !value.trim().length) {
+                            callback('规格文案不能全为空格');
+                        }
+                        else {
+                            callback();
+                        }
+                    }
+                }
+            ],
+        })(&lt;Input
+            allowClear
+            className=&quot;custom-input&quot;
+            placeholder=&quot;请输入规格&quot;
+        /&gt;)
+    }
+&lt;/FormItem&gt;
 </code></pre>
-<h1 id="解析">解析</h1>
-<p>今天这道题跟<a href="http://hbuecx.com//post/mei-ri-yi-ti-or-20200414/">2020.04.14日这道题</a>是一个考点，可以<a href="http://hbuecx.com//post/mei-ri-yi-ti-or-20200414/">点我直接查看这篇文章的解析</a>.</p>
+<p>问题在于所有的 <code>validator</code> 判断都需要加上对于 <code>value</code> 本身的判断。像下面这样：</p>
+<pre><code class="language-jsx">&lt;FormItem
+    label=&quot;规格&quot;
+    className=&quot;contact-detail-info-form-item&quot;
+    {...formItemLayout}
+&gt;
+    {
+        getFieldDecorator('specification', {
+            initialValue: data.specification,
+            rules: [
+                {
+                    required: true,
+                    message: '请输入规格',
+                },
+                {
+                    validator: (rule, value, callback) =&gt; {
+                        /* 注意看这里！！！加上了 value 的判断 */
+                        if (value &amp;&amp; !value.trim().length) {
+                            callback('规格文案不能全为空格');
+                        }
+                        else {
+                            callback();
+                        }
+                    }
+                }
+            ],
+        })(&lt;Input
+            allowClear
+            className=&quot;custom-input&quot;
+            placeholder=&quot;请输入规格&quot;
+        /&gt;)
+    }
+&lt;/FormItem&gt;
+</code></pre>
+<p>加上对于 value 的判断后再去校验就出现飘红提示了。</p>
+<figure data-type="image" tabindex="2"><img src="https://awhitemouse.github.io//post-images/1623294311718.png" alt="" loading="lazy"></figure>
+<h2 id="参考链接">参考链接</h2>
+<ol>
+<li><a href="https://blog.csdn.net/weixin_30698775/article/details/112592844">控制台输入框_antdvue:form表单提交时,只在控制台输出error,输入框不标红 底下也没提示...</a>.</li>
+</ol>
+<h2 id="拓展">拓展</h2>
+<ol>
+<li><a href="https://juejin.cn/post/6844903935728189447">antd-Form表单设置validateFields校验无飘红提示</a>.</li>
+</ol>
 
                 </div>
             </article>
@@ -140,8 +215,8 @@
         
             <div class="next-post">
                 <div class="next gt-c-content-color-first">下一篇</div>
-                <a href="https://awhitemouse.github.io/post/mei-ri-yi-ti-or-20200415/" class="post-title gt-a-link">
-                    每日一题 | 2020.04.15
+                <a href="https://awhitemouse.github.io/post/ru-he-chu-li-an-niu-zu-bian-kuang-xian-de-wen-ti/" class="post-title gt-a-link">
+                    如何处理按钮组边框线的问题
                 </a>
             </div>
         

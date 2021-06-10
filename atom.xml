@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://awhitemouse.github.io/</id>
     <title>白山</title>
-    <updated>2021-06-09T07:52:01.458Z</updated>
+    <updated>2021-06-10T03:08:13.327Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://awhitemouse.github.io/"/>
     <link rel="self" href="https://awhitemouse.github.io/atom.xml"/>
@@ -10,6 +10,97 @@
     <logo>https://awhitemouse.github.io/images/avatar.png</logo>
     <icon>https://awhitemouse.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, 白山</rights>
+    <entry>
+        <title type="html"><![CDATA[Antd Form表单设置validateFields校验无飘红提示]]></title>
+        <id>https://awhitemouse.github.io/post/antd-form-biao-dan-she-zhi-validatefields-xiao-yan-wu-piao-hong-ti-shi/</id>
+        <link href="https://awhitemouse.github.io/post/antd-form-biao-dan-she-zhi-validatefields-xiao-yan-wu-piao-hong-ti-shi/">
+        </link>
+        <updated>2021-06-10T02:48:06.000Z</updated>
+        <summary type="html"><![CDATA[<p>点击保存的时候控制台会打印警告，但是表单中无飘红提示。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>点击保存的时候控制台会打印警告，但是表单中无飘红提示。</p>
+<!-- more -->
+<figure data-type="image" tabindex="1"><img src="https://awhitemouse.github.io//post-images/1623294251997.png" alt="" loading="lazy"></figure>
+<p>通过查找相关问题发现原因在于 <code>validator</code> 方法的编写上。原来我是这样写的：</p>
+<pre><code class="language-jsx">&lt;FormItem
+    label=&quot;规格&quot;
+    className=&quot;contact-detail-info-form-item&quot;
+    {...formItemLayout}
+&gt;
+    {
+        getFieldDecorator('specification', {
+            initialValue: data.specification,
+            rules: [
+                {
+                    required: true,
+                    message: '请输入规格',
+                },
+                {
+                    validator: (rule, value, callback) =&gt; {
+                        /* 注意看这里！！！ */
+                        if (value.length &amp;&amp; !value.trim().length) {
+                            callback('规格文案不能全为空格');
+                        }
+                        else {
+                            callback();
+                        }
+                    }
+                }
+            ],
+        })(&lt;Input
+            allowClear
+            className=&quot;custom-input&quot;
+            placeholder=&quot;请输入规格&quot;
+        /&gt;)
+    }
+&lt;/FormItem&gt;
+</code></pre>
+<p>问题在于所有的 <code>validator</code> 判断都需要加上对于 <code>value</code> 本身的判断。像下面这样：</p>
+<pre><code class="language-jsx">&lt;FormItem
+    label=&quot;规格&quot;
+    className=&quot;contact-detail-info-form-item&quot;
+    {...formItemLayout}
+&gt;
+    {
+        getFieldDecorator('specification', {
+            initialValue: data.specification,
+            rules: [
+                {
+                    required: true,
+                    message: '请输入规格',
+                },
+                {
+                    validator: (rule, value, callback) =&gt; {
+                        /* 注意看这里！！！加上了 value 的判断 */
+                        if (value &amp;&amp; !value.trim().length) {
+                            callback('规格文案不能全为空格');
+                        }
+                        else {
+                            callback();
+                        }
+                    }
+                }
+            ],
+        })(&lt;Input
+            allowClear
+            className=&quot;custom-input&quot;
+            placeholder=&quot;请输入规格&quot;
+        /&gt;)
+    }
+&lt;/FormItem&gt;
+</code></pre>
+<p>加上对于 value 的判断后再去校验就出现飘红提示了。</p>
+<figure data-type="image" tabindex="2"><img src="https://awhitemouse.github.io//post-images/1623294311718.png" alt="" loading="lazy"></figure>
+<h2 id="参考链接">参考链接</h2>
+<ol>
+<li><a href="https://blog.csdn.net/weixin_30698775/article/details/112592844">控制台输入框_antdvue:form表单提交时,只在控制台输出error,输入框不标红 底下也没提示...</a>.</li>
+</ol>
+<h2 id="拓展">拓展</h2>
+<ol>
+<li><a href="https://juejin.cn/post/6844903935728189447">antd-Form表单设置validateFields校验无飘红提示</a>.</li>
+</ol>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[如何处理按钮组边框线的问题]]></title>
         <id>https://awhitemouse.github.io/post/ru-he-chu-li-an-niu-zu-bian-kuang-xian-de-wen-ti/</id>
@@ -1118,24 +1209,6 @@ console.log(result);  // 7
 </code></pre>
 <h2 id="我是尾巴">我是尾巴</h2>
 <p>在实际业务场景中，链式调用常见于 <code>Promise</code> 。那么想象一下， <code>Promise</code> 的链式调用是如何实现的呢？</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[css实现不足一屏置底，超出一屏随页面滚动]]></title>
-        <id>https://awhitemouse.github.io/post/css-shi-xian-bu-zu-yi-ping-zhi-di-chao-chu-yi-ping-sui-ye-mian-gun-dong/</id>
-        <link href="https://awhitemouse.github.io/post/css-shi-xian-bu-zu-yi-ping-zhi-di-chao-chu-yi-ping-sui-ye-mian-gun-dong/">
-        </link>
-        <updated>2021-01-05T02:19:01.000Z</updated>
-        <summary type="html"><![CDATA[<p>css实现不足一屏置底，超出一屏随页面滚动</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>css实现不足一屏置底，超出一屏随页面滚动</p>
-<!-- more -->
-<h2 id="实现方案">实现方案</h2>
-<p>主要实现原理：内容区使用<code>min-height: 100%, padding-bottom: **px</code>，footer使用<code>margin-top: -**px</code>。</p>
-<h2 id="参考链接">参考链接</h2>
-<ol>
-<li><a href="http://www.poorren.com/css-footer-fixed-bottom">纯CSS实现Footer固定底部，超过一屏自动撑开</a>.</li>
-</ol>
 ]]></content>
     </entry>
 </feed>
