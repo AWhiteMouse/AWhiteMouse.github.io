@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://awhitemouse.github.io/</id>
     <title>白山</title>
-    <updated>2021-06-10T03:08:13.327Z</updated>
+    <updated>2021-06-11T08:05:57.969Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://awhitemouse.github.io/"/>
     <link rel="self" href="https://awhitemouse.github.io/atom.xml"/>
@@ -16,12 +16,14 @@
         <link href="https://awhitemouse.github.io/post/antd-form-biao-dan-she-zhi-validatefields-xiao-yan-wu-piao-hong-ti-shi/">
         </link>
         <updated>2021-06-10T02:48:06.000Z</updated>
-        <summary type="html"><![CDATA[<p>点击保存的时候控制台会打印警告，但是表单中无飘红提示。</p>
+        <summary type="html"><![CDATA[<p>使用 <code>validateFields</code>，点击保存的时候控制台会打印警告，但是表单中无飘红提示。</p>
 ]]></summary>
-        <content type="html"><![CDATA[<p>点击保存的时候控制台会打印警告，但是表单中无飘红提示。</p>
+        <content type="html"><![CDATA[<p>使用 <code>validateFields</code>，点击保存的时候控制台会打印警告，但是表单中无飘红提示。</p>
 <!-- more -->
+<h2 id="问题背景">问题背景</h2>
+<p>写了一个表单校验，用来验证输入的字符串是否全为空格。当我点击保存的时候（调用 <code>validateFields</code> 方法），在控制台提示了如下警告：</p>
 <figure data-type="image" tabindex="1"><img src="https://awhitemouse.github.io//post-images/1623294251997.png" alt="" loading="lazy"></figure>
-<p>通过查找相关问题发现原因在于 <code>validator</code> 方法的编写上。原来我是这样写的：</p>
+<p>代码是这样的：</p>
 <pre><code class="language-jsx">&lt;FormItem
     label=&quot;规格&quot;
     className=&quot;contact-detail-info-form-item&quot;
@@ -55,7 +57,8 @@
     }
 &lt;/FormItem&gt;
 </code></pre>
-<p>问题在于所有的 <code>validator</code> 判断都需要加上对于 <code>value</code> 本身的判断。像下面这样：</p>
+<h2 id="解决方案">解决方案</h2>
+<p>通过查阅相关问题发现，只要在 <code>validator</code> 方法的判断中加上对于 <code>value</code> 值本身的判断就能解决问题。像下面这样：</p>
 <pre><code class="language-jsx">&lt;FormItem
     label=&quot;规格&quot;
     className=&quot;contact-detail-info-form-item&quot;
@@ -91,6 +94,34 @@
 </code></pre>
 <p>加上对于 value 的判断后再去校验就出现飘红提示了。</p>
 <figure data-type="image" tabindex="2"><img src="https://awhitemouse.github.io//post-images/1623294311718.png" alt="" loading="lazy"></figure>
+<h2 id="问题原因分析">问题原因分析</h2>
+<p>虽然问题解决了，但是如此怪异的问题我还是得弄清楚原因才行，不然再次遇到同类问题的时候可能不知道该怎么处理。</p>
+<p>对比了一下前后的区别，发现将 <code>value.length</code> 改成 <code>value</code> 的区别在于 <code>value.length</code> 这个表达式本身就可能报错。比如当 <code>value</code> 为 <code>undefined</code> 时。</p>
+<p>而 <code>validator</code> 非常强调的一件事就是 <code>callback</code> 方法必须要被执行。而当 <code>value</code> 为 <code>undefined</code> 时，程序在运行时就会报错，导致 <code>callback</code> 方法没有被调用。</p>
+<p>而程序报错没有却没有在控制台看到错误打印的原因是可能是因为 Antd Form validator 外部使用了 <code>try...catch</code> 对错误进行捕获。</p>
+<h3 id="实践出真知">实践出真知。</h3>
+<p>为了验证这个猜想的正确性，我在代码代码中添加了如下的打印：</p>
+<pre><code class="language-js">// 校验空格
+const validateBlank = (rule: any, value: string, callback: (str?: string) =&gt; void) =&gt; {
+    console.log(1);
+    if (value.length &amp;&amp; !value.trim().length) {
+        console.log(2);
+        callback('规格文案不能全为空格');
+    }
+    else {
+        console.log(3);
+        callback();
+    }
+};
+</code></pre>
+<p>然后点击保存。发现在控制台中仅仅打印了 <code>1</code>。这样的验证结果是符合我的猜想的。为了更加坚定这个结论，我查阅了 Antd 文档。</p>
+<h3 id="知子莫如父">知子莫如父。</h3>
+<p>我在 Antd 文档中发现了这样一个FAQ：<a href="https://ant.design/components/form-cn/#%E8%87%AA%E5%AE%9A%E4%B9%89-validator-%E6%B2%A1%E6%9C%89%E6%95%88%E6%9E%9C">自定义 validator 没有效果</a>.</p>
+<p>描述如下：</p>
+<blockquote>
+<p>这是由于你的 <code>validator</code> 有错误导致 <code>callback</code> 没有执行到。你可以选择通过 <code>async</code> 返回一个 promise 或者使用 <code>try...catch</code> 进行错误捕获：</p>
+</blockquote>
+<p>这段描述的第一句话就正中下怀啊。官方提供的解决方案是在 <code>validator</code> 方法内部使用 <code>try...catch</code> 进行错误捕获，然后在 <code>catch</code> 语句中调用一下 <code>callback</code>。详情参见上方的文档。</p>
 <h2 id="参考链接">参考链接</h2>
 <ol>
 <li><a href="https://blog.csdn.net/weixin_30698775/article/details/112592844">控制台输入框_antdvue:form表单提交时,只在控制台输出error,输入框不标红 底下也没提示...</a>.</li>
