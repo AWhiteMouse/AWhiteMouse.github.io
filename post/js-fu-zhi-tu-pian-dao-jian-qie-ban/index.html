@@ -5,7 +5,7 @@
 <meta name="keywords" content="web,html,css,js,es6,nodejs,react,antd,webpack,redux,jenkins,踩坑,学习笔记,微信小程序,微信公众号,适配,git,github,gitee" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>JS复制canvas图片到剪切板 | 白山</title>
-<link rel="shortcut icon" href="https://awhitemouse.github.io//favicon.ico?v=1623398745010">
+<link rel="shortcut icon" href="https://awhitemouse.github.io//favicon.ico?v=1624951339682">
 <!-- <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.css" rel="stylesheet"> -->
 <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
 <link rel="stylesheet" href="https://awhitemouse.github.io//styles/main.css">
@@ -131,7 +131,7 @@
 <li><code>document.execCommand('copy')</code></li>
 <li><code>navigator.clipboard.write()</code></li>
 </ul>
-<p>但是 <code>document.execCommand('copy')</code> 再部分场景下会失效，秉持着高(偷)效(懒)得原则，果断选择了 <code>navigator.clipboard.write()</code> 的方案来实现图片复制。</p>
+<p>但是 <code>document.execCommand('copy')</code> 在部分场景下会失效，秉持着高(偷)效(懒)得原则，果断选择了 <code>navigator.clipboard.write()</code> 的方案来实现图片复制。</p>
 <h2 id="源码">源码</h2>
 <pre><code class="language-js">// 复制图片到剪切板
 function clipboard() {

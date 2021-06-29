@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://awhitemouse.github.io/</id>
     <title>白山</title>
-    <updated>2021-06-11T08:05:57.969Z</updated>
+    <updated>2021-06-29T07:49:06.390Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://awhitemouse.github.io/"/>
     <link rel="self" href="https://awhitemouse.github.io/atom.xml"/>
@@ -10,6 +10,288 @@
     <logo>https://awhitemouse.github.io/images/avatar.png</logo>
     <icon>https://awhitemouse.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, 白山</rights>
+    <entry>
+        <title type="html"><![CDATA[实现 stylus 预处理器的 css module]]></title>
+        <id>https://awhitemouse.github.io/post/shi-xian-stylus-yu-chu-li-qi-de-css-module/</id>
+        <link href="https://awhitemouse.github.io/post/shi-xian-stylus-yu-chu-li-qi-de-css-module/">
+        </link>
+        <updated>2021-06-28T06:20:42.000Z</updated>
+        <summary type="html"><![CDATA[<p>新接手了一个后台CMS项目，项目的技术栈是React，内容的展示方式是多页签的方式，也就是存在多个模块共存的情况。</p>
+<p>在熟悉项目代码的时候，发现项目的原始开发者居然利用这个条件，让多个模块共用某一个模块的样式，这样无序的样式使用方法，很容易造成一些问题。比如：样式覆盖、样式丢失等。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>新接手了一个后台CMS项目，项目的技术栈是React，内容的展示方式是多页签的方式，也就是存在多个模块共存的情况。</p>
+<p>在熟悉项目代码的时候，发现项目的原始开发者居然利用这个条件，让多个模块共用某一个模块的样式，这样无序的样式使用方法，很容易造成一些问题。比如：样式覆盖、样式丢失等。</p>
+<!-- more -->
+<p>所以我决定引入css module来解决模块间样式相互依赖的问题。</p>
+<h2 id="相关技术栈">相关技术栈</h2>
+<p>项目是使用 <code>react-app-rewired</code> 搭建的，具体使用方法参考 <code>参考链接[1]</code>. 项目使用的css预处理器是 stylus。</p>
+<h2 id="代码改造">代码改造</h2>
+<p>为了更加突出重点，也为了保护项目隐私，所以后面只会展示部分相关的原始代码。</p>
+<p>由于项目是使用 <code>react-app-rewired</code> 搭建的，使用 <code>react-app-rewired</code> 的用处在于可以在不弹出脚手架默认webpack配置的情况下，对默认 webpack 配置内容进行覆盖和改写。</p>
+<p>原始 <code>config-overrides.js</code> 文件的代码是这样的：</p>
+<p><strong>config-overrides.js</strong></p>
+<pre><code class="language-js">// @Description: 结合react-app-rewired个性化处理CRA中的webpack配置(因为CRA中关于webpack的处理封装到了react-script中,不想做eject处理)
+/* eslint-disable */
+const path = require('path');
+const {
+    override, fixBabelImports, addLessLoader,
+    disableEsLint, addWebpackResolve
+} = require('customize-cra');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+//  支持stylus
+const stylus = () =&gt; config =&gt; {
+    const finialLoader = config.mode === 'development' ? 'style-loader' : MiniCssExtractPlugin.loader;
+    const stylusLoader = {
+        test: /\.styl$/,
+        use: [
+            {
+                loader: finialLoader
+            }, {
+                loader: 'css-loader',
+            }, {
+                loader: 'stylus-loader',
+            }
+        ]
+    };
+    const {oneOf} = config.module.rules.find(rule =&gt; rule.oneOf);
+    oneOf.unshift(stylusLoader);
+    return config;
+};
+
+const rewiredMap = () =&gt; config =&gt; {
+    config.devtool = config.mode === 'development' ? 'cheap-module-source-map' : false;
+    return config;
+};
+
+module.exports = {
+    // The Webpack config to use when compiling your react app for development or production.
+    webpack: override(
+        // 关闭mapSource
+        rewiredMap(),
+        disableEsLint(),
+        fixBabelImports('import', {
+            libraryName: 'antd',
+            libraryDirectory: 'es',
+            // style: 'css',
+            style: true,
+        }),
+        addLessLoader({
+            lessOptions: {
+                javascriptEnabled: true,
+                // modifyVars: { '@primary-color': '#1DA57A' },
+            }
+        }),
+        stylus(),
+        addWebpackResolve({
+            alias: {
+                '@resource': path.resolve(__dirname, 'src/resource'),
+                '@common': path.resolve(__dirname, 'src/common'),
+                '@module': path.resolve(__dirname, 'src/module'),
+                '@icomoon': path.resolve(__dirname, 'src/icomoon'),
+                '@service': path.resolve(__dirname, 'src/service'),
+            }
+        })
+    ),
+    // ……
+};
+</code></pre>
+<p>从代码里可以看到关于 stylus 的处理被放在了 <code>stylus</code> 方法中，目前实现的功能是能够解析 <code>.styl</code> 后缀的样式文件。</p>
+<p>而我所需要做的是让 <code>*.styl</code> 支持css module，所以只需要修改 <code>stylus</code> 方法就行。</p>
+<p>实现 css module 的代码如下：</p>
+<pre><code class="language-js">//  支持stylus
+const stylus = () =&gt; config =&gt; {
+    const finialLoader = config.mode === 'development' ? 'style-loader' : MiniCssExtractPlugin.loader;
+    const stylusLoader = {
+        test: /\.styl$/,
+        // 剔除 .module.styl 文件
+        exclude: /\.module.styl$/,
+        use: [
+            {
+                loader: finialLoader
+            }, {
+                loader: 'css-loader',
+            }, {
+                loader: 'stylus-loader',
+            }
+        ]
+    };
+    const stylusModuleLoader = {
+        // 仅对 .module.styl 文件进行处理
+        test: /\.module.styl$/,
+        use: [
+            {
+                loader: finialLoader
+            }, {
+                loader: 'css-loader',
+                // ！！！Important！！！
+                options:{
+                    modules: true,
+                }
+            }, {
+                loader: 'stylus-loader',
+            }
+        ]
+    };
+    const {oneOf} = config.module.rules.find(rule =&gt; rule.oneOf);
+    oneOf.unshift(stylusLoader, stylusModuleLoader);
+    return config;
+};
+</code></pre>
+<p>这样改完就实现了 css module 了。</p>
+<h2 id="使用验证">使用验证</h2>
+<p>为了验证 css module 确实生效了，我得做一个测试。测试方式如下：</p>
+<p>选择某个模块的 <code>index.styl</code>文件，将文件名改成 <code>index.module.styl</code> 。</p>
+<pre><code class="language-diff">-index.styl
++index.module.styl
+</code></pre>
+<p>接着改一下该模块引入样式文件的方式：</p>
+<p><strong>index.tsx</strong></p>
+<pre><code class="language-diff">-import './index.styl';
++import styles from './index.module.styl';
+</code></pre>
+<p>这样改是因为我们使用css module的时候是会给元素的class属性赋值一个类名变量，而不是一个字符串，就像下面这样：</p>
+<p><strong>index.tsx</strong></p>
+<pre><code class="language-diff">-import './index.styl';
++import styles from './index.module.styl';
+
+-&lt;div className=&quot;task-filter&quot;&gt;&lt;/div&gt;
++&lt;div className={styles[&quot;task-filter&quot;]}&gt;&lt;/div&gt;
+</code></pre>
+<p>修改完之后重启项目，在浏览器控制台中可以看见该元素的类名变成了下面这样👇</p>
+<figure data-type="image" tabindex="1"><img src="https://awhitemouse.github.io//post-images/1624870986141.jpg" alt="" loading="lazy"></figure>
+<pre><code class="language-html">&lt;div class=&quot;_1eNJZCuG-X4NKKwr3f_ZC6&quot;&gt;&lt;/div&gt;
+</code></pre>
+<p>这说明css module已经生效了。而我们常见的css module的类名并不是这种随机的字符串，而是一些特定名称的拼接组合。如果要实现这种拼接组合该怎么做呢？其实也很简单，只需要找到 <code>stylus</code> 方法里 <code>stylusModuleLoader</code> 对象里的 <code>modules</code> 属性值即可：</p>
+<pre><code class="language-diff">-modules: true
++modules: {
++    localIdentName: &quot;[path][name]__[local]--[hash:5]&quot;
++}
+</code></pre>
+<p><code>stylusModuleLoader</code> 修改后代码如下：</p>
+<pre><code class="language-js">// 自定义模块化名称
+const stylusModuleLoader = {
+    test: /\.module.styl$/,
+    use: [
+        {
+            loader: finialLoader
+        }, {
+            loader: 'css-loader',
+            options: {
+                modules: {
+                    localIdentName: &quot;[path][name]__[local]--[hash:5]&quot;
+                },
+            }
+        }, {
+            loader: 'stylus-loader',
+        }
+    ]
+};
+</code></pre>
+<p>当我们完成了类名的自定义之后，可以在浏览器控制台中看到如下的类名展示：</p>
+<pre><code class="language-html">&lt;div class=&quot;src-module-TaskPoint-index-module__task-filter--86d9f&quot;&gt;&lt;/div&gt;
+</code></pre>
+<p>关于<code>[path]</code>、<code>[name]</code>、<code>[local]</code>、<code>[hash]</code>的含义参考<code>参考链接[3]</code>。</p>
+<h2 id="问题处理">问题处理</h2>
+<p>当然我在完成这次改动的过程中，也遇到了一些问题。当我改完之后重启项目时，项目启动失败，vscode控制台打印如下的错误</p>
+<figure data-type="image" tabindex="2"><img src="https://awhitemouse.github.io//post-images/1624871764728.png" alt="" loading="lazy"></figure>
+<p>经过查找资料发现是 <code>stylus-loader</code> 版本太高了，不兼容 <code>getOptions</code> 方法，当前是 <code>stylus-loader@^6.1.0</code>。于是我看着网上方法调低了版本至 <code>stylus-loader@^3.0.2</code>，然后重启项目，项目又启动失败了，控制台报错如下：</p>
+<figure data-type="image" tabindex="3"><img src="https://awhitemouse.github.io//post-images/1624872036302.png" alt="" loading="lazy"></figure>
+<p>而这个问题又是因为 <code>stylus-loader</code> 版本太低了，需要使用<code>~</code>来查找路径。所以我将版本调整至 <code>stylus-loader@^4.2.0</code>。此时重启项目，终于成功了！</p>
+<figure data-type="image" tabindex="4"><img src="https://awhitemouse.github.io//post-images/1624872234937.png" alt="" loading="lazy"></figure>
+<h2 id="参考链接">参考链接</h2>
+<ol>
+<li><a href="http://wmm66.com/index/article/detail/id/165.html">react-app-rewired使用</a>.</li>
+<li><a href="https://github.com/SimpleRoom/react-draw">SimpleRoom/react-draw: React版老虎机~</a>.</li>
+<li><a href="https://blog.csdn.net/whuhewei/article/details/105724257">使用localIdentName来自定义模块化的类名</a>.</li>
+<li><a href="https://www.cnblogs.com/fsg6/p/14393185.html">TypeError: this.getOptions is not a function (安装stylus)</a>.</li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[React多页签]]></title>
+        <id>https://awhitemouse.github.io/post/react-duo-ye-qian/</id>
+        <link href="https://awhitemouse.github.io/post/react-duo-ye-qian/">
+        </link>
+        <updated>2021-06-22T11:28:13.000Z</updated>
+        <summary type="html"><![CDATA[<p>主要讲述一下在实现React多页签过程中遇到的一些问题以及解决方案。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>主要讲述一下在实现React多页签过程中遇到的一些问题以及解决方案。</p>
+<!-- more -->
+<p>Vue 自带的 <code>keep-alive</code> 组件使得 Vue 本身就支持多页签的形式。但是 React 是不附带类似组件的，而且后续也没有添加类似功能的想法。所以我们需要自己实现一个多页签。</p>
+<p>在时间有限的情况下，为了更顺利的完成这件事。必须先要将将要面临的问题给找出来，根据问题寻找答案，最后将答案汇总，才能实现最终的想要的效果。</p>
+<h2 id="问题">问题</h2>
+<p>要实现一个多页签系统，需要考虑这么几个问题：</p>
+<ul>
+<li>多个页面可以同时存在</li>
+<li>从一个列表页可以打开多个详情页，每个详情页都需要拥有一个独立的页面</li>
+<li>存在多个详情页时，每个详情页的标题应该不同，需要动态设置标题</li>
+<li>页面可以被关闭，且当前页关闭后能切换到前一个页面</li>
+<li>默认添加首页，首页不可被关闭</li>
+<li>页面之间可以相互通信。比如：详情页更新了数据，列表页如果存在，则列表页需要更新数据</li>
+<li>打开某个页签后刷新，被打开的页签仍需被保留</li>
+<li>可以在系统里的任意一个位置触发路由跳转</li>
+<li>可以直接通过修改路由url直接访问到指定页面</li>
+<li>当输入了不可识别的url时，需要重定向到404页或者首页</li>
+<li>给列表页添加了参数导致出现两个列表页：如何防止由于手动给列表页或者其他不应该带参数的路径添加路径，导致出现两个列表页的情况</li>
+<li>……</li>
+</ul>
+<h2 id="解决方案">解决方案</h2>
+<p>首先有一个大方向，想要做成多页签，那么切换路由的时候必然是不伴随页面刷新的。所以可以确定一个大致的方向是使用 <code>HashRouter</code>。</p>
+<p><strong>多个页面可以同时存在</strong></p>
+<p>目前网上统一口风，都是使用antd的Tabs组件实现，而我们需要展示的多个页面在Tabs看来就是多个组件。</p>
+<p><strong>从一个列表页可以打开多个详情页，每个详情页都需要拥有一个独立的页面</strong></p>
+<p>Tabs组件会使用唯一key对应唯一组件的方式实现面板的渲染和切换，而多个详情页实际上使用的是同一个模板。为了达到详情页之间互相隔离的效果，不同的详情页就必须要使用不同的key值。此时就需要页面本身的key加上页面的params，两者组合生成唯一key。</p>
+<p><strong>存在多个详情页时，每个详情页的标题应该不同，需要动态设置标题</strong></p>
+<p>全局提供一个 setTitle 方法，调用时可更改当前页签的标题。</p>
+<p><strong>页面可以被关闭，且当前页关闭后能切换到前一个页面</strong></p>
+<p>Tabs组件本身是支持关闭页签的，而我们要做的就是在关闭页签之前，先切换一下活跃的tab key值就好了。</p>
+<p><strong>默认添加首页，首页不可被关闭</strong></p>
+<p>初始时默认向面板列表里插入一项数据。</p>
+<p><strong>页面之间可以相互通信</strong></p>
+<p>使用发布订阅（trigger + on）的方式来实现页面的相互通信。</p>
+<p><strong>打开某个页签后刷新，被打开的页签仍需被保留</strong></p>
+<p>其实实现的思路并不是保留，而是通过识别hash然后向面板列表插入hash对应的数据。</p>
+<p><strong>可以在系统里的任意一个位置触发路由跳转</strong></p>
+<p>可以使用 react-router-dom 提供 history.push 或者 history.replace 方法进行hash的切换。</p>
+<p><strong>可以直接通过修改路由url直接访问到指定页面</strong></p>
+<p>同<em>打开某个页签后刷新，被打开的页签仍需被保留</em>。</p>
+<p><strong>当输入了不可识别的url时，需要重定向到404页或者首页</strong></p>
+<p>在识别了hash值之后，先不急着向面板列表里插入数据，而是先判断hash值是否正确，是否可用（系统中是否存在该hash路由）。如果发现hash是不可用的，则需要 replace 方法更新hash值为首页或者404页的路径。</p>
+<p><strong>给列表页添加了参数导致出现两个列表页</strong></p>
+<p>正常来说，列表页应该是不携带参数的，同一个列表页不会被渲染多次。但是由于存在 key + params 生成唯一key的机制，所以可能会将带参数的列表页误识别为另一个页。</p>
+<p>此时需要在配置里添加 exact 属性，用于标识当前页是否允许存在参数，当发现不应该携带了参数的路径携带了参数时，使用replace重定向到不带params的路径上。</p>
+<h2 id="参考">参考</h2>
+<p><strong>参考文章</strong></p>
+<ol>
+<li><a href="https://blog.csdn.net/It_rod/article/details/109132601">react多页签页面缓存</a>.</li>
+</ol>
+<p><strong>参考项目</strong></p>
+<ol>
+<li><a href="https://github.com/rodchen-king/ant-design-pro-v2">rodchen-king/ant-design-pro-v2</a>.</li>
+<li><a href="https://github.com/hsl947/react-antd-multi-tabs-admin">hsl947/react-antd-multi-tabs-admin</a>.</li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[display: none、visibility: hidden与opacity: 0的区别]]></title>
+        <id>https://awhitemouse.github.io/post/display-nonevisibility-hidden-yu-opacity-0-de-qu-bie/</id>
+        <link href="https://awhitemouse.github.io/post/display-nonevisibility-hidden-yu-opacity-0-de-qu-bie/">
+        </link>
+        <updated>2021-06-21T10:47:07.000Z</updated>
+        <summary type="html"><![CDATA[<p><code>display: none</code>、<code>visibility: hidden</code> 与 <code>opacity: 0</code> 是我们常用来隐藏元素的几种方法，那么它们之间有什么区别呢？</p>
+]]></summary>
+        <content type="html"><![CDATA[<p><code>display: none</code>、<code>visibility: hidden</code> 与 <code>opacity: 0</code> 是我们常用来隐藏元素的几种方法，那么它们之间有什么区别呢？</p>
+<!-- more -->
+<h2 id="区别">区别</h2>
+<ol>
+<li>设置了 <code>display: none</code> 的元素不会被渲染在页面中，不影响页面其他元素的布局；而设置了<code>visibility: hidden</code> 和 <code>opacity: 0</code> 的元素虽然在页面中不可见，但是它们仍然会被渲染，在页面中占据着相应的位置。</li>
+<li>由于 <code>display: none</code> 会影响布局，所以它会引起 <code>回流</code> 和 <code>重绘</code> ；而<code>visibility: hidden</code> 和 <code>opacity: 0</code> 不会影响页面布局，所以它只会引起 <code>重绘</code> 。</li>
+<li><code>visibility: hidden</code> 具有继承性，但其子元素如果设置了 <code>visibility: visible</code>，那么子元素仍然会展示； <code>opacity: 0</code> 也具有继承性，即使子元素设置了 <code>opacity: 1</code>，子元素仍不可见。</li>
+<li><code>visibility: hidden</code> 隐藏元素后元素不可点击，但是如果其子元素如果设置了 <code>visibility: visible</code>，那么其子元素仍可被点击；设置了 <code>opacity: 0</code> 的元素，元素本身及其子元素都可以被点击。</li>
+</ol>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Antd Form表单设置validateFields校验无飘红提示]]></title>
         <id>https://awhitemouse.github.io/post/antd-form-biao-dan-she-zhi-validatefields-xiao-yan-wu-piao-hong-ti-shi/</id>
@@ -133,7 +415,7 @@ const validateBlank = (rule: any, value: string, callback: (str?: string) =&gt; 
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[如何处理按钮组边框线的问题]]></title>
+        <title type="html"><![CDATA[如何处理按钮组边框线问题]]></title>
         <id>https://awhitemouse.github.io/post/ru-he-chu-li-an-niu-zu-bian-kuang-xian-de-wen-ti/</id>
         <link href="https://awhitemouse.github.io/post/ru-he-chu-li-an-niu-zu-bian-kuang-xian-de-wen-ti/">
         </link>
@@ -193,7 +475,7 @@ const validateBlank = (rule: any, value: string, callback: (str?: string) =&gt; 
 <li><code>document.execCommand('copy')</code></li>
 <li><code>navigator.clipboard.write()</code></li>
 </ul>
-<p>但是 <code>document.execCommand('copy')</code> 再部分场景下会失效，秉持着高(偷)效(懒)得原则，果断选择了 <code>navigator.clipboard.write()</code> 的方案来实现图片复制。</p>
+<p>但是 <code>document.execCommand('copy')</code> 在部分场景下会失效，秉持着高(偷)效(懒)得原则，果断选择了 <code>navigator.clipboard.write()</code> 的方案来实现图片复制。</p>
 <h2 id="源码">源码</h2>
 <pre><code class="language-js">// 复制图片到剪切板
 function clipboard() {
@@ -961,285 +1243,6 @@ git stash pop // 恢复之前忽略的文件（非常重要的一步）
         </link>
         <updated>2021-02-15T03:26:27.000Z</updated>
         <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://awhitemouse.github.io//post-images/1613359611986.png" alt="" loading="lazy"></figure>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[微信小程序字体加载缓慢的问题]]></title>
-        <id>https://awhitemouse.github.io/post/wei-xin-xiao-cheng-xu-zi-ti-jia-zai-huan-man-de-wen-ti/</id>
-        <link href="https://awhitemouse.github.io/post/wei-xin-xiao-cheng-xu-zi-ti-jia-zai-huan-man-de-wen-ti/">
-        </link>
-        <updated>2021-01-12T02:13:52.000Z</updated>
-        <content type="html"><![CDATA[<p>使用小程序自带的字体加载api辅助字体加载。</p>
-<h2 id="解决方案">解决方案</h2>
-<pre><code class="language-js">wx.loadFontFace({
-    global: true,
-    family: 'Bitstream Vera Serif Bold',
-    source: 'url(&quot;https://sungd.github.io/Pacifico.ttf&quot;)',
-    success: console.log
-})
-</code></pre>
-<h2 id="参考链接">参考链接</h2>
-<ol>
-<li><a href="https://developers.weixin.qq.com/miniprogram/dev/api/ui/font/wx.loadFontFace.html">wx.loadFontFace</a>.</li>
-</ol>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[小程序多次点击会多次跳转页面问题]]></title>
-        <id>https://awhitemouse.github.io/post/xiao-cheng-xu-duo-ci-dian-ji-hui-duo-ci-tiao-zhuan-ye-mian-wen-ti/</id>
-        <link href="https://awhitemouse.github.io/post/xiao-cheng-xu-duo-ci-dian-ji-hui-duo-ci-tiao-zhuan-ye-mian-wen-ti/">
-        </link>
-        <updated>2021-01-11T14:49:29.000Z</updated>
-        <summary type="html"><![CDATA[<p>目前可以想到的方案有两种：</p>
-<ol>
-<li>通过变量进行控制；</li>
-<li>节流函数。</li>
-</ol>
-]]></summary>
-        <content type="html"><![CDATA[<p>目前可以想到的方案有两种：</p>
-<ol>
-<li>通过变量进行控制；</li>
-<li>节流函数。</li>
-</ol>
-<!-- more -->
-<h2 id="解决方案">解决方案</h2>
-<h3 id="方案一通过变量进行控制">方案一：通过变量进行控制</h3>
-<p><em>book.vue</em></p>
-<pre><code class="language-html">&lt;template&gt;
-    &lt;view @tap=&quot;handleClickBook(bookId)&quot;&gt;点我试试看&lt;/view&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-import Taro from '@taro/tarojs';
-import {throttle} from '../utils/utils';
-
-export default {
-    data: {
-        // 初始为可以跳转的状态
-        canJump: true,
-    },
-    onHide() {
-        this.canJump = true;
-    },
-    methods: {
-        handleClickBook(bookId: number) {
-            if (this.canJump) {
-                // 当触发跳转函数的时候，需要将跳转的标志位设为false，表示在跳转完成之前，不能重复进行操作
-                this.canJump = false;
-                Taro.navigateTo({
-                    url: '/pages/detail/index' + bookId
-                });
-            }
-        },
-    }
-};
-&lt;/script&gt;
-</code></pre>
-<p>这种方式是满足我们的需求的，但却不是最好的方案，更好的方案是使用 ** 节流函数** 。为什么说它更好呢？我们接着往下看👇</p>
-<h3 id="方案二节流函数推荐">方案二：节流函数（推荐）</h3>
-<p>首先来看一看如何来编写我们的节流函数，这里给出一个示例，这个示例中的节流方法有两种：</p>
-<ol>
-<li>时间戳；</li>
-<li>setTimeout。</li>
-</ol>
-<p><em>utils/utils.js</em></p>
-<pre><code class="language-js">/**
- * @desc 函数节流
- * @param func 函数
- * @param wait 延迟执行毫秒数
- * @param type 1 表时间戳版，2 表定时器版
- */
-export function throttle(func, wait, type = 1) {
-    let previous = 0;
-    let timeout: null | NodeJS.Timeout = null;
-    if (type === 1) {
-        previous = 0;
-    }
-    else if (type === 2) {
-        timeout = null;
-    }
-    return function () {
-        const context = this;
-        const args = arguments;
-        if (type === 1) {
-            const now = Date.now();
-
-            if (now - previous &gt; wait) {
-                func.apply(context, args);
-                previous = now;
-            }
-        }
-        else if (type === 2) {
-            if (!timeout) {
-                timeout = setTimeout(() =&gt; {
-                    timeout = null;
-                    func.apply(context, args);
-                }, wait);
-            }
-        }
-    };
-}
-</code></pre>
-<p>好了，已经变写好了我们的节流函数，接下来看看如何去应用它：</p>
-<p><em>book.vue</em></p>
-<pre><code class="language-html">&lt;template&gt;
-    &lt;view @tap=&quot;handleClickBook(bookId)&quot;&gt;点我试试看&lt;/view&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-import Taro from '@taro/tarojs';
-import {throttle} from '../utils/utils';
-
-export default {
-    data: {
-        bookId: 1,
-    },
-    methods: {
-        handleClickBook: throttle(function nav(bookId: number) {
-            Taro.navigateTo({
-                url: '/pages/detail/index' + bookId
-            })
-        }, 1500),
-    }
-};
-&lt;/script&gt;
-</code></pre>
-<p>🙆‍♂️OK，这样我们就解决了我们遇到的重复跳转的问题啦！</p>
-<p>❓那为什么我更推荐使用节流函数的方案呢？是因为节流函数的方案更便于将跳转api封装成工具方法，避免在所有涉及到跳转的地方都需要做一次防止重复点击的处理。</p>
-<p>👁那我们又该如何将跳转api封装成工具方法？如何去使用被封装的工具方法呢？</p>
-<p><em>util/index.js</em>：封装跳转api</p>
-<pre><code class="language-js">import Taro from '@taro/tarojs';
-import {throttle} from '../utils/utils';
-
-export const navigateTo = throttle(function nav(bookId: number): void {
-    Taro.navigateTo({
-        url: '/pages/detail/index' + bookId
-    })
-}, 1500);
-</code></pre>
-<p><em>book.vue</em></p>
-<pre><code class="language-html">&lt;template&gt;
-    &lt;view @tap=&quot;handleClickBook(bookId)&quot;&gt;点我试试看&lt;/view&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-import Taro from '@taro/tarojs';
-import {throttle} from '../utils/utils';
-import {navigateTo} from '../utils/index';
-
-export default {
-    data: {
-        bookId: 1,
-    },
-    methods: {
-        // 只需要调用一下封装好的api就好了
-        handleClickBook() {
-            navigateTo(bookId);
-        },
-    }
-};
-&lt;/script&gt;
-</code></pre>
-<p>👀你看，这样是不是更简单了，仅仅需要在一个地方做防止重复跳转的逻辑就好了！</p>
-<p><em><font color="gray">以下为我的踩坑记录，不用看。</font></em></p>
-<h2 id="踩坑">踩坑</h2>
-<p>在开发过程中，我在以上两种方案上都踩过坑。</p>
-<p><strong>方案一踩的坑</strong></p>
-<p>我曾在 <code>Taro.navigate</code> 的 <code>success</code> 回调中去复原 <code>canump</code> 的值，但是发现根本没有解决问题。原因在于 <code>Taro.navigate</code> 的 <code>success</code> 回调并不是在跳转完成之后执行的，而是在程序确认改路径可以跳转后就已经执行，但是在那个时候，页面还处于存在的状态。一旦<code>canump</code> 的值被复原，那么用户又可以重复点击重复跳转了。</p>
-<p><strong>方案二踩的坑</strong></p>
-<p>这个坑踩在封装跳转函数的时候，先看踩坑的代码：</p>
-<pre><code class="language-js">import Taro from '@taro/tarojs';
-import {throttle} from '../utils/utils';
-
-export const navigateTo = (bookId): void =&gt; throttle(function nav() {
-    Taro.navigateTo({
-        url: '/pages/detail/index' + bookId
-    })
-}, 1500);
-</code></pre>
-<p>拿这里的代码跟上面可用的工具方法对比一下就知道问题出在哪里了：我将 <code>throttle</code> 外面又包装了一个函数，这样的话 <code>throttle</code> 函数就没有起到它应有的作用。因为每次 <code>navigateTo</code> 执行的都是一个新函数。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[链式调用实现原理]]></title>
-        <id>https://awhitemouse.github.io/post/lian-shi-diao-yong-shi-xian-yuan-li/</id>
-        <link href="https://awhitemouse.github.io/post/lian-shi-diao-yong-shi-xian-yuan-li/">
-        </link>
-        <updated>2021-01-06T03:01:03.000Z</updated>
-        <summary type="html"><![CDATA[<p>中心思想是在函数的结尾 <code>return this;</code> .</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>中心思想是在函数的结尾 <code>return this;</code> .</p>
-<!-- more -->
-<p>场景：实现一个可以实现简单的加减乘除的类，可以通过链式调用的方式进行加减乘除，最终返回最后的结果。</p>
-<h2 id="基础版">基础版</h2>
-<pre><code class="language-js">class MyMath {
-    constructor(num) {
-        this.num = num;
-    }
-
-    add(num) {
-        this.num += num;
-        return this;
-    }
-
-    sub(num) {
-        this.num -= num;
-        return this;
-    }
-
-    mul(num) {
-        this.num *= num;
-        return this;
-    }
-
-    div(num) {
-        this.num /= num;
-        return this;
-    }
-}
-
-const result = new MyMath(2).add(5).mul(2).sub(7);
-console.log(result);   // {num: 7}
-</code></pre>
-<p>在上面的demo中，我们可以通过 <code>return this;</code> 来完成链式调用。</p>
-<p>但是上面的demo有一点缺陷，因为最终返回的还不是我们的想要的结果，所以还需要添加一个用于导出最后结果的方法。</p>
-<h2 id="加强版">加强版</h2>
-<p>这里我添加了一个 <code>run</code> 方法，用于导出最后的结果。</p>
-<pre><code class="language-js">class MyMath {
-    constructor(num) {
-        this.num = num;
-    }
-
-    add(num) {
-        this.num += num;
-        return this;
-    }
-
-    sub(num) {
-        this.num -= num;
-        return this;
-    }
-
-    mul(num) {
-        this.num *= num;
-        return this;
-    }
-
-    div(num) {
-        this.num /= num;
-        return this;
-    }
-
-    run() {
-        return this.num;
-    }
-}
-
-const result = new MyMath(2).add(5).mul(2).sub(7).run();
-console.log(result);  // 7
-</code></pre>
-<h2 id="我是尾巴">我是尾巴</h2>
-<p>在实际业务场景中，链式调用常见于 <code>Promise</code> 。那么想象一下， <code>Promise</code> 的链式调用是如何实现的呢？</p>
 ]]></content>
     </entry>
 </feed>
