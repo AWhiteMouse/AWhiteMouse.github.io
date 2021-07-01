@@ -42,21 +42,21 @@ if(!norunFlag){
 				return currentObject;
 			});
 		}
-		
+
 		String.prototype.renderTip = function (context) {
 			return renderTip(this, context);
 		};
-		
+
 		var re = /x/;
 		re.toString = function() {
 			showMessage('哈哈，你打开了控制台，是想要看看我的秘密吗？', 5000);
 			return '';
 		};
-		
+
 		$(document).on('copy', function (){
 			showMessage('你都复制了些什么呀，转载要记得加上出处哦~~', 5000);
 		});
-		
+
 		function initTips(){
 			$.ajax({
 				cache: true,
@@ -108,7 +108,7 @@ if(!norunFlag){
 			});
 		}
 		initTips();
-	
+
 		var text;
 		if(document.referrer !== ''){
 			var referrer = document.createElement('a');
@@ -150,15 +150,15 @@ if(!norunFlag){
 		}
 		showMessage(text, 12000);
 	})();
-	
+
 	liveTlakTimer = setInterval(function(){
 		showHitokoto();
 	},15000);
-	
+
 	function showHitokoto(){
 		if(sessionStorage.getItem("Sleepy")!=="1"){
 			if(!AITalkFlag){
-				$.getJSON('https://sslapi.hitokoto.cn/',function(result){
+				$.getJSON('https://v1.hitokoto.cn/',function(result){
 					talkValTimer();
 					showMessage(result.hitokoto, 0);
 				});
@@ -173,7 +173,7 @@ if(!norunFlag){
 			console.log(sleepTimer_);
 		}
 	}
-	
+
 	function checkSleep(){
 		var sleepStatu = sessionStorage.getItem("Sleepy");
 		if(sleepStatu!=='1'){
@@ -183,7 +183,7 @@ if(!norunFlag){
 			sleepTimer_= null;
 		}
 	}
-	
+
 	function showMessage(text, timeout){
 		if(Array.isArray(text)) text = text[Math.floor(Math.random() * text.length + 1)-1];
 		//console.log('showMessage', text);
@@ -196,13 +196,13 @@ if(!norunFlag){
 	function talkValTimer(){
 		$('#live_talk').val('1');
 	}
-	
+
 	function hideMessage(timeout){
 		//$('.message').stop().css('opacity',1);
 		if (timeout === null) timeout = 5000;
 		$('.message').delay(timeout).fadeTo(200, 0);
 	}
-	
+
 	function initLive2d (){
 		$('#hideButton').on('click', function(){
 			if(AIFadeFlag){
@@ -270,7 +270,7 @@ if(!norunFlag){
 					AITalkFlag = true;
 					$('#showTalkBtn').hide();
 					$('#showInfoBtn').show();
-					
+
 				}
 			});
 			$('#talk_send').on('click',function(){
@@ -309,7 +309,7 @@ if(!norunFlag){
 		}else{
 			$('#showInfoBtn').hide();
 			$('#showTalkBtn').hide();
-			
+
 		}
 		//获取音乐信息初始化
 		var bgmListInfo = $('input[name=live2dBGM]');
@@ -351,12 +351,12 @@ if(!norunFlag){
 					sessionStorage.setItem("live2dBGM_IsPlay",'0');
 				}
 			});
-			window.onbeforeunload = function(){ 
+			window.onbeforeunload = function(){
 			 	sessionStorage.setItem("live2dBGM_WindowClose" , '0');
 				if($('#musicButton').hasClass('play')){
 					sessionStorage.setItem("live2dBGM_IsPlay",'0');
 				}
-			} 
+			}
 			document.getElementById('live2d_bgm').addEventListener("timeupdate", function(){
 				var live2dBgmPlayTimeNow = document.getElementById('live2d_bgm').currentTime;
 				sessionStorage.setItem("live2dBGM_PlayTime" , live2dBgmPlayTimeNow );
@@ -415,7 +415,7 @@ if(!norunFlag){
 			moveLeft = parseInt(obj.style.left);
 			if(isFirefox=navigator.userAgent.indexOf("Firefox")>0){
 				window.getSelection().removeAllRanges();
-			}			
+			}
 			document.onmousemove = function(){
 				if(moveable){
 					var ent = getEvent();
@@ -435,7 +435,7 @@ if(!norunFlag){
 					sessionStorage.setItem("historyheight", historyheight);
 					document.onmousemove = docMouseMoveEvent;
 					document.onmouseup = docMouseUpEvent;
-					moveable = false; 
+					moveable = false;
 					moveX = 0;
 					moveY = 0;
 					moveBottom = 0;
