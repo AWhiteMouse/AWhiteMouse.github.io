@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://hbuecx.com</id>
+    <id>http://localhost:4000</id>
     <title>白山的博客</title>
-    <updated>2021-07-01T06:37:03.779Z</updated>
+    <updated>2021-07-01T06:38:33.604Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://hbuecx.com"/>
-    <link rel="self" href="https://hbuecx.com/atom.xml"/>
+    <link rel="alternate" href="http://localhost:4000"/>
+    <link rel="self" href="http://localhost:4000/atom.xml"/>
     <subtitle>温故而知新。</subtitle>
-    <logo>https://hbuecx.com/images/avatar.png</logo>
-    <icon>https://hbuecx.com/favicon.ico</icon>
+    <logo>http://localhost:4000/images/avatar.png</logo>
+    <icon>http://localhost:4000/favicon.ico</icon>
     <rights>All rights reserved 2021, 白山的博客</rights>
     <entry>
         <title type="html"><![CDATA[实现 stylus 预处理器的 css module]]></title>
-        <id>https://hbuecx.com/post/shi-xian-stylus-yu-chu-li-qi-de-css-module/</id>
-        <link href="https://hbuecx.com/post/shi-xian-stylus-yu-chu-li-qi-de-css-module/">
+        <id>http://localhost:4000/post/shi-xian-stylus-yu-chu-li-qi-de-css-module/</id>
+        <link href="http://localhost:4000/post/shi-xian-stylus-yu-chu-li-qi-de-css-module/">
         </link>
         <updated>2021-06-28T06:20:42.000Z</updated>
         <summary type="html"><![CDATA[<p>新接手了一个后台CMS项目，项目的技术栈是React，内容的展示方式是多页签的方式，也就是存在多个模块共存的情况。</p>
@@ -159,7 +159,7 @@ const stylus = () =&gt; config =&gt; {
 +&lt;div className={styles[&quot;task-filter&quot;]}&gt;&lt;/div&gt;
 </code></pre>
 <p>修改完之后重启项目，在浏览器控制台中可以看见该元素的类名变成了下面这样👇</p>
-<figure data-type="image" tabindex="1"><img src="https://hbuecx.com/post-images/1624870986141.jpg" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1624870986141.jpg" alt="" loading="lazy"></figure>
 <pre><code class="language-html">&lt;div class=&quot;_1eNJZCuG-X4NKKwr3f_ZC6&quot;&gt;&lt;/div&gt;
 </code></pre>
 <p>这说明css module已经生效了。而我们常见的css module的类名并不是这种随机的字符串，而是一些特定名称的拼接组合。如果要实现这种拼接组合该怎么做呢？其实也很简单，只需要找到 <code>stylus</code> 方法里 <code>stylusModuleLoader</code> 对象里的 <code>modules</code> 属性值即可：</p>
@@ -194,11 +194,11 @@ const stylusModuleLoader = {
 <p>关于<code>[path]</code>、<code>[name]</code>、<code>[local]</code>、<code>[hash]</code>的含义参考<code>参考链接[3]</code>。</p>
 <h2 id="问题处理">问题处理</h2>
 <p>当然我在完成这次改动的过程中，也遇到了一些问题。当我改完之后重启项目时，项目启动失败，vscode控制台打印如下的错误</p>
-<figure data-type="image" tabindex="2"><img src="https://hbuecx.com/post-images/1624871764728.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="http://localhost:4000/post-images/1624871764728.png" alt="" loading="lazy"></figure>
 <p>经过查找资料发现是 <code>stylus-loader</code> 版本太高了，不兼容 <code>getOptions</code> 方法，当前是 <code>stylus-loader@^6.1.0</code>。于是我看着网上方法调低了版本至 <code>stylus-loader@^3.0.2</code>，然后重启项目，项目又启动失败了，控制台报错如下：</p>
-<figure data-type="image" tabindex="3"><img src="https://hbuecx.com/post-images/1624872036302.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="http://localhost:4000/post-images/1624872036302.png" alt="" loading="lazy"></figure>
 <p>而这个问题又是因为 <code>stylus-loader</code> 版本太低了，需要使用<code>~</code>来查找路径。所以我将版本调整至 <code>stylus-loader@^4.2.0</code>。此时重启项目，终于成功了！</p>
-<figure data-type="image" tabindex="4"><img src="https://hbuecx.com/post-images/1624872234937.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="4"><img src="http://localhost:4000/post-images/1624872234937.png" alt="" loading="lazy"></figure>
 <h2 id="参考链接">参考链接</h2>
 <ol>
 <li><a href="http://wmm66.com/index/article/detail/id/165.html">react-app-rewired使用</a>.</li>
@@ -210,8 +210,8 @@ const stylusModuleLoader = {
     </entry>
     <entry>
         <title type="html"><![CDATA[React多页签]]></title>
-        <id>https://hbuecx.com/post/react-duo-ye-qian/</id>
-        <link href="https://hbuecx.com/post/react-duo-ye-qian/">
+        <id>http://localhost:4000/post/react-duo-ye-qian/</id>
+        <link href="http://localhost:4000/post/react-duo-ye-qian/">
         </link>
         <updated>2021-06-22T11:28:13.000Z</updated>
         <summary type="html"><![CDATA[<p>主要讲述一下在实现React多页签过程中遇到的一些问题以及解决方案。</p>
@@ -275,8 +275,8 @@ const stylusModuleLoader = {
     </entry>
     <entry>
         <title type="html"><![CDATA[display: none、visibility: hidden与opacity: 0的区别]]></title>
-        <id>https://hbuecx.com/post/display-nonevisibility-hidden-yu-opacity-0-de-qu-bie/</id>
-        <link href="https://hbuecx.com/post/display-nonevisibility-hidden-yu-opacity-0-de-qu-bie/">
+        <id>http://localhost:4000/post/display-nonevisibility-hidden-yu-opacity-0-de-qu-bie/</id>
+        <link href="http://localhost:4000/post/display-nonevisibility-hidden-yu-opacity-0-de-qu-bie/">
         </link>
         <updated>2021-06-21T10:47:07.000Z</updated>
         <summary type="html"><![CDATA[<p><code>display: none</code>、<code>visibility: hidden</code> 与 <code>opacity: 0</code> 是我们常用来隐藏元素的几种方法，那么它们之间有什么区别呢？</p>
@@ -294,8 +294,8 @@ const stylusModuleLoader = {
     </entry>
     <entry>
         <title type="html"><![CDATA[Antd Form表单设置validateFields校验无飘红提示]]></title>
-        <id>https://hbuecx.com/post/antd-form-biao-dan-she-zhi-validatefields-xiao-yan-wu-piao-hong-ti-shi/</id>
-        <link href="https://hbuecx.com/post/antd-form-biao-dan-she-zhi-validatefields-xiao-yan-wu-piao-hong-ti-shi/">
+        <id>http://localhost:4000/post/antd-form-biao-dan-she-zhi-validatefields-xiao-yan-wu-piao-hong-ti-shi/</id>
+        <link href="http://localhost:4000/post/antd-form-biao-dan-she-zhi-validatefields-xiao-yan-wu-piao-hong-ti-shi/">
         </link>
         <updated>2021-06-10T02:48:06.000Z</updated>
         <summary type="html"><![CDATA[<p>使用 <code>validateFields</code>，点击保存的时候控制台会打印警告，但是表单中无飘红提示。</p>
@@ -304,7 +304,7 @@ const stylusModuleLoader = {
 <!-- more -->
 <h2 id="问题背景">问题背景</h2>
 <p>写了一个表单校验，用来验证输入的字符串是否全为空格。当我点击保存的时候（调用 <code>validateFields</code> 方法），在控制台提示了如下警告：</p>
-<figure data-type="image" tabindex="1"><img src="https://hbuecx.com/post-images/1623294251997.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1623294251997.png" alt="" loading="lazy"></figure>
 <p>代码是这样的：</p>
 <pre><code class="language-jsx">&lt;FormItem
     label=&quot;规格&quot;
@@ -375,7 +375,7 @@ const stylusModuleLoader = {
 &lt;/FormItem&gt;
 </code></pre>
 <p>加上对于 value 的判断后再去校验就出现飘红提示了。</p>
-<figure data-type="image" tabindex="2"><img src="https://hbuecx.com/post-images/1623294311718.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="http://localhost:4000/post-images/1623294311718.png" alt="" loading="lazy"></figure>
 <h2 id="问题原因分析">问题原因分析</h2>
 <p>虽然问题解决了，但是如此怪异的问题我还是得弄清楚原因才行，不然再次遇到同类问题的时候可能不知道该怎么处理。</p>
 <p>对比了一下前后的区别，发现将 <code>value.length</code> 改成 <code>value</code> 的区别在于 <code>value.length</code> 这个表达式本身就可能报错。比如当 <code>value</code> 为 <code>undefined</code> 时。</p>
@@ -416,8 +416,8 @@ const validateBlank = (rule: any, value: string, callback: (str?: string) =&gt; 
     </entry>
     <entry>
         <title type="html"><![CDATA[如何处理按钮组边框线问题]]></title>
-        <id>https://hbuecx.com/post/ru-he-chu-li-an-niu-zu-bian-kuang-xian-de-wen-ti/</id>
-        <link href="https://hbuecx.com/post/ru-he-chu-li-an-niu-zu-bian-kuang-xian-de-wen-ti/">
+        <id>http://localhost:4000/post/ru-he-chu-li-an-niu-zu-bian-kuang-xian-de-wen-ti/</id>
+        <link href="http://localhost:4000/post/ru-he-chu-li-an-niu-zu-bian-kuang-xian-de-wen-ti/">
         </link>
         <updated>2021-06-09T07:31:39.000Z</updated>
         <summary type="html"><![CDATA[<p>关键点在于如何处理相邻元素的边框线。</p>
@@ -432,7 +432,7 @@ const validateBlank = (rule: any, value: string, callback: (str?: string) =&gt; 
   on <a href="https://codepen.io">CodePen</a>.</span>
 </p>
 <p>这种方法对付一般性的需求是没有问题的，但是如果遇到了比较特殊的情况就出问题了，比如这样：</p>
-<figure data-type="image" tabindex="1"><img src="https://hbuecx.com/post-images/1623224766667.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1623224766667.png" alt="" loading="lazy"></figure>
 <p>因为换行的原因导致中间元素没有右边框的问题被暴露出来了。</p>
 <h2 id="margin-right负值">margin-right负值</h2>
 <p>为了解决换行导致的样式问题，需要保证每个元素的左右边框都存在。</p>
@@ -448,8 +448,8 @@ const validateBlank = (rule: any, value: string, callback: (str?: string) =&gt; 
     </entry>
     <entry>
         <title type="html"><![CDATA[【转载】探秘 flex 上下文中神奇的自动 margin]]></title>
-        <id>https://hbuecx.com/post/zhuan-zai-tan-mi-flex-shang-xia-wen-zhong-shen-qi-de-zi-dong-margin/</id>
-        <link href="https://hbuecx.com/post/zhuan-zai-tan-mi-flex-shang-xia-wen-zhong-shen-qi-de-zi-dong-margin/">
+        <id>http://localhost:4000/post/zhuan-zai-tan-mi-flex-shang-xia-wen-zhong-shen-qi-de-zi-dong-margin/</id>
+        <link href="http://localhost:4000/post/zhuan-zai-tan-mi-flex-shang-xia-wen-zhong-shen-qi-de-zi-dong-margin/">
         </link>
         <updated>2021-05-31T06:19:24.000Z</updated>
         <summary type="html"><![CDATA[<p><a href="https://www.cnblogs.com/coco1s/p/10910588.html">阅读原文</a></p>
@@ -460,8 +460,8 @@ const validateBlank = (rule: any, value: string, callback: (str?: string) =&gt; 
     </entry>
     <entry>
         <title type="html"><![CDATA[JS复制canvas图片到剪切板]]></title>
-        <id>https://hbuecx.com/post/js-fu-zhi-tu-pian-dao-jian-qie-ban/</id>
-        <link href="https://hbuecx.com/post/js-fu-zhi-tu-pian-dao-jian-qie-ban/">
+        <id>http://localhost:4000/post/js-fu-zhi-tu-pian-dao-jian-qie-ban/</id>
+        <link href="http://localhost:4000/post/js-fu-zhi-tu-pian-dao-jian-qie-ban/">
         </link>
         <updated>2021-04-27T04:10:55.000Z</updated>
         <summary type="html"><![CDATA[<p>最近在写一个小工具，用来生成指定宽高与颜色的图片：<a href="https://hbuecx.com/GImage/">传送门</a>.我想给它添加可以一键复制图片到剪切板的功能，所以才有了这篇文章。</p>
@@ -502,8 +502,8 @@ function clipboard() {
     </entry>
     <entry>
         <title type="html"><![CDATA[还在用 npm install ? 试试 npm ci 吧！]]></title>
-        <id>https://hbuecx.com/post/ni-zhi-dao-npm-ci-ma/</id>
-        <link href="https://hbuecx.com/post/ni-zhi-dao-npm-ci-ma/">
+        <id>http://localhost:4000/post/ni-zhi-dao-npm-ci-ma/</id>
+        <link href="http://localhost:4000/post/ni-zhi-dao-npm-ci-ma/">
         </link>
         <updated>2021-04-22T03:19:57.000Z</updated>
         <summary type="html"><![CDATA[<p>在有 <code>package-lock</code> 的项目，我们可以使用 <code>npm ci</code> 来替代 <code>npm install</code>.</p>
@@ -528,7 +528,7 @@ function clipboard() {
 <p>此时我们应该想到另一个可能被我们遗忘的小机灵鬼：<code>package-lock.json</code>。这可是控制 <code>node_modules</code> 文件夹中所有依赖的源头啊。</p>
 <p>是的，我们完全可以通过锁定问题的源头来解决问题，即锁定 <code>package-lock.json</code>，让 Jenkins 在构建安装依赖时使用和我们本地依赖一致的包，这样我们的问题就可以解决了。</p>
 <p>而实现这一目标的的一个优雅工具就是：<code>npm ci</code>.我们可以使用 <code>npm ci</code> 取代 <code>npm install</code>，就像图里所演示的这样，将构建脚本里的 <code>npm install</code> 换成 <code>npm ci</code>，这样就可以实现我们所需要的效果了：</p>
-<figure data-type="image" tabindex="1"><img src="https://hbuecx.com/post-images/1619501381269.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1619501381269.png" alt="" loading="lazy"></figure>
 <p>关于使用 <code>npm ci</code> 的场景，它应该是这样的：</p>
 <blockquote>
 <p>在有 <code>package-lock</code> 的项目，我们可以使用 <code>npm ci</code> 来替代 <code>npm install</code>.</p>
@@ -545,8 +545,8 @@ function clipboard() {
     </entry>
     <entry>
         <title type="html"><![CDATA[css扩大元素的点击范围]]></title>
-        <id>https://hbuecx.com/post/css-kuo-da-yuan-su-de-dian-ji-fan-wei/</id>
-        <link href="https://hbuecx.com/post/css-kuo-da-yuan-su-de-dian-ji-fan-wei/">
+        <id>http://localhost:4000/post/css-kuo-da-yuan-su-de-dian-ji-fan-wei/</id>
+        <link href="http://localhost:4000/post/css-kuo-da-yuan-su-de-dian-ji-fan-wei/">
         </link>
         <updated>2021-04-19T11:45:35.000Z</updated>
         <summary type="html"><![CDATA[<p>QA反映有个按钮有点难点到，但是UI稿设计的宽高就这么大啊，所以只能想办法在不改变元素展示样式的情况下扩大元素的点击范围。</p>
@@ -585,8 +585,8 @@ function clipboard() {
     </entry>
     <entry>
         <title type="html"><![CDATA[关于儿童交互产品的设计理念]]></title>
-        <id>https://hbuecx.com/post/guan-yu-er-tong-jiao-hu-chan-pin-de-she-ji-li-nian/</id>
-        <link href="https://hbuecx.com/post/guan-yu-er-tong-jiao-hu-chan-pin-de-she-ji-li-nian/">
+        <id>http://localhost:4000/post/guan-yu-er-tong-jiao-hu-chan-pin-de-she-ji-li-nian/</id>
+        <link href="http://localhost:4000/post/guan-yu-er-tong-jiao-hu-chan-pin-de-she-ji-li-nian/">
         </link>
         <updated>2021-04-15T02:39:52.000Z</updated>
         <summary type="html"><![CDATA[<p>今天早会的时候，产品总监提出目前我们的产品还是有一部分偏向于成人化。这让我好奇：成人交互与儿童交互的区别在哪里呢？</p>
@@ -594,15 +594,15 @@ function clipboard() {
         <content type="html"><![CDATA[<p>今天早会的时候，产品总监提出目前我们的产品还是有一部分偏向于成人化。这让我好奇：成人交互与儿童交互的区别在哪里呢？</p>
 <!-- more -->
 <p>我在查找资料的过程中，发现了一篇文章：<a href="http://www.gx-id.com/new/265.html">不同年龄阶段儿童交互产品设计理念需要加以区分利用</a>，其中对于成人与儿童交互应有的区别的做了详细的论述：</p>
-<figure data-type="image" tabindex="1"><img src="https://hbuecx.com/post-images/1618454763745.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1618454763745.png" alt="" loading="lazy"></figure>
 <p>另外还有一篇文章：<a href="https://zhuanlan.zhihu.com/p/130241756">儿童和成人学习英语的区别</a>，其中关于儿童英语学习路径的观点可以参考一下：</p>
-<figure data-type="image" tabindex="2"><img src="https://hbuecx.com/post-images/1618454933806.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="http://localhost:4000/post-images/1618454933806.png" alt="" loading="lazy"></figure>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[如何绘制一条优雅的圆弧线]]></title>
-        <id>https://hbuecx.com/post/ru-he-hui-zhi-yi-tiao-you-ya-de-yuan-hu-xian/</id>
-        <link href="https://hbuecx.com/post/ru-he-hui-zhi-yi-tiao-you-ya-de-yuan-hu-xian/">
+        <id>http://localhost:4000/post/ru-he-hui-zhi-yi-tiao-you-ya-de-yuan-hu-xian/</id>
+        <link href="http://localhost:4000/post/ru-he-hui-zhi-yi-tiao-you-ya-de-yuan-hu-xian/">
         </link>
         <updated>2021-04-12T12:55:19.000Z</updated>
         <summary type="html"><![CDATA[<p>最近在做的一个需求里需要绘制一条优雅的圆弧线，UE问我要不要切图？？伤害性不大，侮辱性极强！</p>
@@ -610,7 +610,7 @@ function clipboard() {
         <content type="html"><![CDATA[<p>最近在做的一个需求里需要绘制一条优雅的圆弧线，UE问我要不要切图？？伤害性不大，侮辱性极强！</p>
 <!-- more -->
 <p>UE给出的设计稿是下面这样的👇（看中间的那条白色圆弧线）</p>
-<figure data-type="image" tabindex="1"><img src="https://hbuecx.com/post-images/1618456618748.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1618456618748.png" alt="" loading="lazy"></figure>
 <p>跟UE对设计稿的时候，UE问我这个圆弧要不要切图？<del><em>嗯!? 这么简单的圆弧还切图，看不起谁呢？</em><del></p>
 <p>👀之前也绘制过圆弧线，是使用 <a href="#%E7%94%BB%E5%A4%A7%E5%9C%86">画大圆</a> 的方式实现的。而这一次，我突然想到应该还有其他的办法也可以实现相同的效果吧。</p>
 <p>于是查阅了一些资料，结合自身的经验总结了有如下几种画圆弧的方式：</p>
@@ -695,8 +695,8 @@ function clipboard() {
     </entry>
     <entry>
         <title type="html"><![CDATA[如何做一场高质量的分享]]></title>
-        <id>https://hbuecx.com/post/ru-he-zuo-yi-chang-gao-zhi-liang-de-fen-xiang/</id>
-        <link href="https://hbuecx.com/post/ru-he-zuo-yi-chang-gao-zhi-liang-de-fen-xiang/">
+        <id>http://localhost:4000/post/ru-he-zuo-yi-chang-gao-zhi-liang-de-fen-xiang/</id>
+        <link href="http://localhost:4000/post/ru-he-zuo-yi-chang-gao-zhi-liang-de-fen-xiang/">
         </link>
         <updated>2021-04-02T03:52:08.000Z</updated>
         <summary type="html"><![CDATA[<p>最近做了两次分享，第二次分享完之后，自我感觉不是很理想。正好看到这样一篇分析高质量分享的<a href="https://mp.weixin.qq.com/s/ZcHkIs00kVeyZ2-7u3cg5A">文章</a>，看完之后确有所得，所以这里对这篇文章里提到的自己踩过坑的地方列出来，结合自己的经历做一个总结。</p>
@@ -750,8 +750,8 @@ function clipboard() {
     </entry>
     <entry>
         <title type="html"><![CDATA[如何拦截Elementui RadioGroup的数据变更]]></title>
-        <id>https://hbuecx.com/post/ru-he-lan-jie-elementui-raio-group-de-shu-ju-bian-geng/</id>
-        <link href="https://hbuecx.com/post/ru-he-lan-jie-elementui-raio-group-de-shu-ju-bian-geng/">
+        <id>http://localhost:4000/post/ru-he-lan-jie-elementui-raio-group-de-shu-ju-bian-geng/</id>
+        <link href="http://localhost:4000/post/ru-he-lan-jie-elementui-raio-group-de-shu-ju-bian-geng/">
         </link>
         <updated>2021-03-30T02:00:12.000Z</updated>
         <summary type="html"><![CDATA[<p>最近在做的一个业务场景需要劫持掉 <code>RadioGroup</code> 的内部的数据自动更新行为，然后根据外部的条件动态判断能否更新数据。</p>
@@ -760,22 +760,22 @@ function clipboard() {
 <!-- more -->
 <h2 id="问题简述">问题简述</h2>
 <p>界面如下图。最上方的Tabs标签页是一级分类（Tabs）；中间的按钮组（即RadioGroup）是二级分类；下方是数据展示面板，用于展示当前分类下的数据。</p>
-<figure data-type="image" tabindex="1"><img src="https://hbuecx.com/post-images/1617161503433.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1617161503433.png" alt="" loading="lazy"></figure>
 <p>如果数据展示面板被手动操作导致数据发生更改后，此时去切换上方的一级分类或者二级分类都需要弹出二次确认弹窗如下：</p>
-<figure data-type="image" tabindex="2"><img src="https://hbuecx.com/post-images/1617161868698.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="http://localhost:4000/post-images/1617161868698.png" alt="" loading="lazy"></figure>
 <h2 id="解决方案">解决方案</h2>
 <p>我们的使用的组件库是<a href="https://element.eleme.cn/#/zh-CN/component/installation">element-ui 2</a>。</p>
 <p>下面将针对不同的组件提出不同的数据劫持的方案。</p>
 <h3 id="一级分类tabs">一级分类：Tabs</h3>
 <p>Tabs组件提供了 <code>before-leave</code> 钩子，可以使用这个钩子完成对数据变更的劫持。</p>
-<figure data-type="image" tabindex="3"><img src="https://hbuecx.com/post-images/1617162183098.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="http://localhost:4000/post-images/1617162183098.png" alt="" loading="lazy"></figure>
 <p>使用示例如下：<br>
-<img src="https://hbuecx.com/post-images/1617162565503.png" alt="" loading="lazy"><br>
-<img src="https://hbuecx.com/post-images/1617162382412.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1617162565503.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1617162382412.png" alt="" loading="lazy"></p>
 <h3 id="二级分类radiogroup">二级分类：RadioGroup</h3>
 <p>相较于Tabs，RadioGroup的处理方案要复杂一些，因为这个组件并没有提供类似于 <code>before-leave</code> 的钩子，所以需要自行实现这一过程。</p>
 <p>最初的想法是利用官方提供的 <code>value</code> 属性以及<code>chang</code>回调来完成这一过程。因为如果用 <code>v-model</code> 的话，Vue内部就会代理所有的数据处理，就不能完成自定义的数据劫持了。</p>
-<figure data-type="image" tabindex="4"><img src="https://hbuecx.com/post-images/1617163290456.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="4"><img src="http://localhost:4000/post-images/1617163290456.png" alt="" loading="lazy"></figure>
 <p>关键代码如下：</p>
 <pre><code class="language-html">&lt;template&gt;
     &lt;el-tabs v-model=&quot;activeLevelGroup&quot; :before-leave=&quot;beforeLeave&quot; :class=&quot;$style['tabs']&quot;&gt;
@@ -821,7 +821,7 @@ export default class LevelTab extends Vue {
 </code></pre>
 <p>当我兴高采烈地去运行代码的时候发现实际效果与预想的效果差的十万八千里。</p>
 <p>无论我点选哪个选项，该选项都会被点亮，并且再次点击也无法取消选中……😰</p>
-<figure data-type="image" tabindex="5"><img src="https://hbuecx.com/post-images/1617172179228.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="5"><img src="http://localhost:4000/post-images/1617172179228.png" alt="" loading="lazy"></figure>
 <p>到这里，继续靠推测去研究方案效率就很低了。不如干脆去看看element-ui 源码，看看<a href="https://github.com/ElemeFE/element/blob/dev/packages/radio/src/radio-group.vue">RadioGroup</a>和<a href="https://github.com/ElemeFE/element/blob/dev/packages/radio/src/radio-button.vue">RadioButton</a>的数据是怎么传递和更新的.</p>
 <h2 id="radiogroup-与-radiobutton">RadioGroup 与 RadioButton</h2>
 <p>先看了 RadioGroup 的源码，只在 <code>created</code> 钩子里看见了数据处理相关的代码。它监听了 <code>handleChange</code> 事件，并在监听到该事件后向上层发送 <code>change</code> 回调。</p>
@@ -966,8 +966,8 @@ export default class LevelTab extends Vue {
     </entry>
     <entry>
         <title type="html"><![CDATA[GitHub Action: The process '/usr/bin/git' failed with exit code 128]]></title>
-        <id>https://hbuecx.com/post/github-action-gou-jian-shi-bai-chu-li/</id>
-        <link href="https://hbuecx.com/post/github-action-gou-jian-shi-bai-chu-li/">
+        <id>http://localhost:4000/post/github-action-gou-jian-shi-bai-chu-li/</id>
+        <link href="http://localhost:4000/post/github-action-gou-jian-shi-bai-chu-li/">
         </link>
         <updated>2021-03-24T01:55:07.000Z</updated>
         <content type="html"><![CDATA[<p>最近发现了<a href="https://vuepress-theme-hope.github.io/zh">vuepress-theme-hope</a>这个强大的静态博客生成工具，它使用了<code>GitHub Action</code>来构建生成静态网页，但是在我发布代码之后，构建了好几次都没有成功。</p>
@@ -977,7 +977,7 @@ export default class LevelTab extends Vue {
 <p>The process '/usr/bin/git' failed with exit code 128.</p>
 </blockquote>
 <p>截图：</p>
-<figure data-type="image" tabindex="1"><img src="https://hbuecx.com/post-images/1616550964478.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1616550964478.png" alt="" loading="lazy"></figure>
 <p>构建脚本：</p>
 <pre><code class="language-yml">name: Deploy GitHub Pages
 
@@ -1064,8 +1064,8 @@ jobs:
     </entry>
     <entry>
         <title type="html"><![CDATA[为什么要在function之前加上"!"]]></title>
-        <id>https://hbuecx.com/post/wei-shi-me-yao-zai-function-zhi-qian-jia-shang/</id>
-        <link href="https://hbuecx.com/post/wei-shi-me-yao-zai-function-zhi-qian-jia-shang/">
+        <id>http://localhost:4000/post/wei-shi-me-yao-zai-function-zhi-qian-jia-shang/</id>
+        <link href="http://localhost:4000/post/wei-shi-me-yao-zai-function-zhi-qian-jia-shang/">
         </link>
         <updated>2021-03-19T09:51:28.000Z</updated>
         <summary type="html"><![CDATA[<p>在某些第三方包中，会见到以 <code>!</code> 开头的代码，那么为什么要这么做呢？</p>
@@ -1094,8 +1094,8 @@ jobs:
     </entry>
     <entry>
         <title type="html"><![CDATA[JS实现字符串的批量替换]]></title>
-        <id>https://hbuecx.com/post/js-shi-xian-zi-fu-chuan-de-pi-liang-ti-huan/</id>
-        <link href="https://hbuecx.com/post/js-shi-xian-zi-fu-chuan-de-pi-liang-ti-huan/">
+        <id>http://localhost:4000/post/js-shi-xian-zi-fu-chuan-de-pi-liang-ti-huan/</id>
+        <link href="http://localhost:4000/post/js-shi-xian-zi-fu-chuan-de-pi-liang-ti-huan/">
         </link>
         <updated>2021-03-15T07:26:33.000Z</updated>
         <content type="html"><![CDATA[<p>有一个对象数据结构如下：</p>
@@ -1142,8 +1142,8 @@ console.log(result);
     </entry>
     <entry>
         <title type="html"><![CDATA[Git 提交部分代码]]></title>
-        <id>https://hbuecx.com/post/git-ti-jiao-bu-fen-dai-ma/</id>
-        <link href="https://hbuecx.com/post/git-ti-jiao-bu-fen-dai-ma/">
+        <id>http://localhost:4000/post/git-ti-jiao-bu-fen-dai-ma/</id>
+        <link href="http://localhost:4000/post/git-ti-jiao-bu-fen-dai-ma/">
         </link>
         <updated>2021-03-11T07:40:28.000Z</updated>
         <content type="html"><![CDATA[<p>如果我们开发过程中，需要先提交一部分代码，该怎么做呢？</p>
@@ -1163,8 +1163,8 @@ git stash pop // 恢复之前忽略的文件（非常重要的一步）
     </entry>
     <entry>
         <title type="html"><![CDATA[Redux与Vuex的区别]]></title>
-        <id>https://hbuecx.com/post/redux-yu-vuex-de-qu-bie/</id>
-        <link href="https://hbuecx.com/post/redux-yu-vuex-de-qu-bie/">
+        <id>http://localhost:4000/post/redux-yu-vuex-de-qu-bie/</id>
+        <link href="http://localhost:4000/post/redux-yu-vuex-de-qu-bie/">
         </link>
         <updated>2021-03-08T08:51:17.000Z</updated>
         <content type="html"><![CDATA[<h2 id="相同点">相同点</h2>
@@ -1189,8 +1189,8 @@ git stash pop // 恢复之前忽略的文件（非常重要的一步）
     </entry>
     <entry>
         <title type="html"><![CDATA[腾讯移动端开发规范]]></title>
-        <id>https://hbuecx.com/post/teng-xun-yi-dong-duan-kai-fa-gui-fan/</id>
-        <link href="https://hbuecx.com/post/teng-xun-yi-dong-duan-kai-fa-gui-fan/">
+        <id>http://localhost:4000/post/teng-xun-yi-dong-duan-kai-fa-gui-fan/</id>
+        <link href="http://localhost:4000/post/teng-xun-yi-dong-duan-kai-fa-gui-fan/">
         </link>
         <updated>2021-02-20T07:33:47.000Z</updated>
         <content type="html"><![CDATA[<p>要考虑Android低端机与2G网络场景下性能 <code>注意！</code></p>
@@ -1238,11 +1238,11 @@ git stash pop // 恢复之前忽略的文件（非常重要的一步）
     </entry>
     <entry>
         <title type="html"><![CDATA[Chrome浏览器截长屏]]></title>
-        <id>https://hbuecx.com/post/chrome-liu-lan-qi-jie-chang-ping/</id>
-        <link href="https://hbuecx.com/post/chrome-liu-lan-qi-jie-chang-ping/">
+        <id>http://localhost:4000/post/chrome-liu-lan-qi-jie-chang-ping/</id>
+        <link href="http://localhost:4000/post/chrome-liu-lan-qi-jie-chang-ping/">
         </link>
         <updated>2021-02-15T03:26:27.000Z</updated>
-        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://hbuecx.com/post-images/1613359611986.png" alt="" loading="lazy"></figure>
+        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1613359611986.png" alt="" loading="lazy"></figure>
 ]]></content>
     </entry>
 </feed>

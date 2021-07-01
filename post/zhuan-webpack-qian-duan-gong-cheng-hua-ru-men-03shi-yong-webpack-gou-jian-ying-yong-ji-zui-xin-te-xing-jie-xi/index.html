@@ -5,11 +5,11 @@
 <meta name="keywords" content="web,html,css,js,es6,nodejs,react,antd,webpack,redux,jenkins,踩坑,学习笔记,微信小程序,微信公众号,适配,git,github,gitee" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Webpack前端工程化入门——03：使用 Webpack 构建应用及最新特性解析 | 白山的博客</title>
-<link rel="shortcut icon" href="https://hbuecx.com/favicon.ico?v=1625121400433">
+<link rel="shortcut icon" href="http://localhost:4000/favicon.ico?v=1625121400363">
 <!-- <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.css" rel="stylesheet"> -->
 <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
-<link rel="stylesheet" href="https://hbuecx.com/styles/main.css">
-<link rel="stylesheet" href="https://hbuecx.com/media/live2d/css/live2d.css">
+<link rel="stylesheet" href="http://localhost:4000/styles/main.css">
+<link rel="stylesheet" href="http://localhost:4000/media/live2d/css/live2d.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
@@ -96,7 +96,7 @@
             
                 <div class="nav-item">
                     
-                        <a href="https://hbuecx.com/collection" class="menu gt-a-link" target="_blank">
+                        <a href="http://localhost:4000/collection" class="menu gt-a-link" target="_blank">
                             项目
                         </a>
                     
@@ -124,7 +124,7 @@
                         · 2019-06-06 12:26:30 ·
                     </time>
                     
-                        <a href="https://hbuecx.com/tag/Qd6JthZND/" class="post-tags">
+                        <a href="http://localhost:4000/tag/Qd6JthZND/" class="post-tags">
                             # Webpack
                         </a>
                     
@@ -169,12 +169,12 @@ moduleLog();
 <p>在浏览器中打开 index.html，你应该能看到页面内容中的 &quot;<strong>app.js loaded. module.js loaded.</strong>&quot; 了。以上是我们通过 Webpack 将工程中的源文件 app.js 和 module.js 打包合并生成了 bundle.js。</p>
 <h4 id="报错">报错</h4>
 <p>如果出现如下报错：<br>
-<img src="https://hbuecx.com/post-images/1559802140007.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1559802140007.png" alt="" loading="lazy"><br>
 该报错原因为未指定mode，即未指定生产环境还是开发环境。此处使用开发环境，可以尝试下修改一下webpack命令：</p>
 <pre><code>webpack app.js --output-filename ./dist/bundle.js --output-path . --mode development
 </code></pre>
 <p>使用该命令后成功截图如下所示：<br>
-<img src="https://hbuecx.com/post-images/1559802410446.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1559802410446.png" alt="" loading="lazy"></p>
 <h3 id="定义配置文件">定义配置文件</h3>
 <p>Webpack 为打包提供了很多配置项，如果使用命令行的形式则要配置太多的参数，使得最终的打包命令很长。因此我们习惯于将 Webpack 配置写在一个特定的文件中，通过该文件来管理我们项目中的配置。比如我们在工程中创建一个 <code>webpack.config.js</code>：</p>
 <pre><code>const path = require('path');
@@ -252,7 +252,7 @@ module.exports = {
 </code></pre>
 <p>配置完成后，运行 <code>npm run server</code>命令即可。</p>
 <h3 id="一切皆模块与-loaders">一切皆模块与 loaders</h3>
-<figure data-type="image" tabindex="1"><img src="https://hbuecx.com/post-images/1559805621778.jpg" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1559805621778.jpg" alt="" loading="lazy"></figure>
 <p>接下来我们要介绍一个 Webpack 的核心特性——一切皆模块。对于像 <code>RequireJS</code> 或 <code>Browserify</code> 这样的打包工具而言，它们仅仅能够处理 JavaScript。然而我们的工程不仅仅有 JavaScript，还有模板、样式文件、图片等等其它类型的资源，这就意味着我们还需要使用别的工具去管理它们。</p>
 <p>在 Webpack 的思想中，所有这些资源——模板、样式、图片等等都是模块，因为这些资源也具备模块的特性——它们都负责特定的职能，并且具有可复用性。因此，我们可以使用 Webpack 去管理所有这些资源，并且把它们都当做模块来处理。</p>
 <p>到了代码层面，让我们实际来使用一下这个特性。在项目中创建一个很简单的 style.css：</p>
@@ -435,7 +435,7 @@ log();
         
             <div class="next-post">
                 <div class="next gt-c-content-color-first">下一篇</div>
-                <a href="https://hbuecx.com/post/zhuan-webpack-qian-duan-gong-cheng-hua-ru-men-02guan-yu-bao-guan-li-qi-ni-ying-gai-zhi-dao-de/" class="post-title gt-a-link">
+                <a href="http://localhost:4000/post/zhuan-webpack-qian-duan-gong-cheng-hua-ru-men-02guan-yu-bao-guan-li-qi-ni-ying-gai-zhi-dao-de/" class="post-title gt-a-link">
                     Webpack前端工程化入门——02：关于包管理器你应该知道的
                 </a>
             </div>
@@ -508,7 +508,7 @@ log();
         
         
     </div>
-    Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a href="https://hbuecx.com/atom.xml" target="_blank">RSS</a>
+    Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a href="http://localhost:4000/atom.xml" target="_blank">RSS</a>
 </div>
 
 <div id="landlord" style="left:5px;bottom:0px;">
