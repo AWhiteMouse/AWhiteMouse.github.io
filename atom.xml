@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://hbuecx.com</id>
-    <title>白山</title>
-    <updated>2021-07-01T03:04:36.021Z</updated>
+    <title>白山的博客</title>
+    <updated>2021-07-01T06:37:03.779Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://hbuecx.com"/>
     <link rel="self" href="https://hbuecx.com/atom.xml"/>
     <subtitle>温故而知新。</subtitle>
     <logo>https://hbuecx.com/images/avatar.png</logo>
     <icon>https://hbuecx.com/favicon.ico</icon>
-    <rights>All rights reserved 2021, 白山</rights>
+    <rights>All rights reserved 2021, 白山的博客</rights>
     <entry>
         <title type="html"><![CDATA[实现 stylus 预处理器的 css module]]></title>
         <id>https://hbuecx.com/post/shi-xian-stylus-yu-chu-li-qi-de-css-module/</id>
