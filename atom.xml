@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://hbuecx.com</id>
     <title>白山的博客</title>
-    <updated>2021-07-01T06:48:53.451Z</updated>
+    <updated>2021-07-02T05:41:09.724Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://hbuecx.com"/>
     <link rel="self" href="https://hbuecx.com/atom.xml"/>
@@ -10,6 +10,47 @@
     <logo>https://hbuecx.com/images/avatar.png</logo>
     <icon>https://hbuecx.com/favicon.ico</icon>
     <rights>All rights reserved 2021, 白山的博客</rights>
+    <entry>
+        <title type="html"><![CDATA[Promise缓存]]></title>
+        <id>https://hbuecx.com/post/promise-huan-cun/</id>
+        <link href="https://hbuecx.com/post/promise-huan-cun/">
+        </link>
+        <updated>2021-07-02T04:42:21.000Z</updated>
+        <summary type="html"><![CDATA[<p>假如现在需要通过发起请求来获取一份数据，页面上有两个按钮都可以点击用来获取数据，需要实现的效果是点击两个按钮都能拿到结果，但是只能发起一次请求。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>假如现在需要通过发起请求来获取一份数据，页面上有两个按钮都可以点击用来获取数据，需要实现的效果是点击两个按钮都能拿到结果，但是只能发起一次请求。</p>
+<!-- more -->
+<p>正常情况下，两个按钮都会调用发送请求，想要只请求一次，解决方案就是将请求缓存起来。代码如下：</p>
+<pre><code class="language-html">&lt;button onclick=&quot;handleClick1()&quot;&gt;测试1&lt;/button&gt;
+&lt;button onclick=&quot;handleClick2()&quot;&gt;测试2&lt;/button&gt;
+</code></pre>
+<pre><code class="language-js">let p = null;
+
+function click() {
+    p = p || new Promise((resolve) =&gt; {
+        console.log('啦啦啦，我执行啦');
+        setTimeout(() =&gt; {
+            resolve(20);
+        }, 10);
+    });
+}
+
+function handleClick1() {
+    click();
+    p.then(res =&gt; {
+        console.log(&quot;1&quot;, res);
+    })
+}
+
+function handleClick2() {
+    click();
+    p.then(res =&gt; {
+        console.log(&quot;2&quot;, res);
+    })
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[实现 stylus 预处理器的 css module]]></title>
         <id>https://hbuecx.com/post/shi-xian-stylus-yu-chu-li-qi-de-css-module/</id>
@@ -1234,15 +1275,6 @@ git stash pop // 恢复之前忽略的文件（非常重要的一步）
 <ol>
 <li><a href="http://alloyteam.github.io/Spirit/modules/Standard/index.html">移动开发规范概述</a>.</li>
 </ol>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Chrome浏览器截长屏]]></title>
-        <id>https://hbuecx.com/post/chrome-liu-lan-qi-jie-chang-ping/</id>
-        <link href="https://hbuecx.com/post/chrome-liu-lan-qi-jie-chang-ping/">
-        </link>
-        <updated>2021-02-15T03:26:27.000Z</updated>
-        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://hbuecx.com/post-images/1613359611986.png" alt="" loading="lazy"></figure>
 ]]></content>
     </entry>
 </feed>

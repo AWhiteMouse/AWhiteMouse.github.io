@@ -4,7 +4,7 @@
 <meta name="description" content="一位前端开发者的学习笔记与踩坑指南" />
 <meta name="keywords" content="web,html,css,js,es6,nodejs,react,antd,webpack,redux,jenkins,踩坑,学习笔记,微信小程序,微信公众号,适配,git,github,gitee" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>踩坑 | 白山的博客</title>
+<title>Promise缓存 | 白山的博客</title>
 <link rel="shortcut icon" href="https://hbuecx.com/favicon.ico?v=1625204465416">
 <!-- <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.css" rel="stylesheet"> -->
 <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
@@ -44,11 +44,11 @@
 </script>
 
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 </head>
 <body>
 <div class="main gt-bg-theme-color-first">
-    <div class="main-content">
-        <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg">
     <div class="navbar-brand">
         <img class="user-avatar" src="/images/avatar.png" alt="头像">
         <div class="site-name gt-c-content-color-first">
@@ -113,170 +113,95 @@
         </div>
     </div>
 </nav>
-        <div class="current-tag-container">
-            <h2 class="title gt-c-content-color-first">
-                #踩坑
-            </h2>
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    Promise缓存
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2021-07-02 12:42:21 ·
+                    </time>
+                    
+                        <a href="https://hbuecx.com/tag/upoIx-adY/" class="post-tags">
+                            # JS
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <p>假如现在需要通过发起请求来获取一份数据，页面上有两个按钮都可以点击用来获取数据，需要实现的效果是点击两个按钮都能拿到结果，但是只能发起一次请求。</p>
+<!-- more -->
+<p>正常情况下，两个按钮都会调用发送请求，想要只请求一次，解决方案就是将请求缓存起来。代码如下：</p>
+<pre><code class="language-html">&lt;button onclick=&quot;handleClick1()&quot;&gt;测试1&lt;/button&gt;
+&lt;button onclick=&quot;handleClick2()&quot;&gt;测试2&lt;/button&gt;
+</code></pre>
+<pre><code class="language-js">let p = null;
+
+function click() {
+    p = p || new Promise((resolve) =&gt; {
+        console.log('啦啦啦，我执行啦');
+        setTimeout(() =&gt; {
+            resolve(20);
+        }, 10);
+    });
+}
+
+function handleClick1() {
+    click();
+    p.then(res =&gt; {
+        console.log(&quot;1&quot;, res);
+    })
+}
+
+function handleClick2() {
+    click();
+    p.then(res =&gt; {
+        console.log(&quot;2&quot;, res);
+    })
+}
+</code></pre>
+
+                </div>
+            </article>
         </div>
-        <div class="post-list-container">
-    <div class="post-inner">
-        
-            <div class="post gt-bg-theme-color-second">
-                <div class="post-left">
-                    <div>
-                        
-                        <a href="https://hbuecx.com/post/an-niu-wen-zi-bu-ju-zhong-wen-ti/">
-                            <span class="post-title gt-c-content-color-first">按钮文字垂直不居中问题</span>
-                        </a>
-                    </div>
-                    <div class="gt-post-content post-abstract gt-c-content-color-second">
-                        <p>在开发需求中，遇到了按钮文字不居中的问题，问题出现得有些奇怪。</p>
 
-                    </div>
-                    <div class="post-info">
-                        <time class="post-time gt-c-content-color-first">
-                            发布于 · 2020-01-16 04:56:30 ·
-                        </time>
-                        
-                            <a href="https://hbuecx.com/tag/mwHk1wpwf/" class="post-tag">
-                                # 适配
-                            </a>
-                        
-                            <a href="https://hbuecx.com/tag/ufGbQYqvJv/" class="post-tag">
-                                # 踩坑
-                            </a>
-                        
-                            <a href="https://hbuecx.com/tag/vDt64AfE0/" class="post-tag">
-                                # 移动端
-                            </a>
-                        
-                            <a href="https://hbuecx.com/tag/QS8yuBEVZN/" class="post-tag">
-                                # web
-                            </a>
-                        
-                    </div>
-                </div>
-                
-                    <a href="https://hbuecx.com/post/an-niu-wen-zi-bu-ju-zhong-wen-ti/" class="post-feature-image"
-                       style="background-image: url('https://ask.qcloudimg.com/http-save/1902605/amb9t2tjh1.jpeg')">
-                    </a>
-                
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://hbuecx.com/post/shi-xian-stylus-yu-chu-li-qi-de-css-module/" class="post-title gt-a-link">
+                    实现 stylus 预处理器的 css module
+                </a>
             </div>
         
-            <div class="post gt-bg-theme-color-second">
-                <div class="post-left">
-                    <div>
-                        
-                        <a href="https://hbuecx.com/post/jenkinschu-cuo-xin-xi-error-enoent-no-such-file-or-directory/">
-                            <span class="post-title gt-c-content-color-first">Jenkins：【出错信息】:Error: ENOENT: no such file or directory</span>
-                        </a>
-                    </div>
-                    <div class="gt-post-content post-abstract gt-c-content-color-second">
-                        <p>在Jenkins上发布代码，连续发布两次都报了同一个错误。</p>
 
-                    </div>
-                    <div class="post-info">
-                        <time class="post-time gt-c-content-color-first">
-                            发布于 · 2020-01-15 04:32:30 ·
-                        </time>
-                        
-                            <a href="https://hbuecx.com/tag/QXbkbGufZ/" class="post-tag">
-                                # Jenkins
-                            </a>
-                        
-                            <a href="https://hbuecx.com/tag/ufGbQYqvJv/" class="post-tag">
-                                # 踩坑
-                            </a>
-                        
-                    </div>
-                </div>
-                
-                    <a href="https://hbuecx.com/post/jenkinschu-cuo-xin-xi-error-enoent-no-such-file-or-directory/" class="post-feature-image"
-                       style="background-image: url('https://jenkins.io/images/logo-title-opengraph.png')">
-                    </a>
-                
-            </div>
         
-            <div class="post gt-bg-theme-color-second">
-                <div class="post-left">
-                    <div>
-                        
-                        <a href="https://hbuecx.com/post/wei-xin-chang-an-tu-pian-fa-song-gei-peng-you-cai-keng/">
-                            <span class="post-title gt-c-content-color-first">微信分享海报踩坑</span>
-                        </a>
-                    </div>
-                    <div class="gt-post-content post-abstract gt-c-content-color-second">
-                        <p>在一个需求中涉及到海报分享，需要让用户长按海报分享给朋友。</p>
+            
+                <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
 
-                    </div>
-                    <div class="post-info">
-                        <time class="post-time gt-c-content-color-first">
-                            发布于 · 2020-01-12 11:55:13 ·
-                        </time>
-                        
-                            <a href="https://hbuecx.com/tag/ufGbQYqvJv/" class="post-tag">
-                                # 踩坑
-                            </a>
-                        
-                            <a href="https://hbuecx.com/tag/MaE4DBsGs/" class="post-tag">
-                                # 微信
-                            </a>
-                        
-                            <a href="https://hbuecx.com/tag/vDt64AfE0/" class="post-tag">
-                                # 移动端
-                            </a>
-                        
-                            <a href="https://hbuecx.com/tag/QS8yuBEVZN/" class="post-tag">
-                                # web
-                            </a>
-                        
-                    </div>
-                </div>
-                
-                    <a href="https://hbuecx.com/post/wei-xin-chang-an-tu-pian-fa-song-gei-peng-you-cai-keng/" class="post-feature-image"
-                       style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdkjfUrvWe2rMf_ghUw-bGhd7jxGugMK513ctlbznNgwNnbfD88g&amp;s')">
-                    </a>
-                
-            </div>
-        
-            <div class="post gt-bg-theme-color-second">
-                <div class="post-left">
-                    <div>
-                        
-                        <a href="https://hbuecx.com/post/ye-mian-tiao-zhuan-shi-tong-ji-shu-ju-diu-shi-wen-ti/">
-                            <span class="post-title gt-c-content-color-first">页面跳转时，埋点数据丢失问题</span>
-                        </a>
-                    </div>
-                    <div class="gt-post-content post-abstract gt-c-content-color-second">
-                        <p>在开发项目时，一个不可或缺的部分就是数据统计。这里不讨论数据统计的方法，只关注一个问题：有时我们会遇到这样的场景，在进行某个上报后就马上发生跳转，这种情况下上报的丢失率为97%。</p>
+<div id="gitalk-container"></div>
 
-                    </div>
-                    <div class="post-info">
-                        <time class="post-time gt-c-content-color-first">
-                            发布于 · 2020-01-09 05:32:31 ·
-                        </time>
-                        
-                            <a href="https://hbuecx.com/tag/ufGbQYqvJv/" class="post-tag">
-                                # 踩坑
-                            </a>
-                        
-                    </div>
-                </div>
-                
-                    <a href="https://hbuecx.com/post/ye-mian-tiao-zhuan-shi-tong-ji-shu-ju-diu-shi-wen-ti/" class="post-feature-image"
-                       style="background-image: url('https://img.moegirl.org/common/0/06/%E5%A4%A7%E6%95%B0%E6%8D%AE.jpeg')">
-                    </a>
-                
-            </div>
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '1c7817279f236848ef3b',
+    clientSecret: 'cc9a052a730aca58df4ac91361957979a7fb5396',
+    repo: 'AWhiteMouse.github.io',
+    owner: 'AWhiteMouse',
+    admin: ['AWhiteMouse'],
+    id: location.pathname,      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+            
+
+            
         
-    </div>
-</div>
-        <div class="pagination-container">
-    
-        <a href="https://hbuecx.com/tag/ufGbQYqvJv" class="prev-page gt-a-link">上一页</a>
-    
-    
-</div>
 
         <div class="site-footer gt-c-content-color-first">
     <div class="slogan gt-c-content-color-first">温故而知新。</div>
@@ -358,6 +283,7 @@
 <script type="text/javascript" src="/media/live2d/js/live2d.js"></script>
 <script type="text/javascript" src="/media/live2d/js/message.js"></script>
 <!-- <script src="//code.tidio.co/fkwn1bueaqmcolzjchxzh7xoz5ahzrtw.js" async></script> -->
+
     </div>
 </div>
 </body>
